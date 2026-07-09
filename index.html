@@ -562,10 +562,16 @@ Import Backup
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 window.firebaseDoc = doc;
 window.firebaseSetDoc = setDoc;
+window.firebaseOnSnapshot = onSnapshot;
 
 const firebaseConfig = {
   apiKey: "AIzaSyBiZcLf-f-5jkSyYIPdTgwp1Cc5U_Hl6b4",
@@ -1103,6 +1109,52 @@ function openCalendar() {
   }, 800);
 }
 
+function startRealtimeSync() {
+
+  if (!window.db) return;
+
+  window.firebaseOnSnapshot(
+
+    window.firebaseDoc(window.db, "dashboard", "current"),
+
+    (snapshot) => {
+
+      if (!snapshot.exists()) return;
+
+      const firebaseData = snapshot.data();
+
+      if (!firebaseData.cells) return;
+
+      document.querySelectorAll(".cell").forEach((cell, index) => {
+
+        const saved = firebaseData.cells[index];
+
+        if (!saved) return;
+
+        cell.textContent = saved.text || "";
+
+        cell.classList.toggle("active", saved.active);
+
+        cell.classList.toggle("locked", saved.locked);
+
+        cell.dataset.locked = saved.locked ? "true" : "false";
+
+      });
+
+      console.log("Realtime sync updated");
+
+    },
+
+    (error) => {
+
+      console.error("Realtime sync error:", error);
+
+    }
+
+  );
+
+}
+window.addEventListener("load", startRealtimeSync);
 </script>
 
 </body>
