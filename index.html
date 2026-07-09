@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pet Med Kiosk</title>
+
+<style>
+
+/* =========================
+   BASE APP STYLES
+========================= */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+
+  /* IMPORTANT: allow real page scroll */
+  height: auto;
+  overflow-y: auto;
+}
+
+/* TOP BAR */
+.top {
+  padding: 10px 12px;
+  background: #111827;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.top button {
+  background: #1f2937;
+  color: white;
+  border: 1px solid #334155;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+<button onclick="toggleLockMode()" id="lockModeBtn">🔒 Locked</button>
+#lockModeBtn {
+  background: #1f2937;
+  color: white;
+  border: 1px solid #334155;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-left: 8px;
+}
+/* =========================
+   GRID SYSTEM
+========================= */
+.matrix {
+  padding: 12px;
+  padding-bottom: 140px; /* space for bottom bar */
+  min-height: 100vh;     /* NOT fixed height */
+}
+
+.dog-content {
+  overflow-y: auto;
+}
+
+.grid-header {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  background: #0f172a;
+}
+
+.grid-header, .grid-row {
+  display: grid;
+  grid-template-columns: 180px repeat(7, 1fr);
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.grid-header div {
+  text-align: center;
+  font-weight: 600;
+  color: #38bdf8;
+
+  padding: 8px 6px;
+  margin: 2px;
+
+  border-radius: 8px;
+  background: rgba(56, 189, 248, 0.08);
+
+  cursor: pointer;
+  user-select: none;
+
+  transition: 0.15s ease;
+}
+
+.grid-header div:hover {
+  background: rgba(56, 189, 248, 0.2);
+  transform: translateY(-1px);
+}
+
+.grid-header div:active {
+  transform: translateY(1px);
+  background: rgba(56, 189, 248, 0.3);
+}
+
+.grid-header div:first-child {
+  background: transparent;
+  cursor: default;
+  padding: 0;
+  margin: 0;
+}
+
+.today-col {
+  border: 3px solid white !important;
+}
+
+.grid-row {
+  transition: background 0.2s ease, filter 0.15s ease;
+}
+
+.grid-row:active {
+  filter: brightness(1.15);
+}
+
+/* MED LABEL */
+.med-name {
+  background: rgba(0,0,0,0.25);
+  padding: 8px;
+  border-radius: 6px;
+}
+
+/* CHECKBOX CELLS */
+.cell {
+  height: 38px;
+  background: #111827;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px; 
+  font-weight: bold;
+  color: black;
+}
+
+.cell.active {
+  background: #a8e4a0;
+}
+
+.cell.locked::after {
+  content: "🔒";
+  font-size: 10px;
+  position: absolute;
+  top: 2px;
+  right: 4px;
+}
+.cell {
+  position: relative;
+}
+
+.today {
+  background: rgba(34, 197, 94, 0.25);
+  border-radius: 6px;
+}
+
+/* =========================
+   DOG SECTIONS
+========================= */
+.dog {
+  padding: 10px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+/* YOUR COLORS */
+.aidan { background: #FF7F00; }
+.callie { background: #FF69B4; }
+.logan { background: #4169E1; }
+.ate { background: #9966cb; }
+
+/* DOG TITLE */
+.dog-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  background: rgba(0,0,0,0.25);
+  border-radius: 6px;
+}
+
+.logan .grid-row {
+  border-radius: 6px;
+  margin-bottom: 4px;
+  padding: 2px 0;
+}
+
+/* Base blue family already handled by Logan section */
+
+.med-loxicom {
+  background: rgba(160, 200, 255, 0.18);
+  border-left: 6px solid #7fb3ff;
+}
+
+.med-amoxicillin {
+  background: rgba(120, 170, 255, 0.20);
+  border-left: 6px solid #4f97ff;
+}
+
+.med-trazodone {
+  background: rgba(180, 220, 255, 0.22);
+  border-left: 6px solid #9fd3ff;
+}
+
+.med-gabapentin {
+  background: rgba(110, 160, 240, 0.22);
+  border-left: 6px solid #5a9cff;
+}
+
+.med-wuffes {
+  background: rgba(200, 220, 255, 0.14);
+  border-left: 6px solid #b3d1ff;
+}
+
+/* =========================
+   BOTTOM NAV BAR
+========================= */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #111827;
+  border-top: 1px solid #334155;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.bottom-bar button {
+  background: #1f2937;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.dog-content {
+  margin-top: 6px;
+}
+.dog.collapsed .dog-content {
+  display: none;
+}
+.dog-title {
+  cursor: pointer;
+}
+
+#statusBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: #0f172a;
+  border-top: 1px solid rgba(255,255,255,0.1);
+
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #38bdf8;
+
+  display: flex;
+  justify-content: space-between;
+  z-index: 9999;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     TOP HEADER
+========================= -->
+<div class="top">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <div style="font-size:18px; font-weight:bold;">
+      🐾 Pet Med Dashboard
+    </div>
+
+<button onclick="goFullScreen()">⛶ Full Screen</button>
+<button onclick="exportBackup()">Export Backup</button>
+<button onclick="restoreBackup()">Restore Backup</button>
+
+<input type="file" id="importFile" accept=".json" onchange="importBackup(event)" style="display:none;">
+
+<button onclick="document.getElementById('importFile').click()">
+Import Backup
+</button>
+
+<div id="backupInfo"></div>
+  </div>
+</div>
+
+
+<!-- =========================
+     MAIN GRID
+========================= -->
+<div class="matrix">
+
+  <!-- DAYS HEADER -->
+<div class="grid-header">
+  <div class="header-spacer"></div>
+
+  <div class="day-btn" onclick="clearDay(0)">SUN</div>
+  <div class="day-btn" onclick="clearDay(1)">MON</div>
+  <div class="day-btn" onclick="clearDay(2)">TUE</div>
+  <div class="day-btn" onclick="clearDay(3)">WED</div>
+  <div class="day-btn" onclick="clearDay(4)">THU</div>
+  <div class="day-btn" onclick="clearDay(5)">FRI</div>
+  <div class="day-btn" onclick="clearDay(6)">SAT</div>
+</div>
+
+  <!-- =========================
+       AIDAN
+  ========================= -->
+  <div class="dog aidan">
+    <div class="dog-title">Aidan</div>
+     <div class="dog-content">
+    <div class="grid-row">
+      <div class="med-name">Anypril</div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+   </div> 
+  </div>
+
+  <!-- =========================
+       CALLIE
+  ========================= -->
+  <div class="dog callie">
+    <div class="dog-title">Callie</div>
+    <div class="dog-content">
+    <div class="grid-row">
+      <div class="med-name">Gab 1</div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    
+    <div class="grid-row">
+      <div class="med-name">Gab 2</div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    
+    <div class="grid-row">
+      <div class="med-name">Traz 1</div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    
+    <div class="grid-row">
+      <div class="med-name">Traz 2</div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>
+    
+<div class="grid-row">
+      <div class="med-name">Wuffes</div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    </div>    
+    </div>
+  </div>
+
+  <!-- =========================
+       LOGAN
+  ========================= -->
+  <div class="dog logan">
+  <div class="dog-title">Logan</div>
+ <div class="dog-content">
+ 
+<div class="grid-row med-loxicom">
+    <div class="med-name">Loxicom</div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+  
+  <div class="grid-row med-amoxicillin">
+    <div class="med-name">Amoxicillin 1</div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+  
+  <div class="grid-row med-amoxicillin">
+    <div class="med-name">Amoxicillin 2</div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+  
+<div class="grid-row med-trazodone">
+    <div class="med-name">Traz 1</div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+
+<div class="grid-row med-trazodone">
+    <div class="med-name">Traz 2</div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+
+<div class="grid-row med-trazodone">
+    <div class="med-name">Traz 3</div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+
+<div class="grid-row med-trazodone">
+    <div class="med-name">Bedtime Traz 50mg 10PM</div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+
+<div class="grid-row med-gabapentin">
+    <div class="med-name">Gab 1</div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+
+<div class="grid-row med-gabapentin">
+    <div class="med-name">1st Bed Gab 50mg 7:30PM</div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+
+<div class="grid-row med-gabapentin">
+    <div class="med-name">2nd Bed Gab 100mg 10PM</div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+
+<div class="grid-row med-wuffes">
+    <div class="med-name">Wuffes</div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+  </div>
+  </div>
+</div>
+
+
+<!-- =========================
+       FOOD
+  ========================= -->
+<div class="dog ate">
+  <div class="dog-title">Ate</div>
+
+  <div class="dog-content">
+
+    <div class="grid-row">
+      <div class="med-name">Aidan 1</div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+    
+    <div class="grid-row">
+      <div class="med-name">Aidan 2</div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+<div class="grid-row">
+      <div class="med-name">Callie 1</div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+    
+<div class="grid-row">
+      <div class="med-name">Callie 2</div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+    
+<div class="grid-row">
+      <div class="med-name">Logan 1</div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+    
+    <div class="grid-row">
+      <div class="med-name">Logan 2</div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+<div class="grid-row">
+      <div class="med-name">Jasmine 1</div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+    
+<div class="grid-row">
+      <div class="med-name">Jasmine 2</div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================
+     BOTTOM BAR (SAFE POSITION)
+========================= -->
+<div class="bottom-bar">
+  <button onclick="openApp('calendar')">📅 Calendar</button>
+  <button onclick="openApp('notes')">📝 Notes</button>
+  <button onclick="openApp('grocery')">🛒 Grocery</button>
+</div>
+
+<div id="backupDot"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+window.firebaseDoc = doc;
+window.firebaseSetDoc = setDoc;
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBiZcLf-f-5jkSyYIPdTgwp1Cc5U_Hl6b4",
+  authDomain: "pet-med-dasboard.firebaseapp.com",
+  projectId: "pet-med-dasboard",
+  storageBucket: "pet-med-dasboard.firebasestorage.app",
+  messagingSenderId: "726276547458",
+  appId: "1:726276547458:web:f95f3334ed4a043f52659b"
+};
+
+const app = initializeApp(firebaseConfig);
+
+window.db = getFirestore(app);
+window.firebaseReady = true;
+
+console.log("Firebase connected and db ready");
+
+console.log("Firebase connected");
+
+</script>
+
+
+<script>
+
+let lockMode = true;
+
+const doseMeds = ["Gab 1", "Gab 2", "Gab 3", "Traz 1", "Traz 2" , "Traz 3" , "Bedtime Traz"];
+
+/* =========================
+   CELL CLICK + TIME LOGIC
+========================= */
+document.querySelectorAll(".cell").forEach(cell => {
+  cell.addEventListener("click", () => {
+
+    // REMOVE if already filled
+    if (cell.textContent.trim() !== "") {
+
+  // If locked → require confirmation
+  if (cell.dataset.locked === "true") {
+    const unlock = confirm("This entry is locked.\nDelete it anyway?");
+
+    if (!unlock) return;
+
+    cell.dataset.locked = "false";
+  }
+
+  cell.dataset.time = "";
+  cell.textContent = "";
+  cell.classList.remove("active", "locked");
+
+  saveState();
+  saveToFirebase();
+return;
+}
+
+    // OTHERWISE ADD TIME
+    const useNow = confirm("Use current time?\n\nOK = Now\nCancel = Enter custom time");
+
+    let timeText;
+
+    if (useNow) {
+      const now = new Date();
+      timeText = now.toLocaleTimeString([], {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      });
+    } else {
+      const input = prompt("Enter time (example: 8:30 AM)");
+      if (!input) return;
+      timeText = input;
+    }
+
+    let display = timeText;
+
+    // ✅ ONLY THESE MEDS GET DOSE OPTION
+    const medName = cell.parentElement.querySelector(".med-name")?.textContent?.trim();
+
+    if (doseMeds.includes(medName)) {
+      const dose = prompt("Dose? (optional)\nExamples: 1/4, 1/2, 1");
+
+      if (dose && dose.trim() !== "") {
+        display += " (" + dose.trim() + ")";
+      }
+    }
+
+    cell.dataset.time = display;
+    cell.textContent = display;
+    cell.classList.add("active");
+    cell.dataset.locked = "true";
+    cell.classList.add("locked");
+saveState();
+saveToFirebase();
+  });
+});
+
+/* =========================
+   COLLAPSE DOG SECTIONS
+========================= */
+document.addEventListener("click", function (e) {
+  if (!e.target.classList.contains("dog-title")) return;
+
+  const dog = e.target.parentElement;
+  dog.classList.toggle("collapsed");
+});
+
+/* =========================
+   FULLSCREEN
+========================= */
+function goFullScreen() {
+  document.documentElement.requestFullscreen?.();
+}
+
+/* =========================
+   OPEN APPS
+========================= */
+function openApp(app) {
+  if (app === "calendar") window.location.href = "https://calendar.google.com";
+  if (app === "notes") window.location.href = "https://keep.google.com";
+  if (app === "grocery") {
+    window.open("https://www.walmart.com/grocery", "_blank");
+  }
+}
+
+function updateCurrentDayHighlight() {
+  const today = new Date().getDay(); // 0 = Sunday
+
+  document.querySelectorAll(".grid-header div").forEach((el, index) => {
+    el.classList.remove("today");
+    if (index === today + 1) { 
+      // +1 because first column is blank (med names)
+      el.classList.add("today");
+    }
+  });
+}
+
+/* =========================
+   SAVE STATE (FIREBASE STORAGE)
+========================= */
+
+async function saveToFirebase() {
+
+  if (!window.db) {
+    console.log("Firebase not ready");
+    return;
+  }
+
+  const cells = document.querySelectorAll(".cell");
+
+  const data = {};
+
+  cells.forEach((cell, index) => {
+    data[index] = {
+      text: cell.textContent,
+      active: cell.classList.contains("active"),
+      locked: cell.dataset.locked === "true"
+    };
+  });
+
+  try {
+
+    await window.firebaseSetDoc(
+      window.firebaseDoc(window.db, "dashboard", "current"),
+      {
+        cells: data,
+        updated: new Date().toString()
+      }
+    );
+
+    console.log("Saved to Firebase");
+
+  } catch (error) {
+    console.error("Firebase save error:", error);
+  }
+}
+
+async function loadFromFirebase() {
+
+  if (!window.db) {
+    console.log("Firebase not ready");
+    return;
+  }
+
+  try {
+
+    const { getDoc } = await import(
+      "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js"
+    );
+
+    const snap = await getDoc(
+      window.firebaseDoc(window.db, "dashboard", "current")
+    );
+
+    if (!snap.exists()) {
+      console.log("No Firebase data yet");
+      return;
+    }
+
+    const data = snap.data().cells;
+
+    document.querySelectorAll(".cell").forEach((cell, index) => {
+
+      if (data[index]) {
+
+        cell.textContent = data[index].text || "";
+
+        if (data[index].active) {
+          cell.classList.add("active");
+        }
+
+        if (data[index].locked) {
+          cell.dataset.locked = "true";
+          cell.classList.add("locked");
+        }
+
+      }
+
+    });
+
+    console.log("Loaded from Firebase");
+
+  } catch (error) {
+    console.error("Firebase load error:", error);
+  }
+}
+
+/* =========================
+   SAVE STATE (LOCAL STORAGE)
+========================= */
+function saveState() {
+
+  const cells = document.querySelectorAll(".cell");
+
+  const data = {};
+
+  cells.forEach((cell, index) => {
+    data[index] = {
+      text: cell.textContent,
+      active: cell.classList.contains("active"),
+      locked: cell.dataset.locked === "true"
+    };
+  });
+
+  // 🧠 check if there is any real data
+  const hasAnyData = Object.values(data).some(
+    entry => entry.text && entry.text.trim() !== ""
+  );
+
+  if (!hasAnyData) {
+    console.warn("Save blocked: empty state not saved as backup");
+
+    // still allow main state to update (important!)
+    localStorage.setItem("medData", JSON.stringify(data));
+    return;
+  }
+
+  // 💾 main save
+  localStorage.setItem("medData", JSON.stringify(data));
+
+  // 🟢 stable backup with timestamp
+  localStorage.setItem("medData_backup", JSON.stringify({
+  data: data,
+  timestamp: Date.now()
+}));
+
+updateBackupInfo();
+}
+
+
+function restoreBackup() {
+  const backupRaw = localStorage.getItem("medData_backup");
+
+  if (!backupRaw) {
+    alert("No backup found");
+    return;
+  }
+
+  const backup = JSON.parse(backupRaw);
+
+  localStorage.setItem("medData", JSON.stringify(backup.data));
+loadState();
+
+updateBackupInfo();
+}
+
+function exportBackup() {
+
+  const backupRaw = localStorage.getItem("medData_backup");
+
+  if (!backupRaw) {
+    alert("No backup found");
+    return;
+  }
+
+  const blob = new Blob([backupRaw], {
+    type: "application/json"
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "pet-med-backup.json";
+
+  document.body.appendChild(a);
+  a.click();
+
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  alert("Backup exported!");
+}
+
+function importBackup(event) {
+
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+
+    localStorage.setItem("medData_backup", e.target.result);
+
+    const backup = JSON.parse(e.target.result);
+
+    localStorage.setItem("medData", JSON.stringify(backup.data));
+
+    loadState();
+
+    updateBackupInfo();
+
+    alert("Backup imported!");
+  };
+
+  reader.readAsText(file);
+}
+
+function createSafetyBackup() {
+  const cells = document.querySelectorAll(".cell");
+
+  const data = {};
+
+  cells.forEach((cell, index) => {
+    data[index] = {
+      text: cell.textContent,
+      active: cell.classList.contains("active"),
+      locked: cell.dataset.locked === "true"
+    };
+  });
+
+  localStorage.setItem("medData_backup", JSON.stringify({
+    data: data,
+    timestamp: Date.now(),
+    reason: "auto-clear-backup"
+  }));
+}
+
+/* =========================
+   LOAD STATE (RESTORE ON OPEN)
+========================= */
+function loadState() {
+  const data = JSON.parse(localStorage.getItem("medData") || "{}");
+
+  document.querySelectorAll(".cell").forEach((cell, index) => {
+    if (data[index]) {
+
+      cell.textContent = data[index].text || "";
+
+      if (data[index].active) {
+        cell.classList.add("active");
+      }
+
+      if (data[index].locked) {
+        cell.dataset.locked = "true";
+        cell.classList.add("locked");
+      } else {
+        cell.dataset.locked = "false";
+      }
+    }
+  });
+}
+
+function highlightTodayColumn() {
+  const today = new Date().getDay(); // 0 = Sunday, 6 = Saturday
+
+  document.querySelectorAll(".grid-row").forEach(row => {
+    const cells = row.querySelectorAll(".cell");
+
+    if (cells[today]) {
+      cells[today].classList.add("today-col");
+    }
+  });
+}
+
+function getBackupTime() {
+  const backupRaw = localStorage.getItem("medData_backup");
+  if (!backupRaw) return "No backup";
+
+  const backup = JSON.parse(backupRaw);
+
+  if (!backup.timestamp) return "Backup saved (old version)";
+
+  return "Backup saved: " + new Date(backup.timestamp).toLocaleString();
+}
+
+window.addEventListener("load", highlightTodayColumn);
+
+function clearDay(dayIndex) {
+
+createSafetyBackup();
+
+  const dayNames = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+
+  if (!confirm(`Clear all entries for ${dayNames[dayIndex]}?`)) {
+    return;
+  }
+
+  document.querySelectorAll(".grid-row").forEach(row => {
+    const cell = row.querySelectorAll(".cell")[dayIndex];
+
+    if (!cell) return;
+
+    // FULL reset of cell state
+    cell.textContent = "";
+    cell.dataset.time = "";
+    cell.dataset.locked = "false";
+
+    cell.classList.remove("active", "locked");
+  });
+
+  saveState();
+  saveToFirebase();
+}
+
+function updateBackupInfo() {
+  const dot = document.getElementById("backupDot");
+  const el = document.getElementById("backupInfo");
+
+  if (!dot || !el) return;
+
+  const backupRaw = localStorage.getItem("medData_backup");
+
+  if (!backupRaw) {
+    dot.style.background = "gray";
+    el.textContent = "⚠ No backup saved";
+    return;
+  }
+
+  let backup;
+
+  try {
+    backup = JSON.parse(backupRaw);
+  } catch {
+    dot.style.background = "red";
+    el.textContent = "⚠ Backup corrupted";
+    return;
+  }
+
+  if (!backup.data) {
+    dot.style.background = "red";
+    el.textContent = "⚠ Invalid backup";
+    return;
+  }
+
+  const date = backup.timestamp
+    ? new Date(backup.timestamp).toLocaleString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true
+      })
+    : "unknown time";
+
+  if (backup.reason === "auto-clear") {
+    dot.style.background = "orange";
+    el.textContent = `🟡 Auto Backup: ${date}`;
+  } else {
+    dot.style.background = "limegreen";
+    el.textContent = `🟢 Backup: ${date}`;
+  }
+}
+
+/* =========================
+   INIT ON PAGE LOAD
+========================= */
+window.addEventListener("load", () => {
+  loadState();
+  setTimeout(loadFromFirebase, 1000);
+});
+
+updateCurrentDayHighlight();
+
+function scheduleMidnightUpdate() {
+  const now = new Date();
+  const msUntilMidnight =
+    new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1,
+      0, 0, 1
+    ) - now;
+
+  setTimeout(() => {
+    updateCurrentDayHighlight();
+    scheduleMidnightUpdate(); // reschedule next day
+  }, msUntilMidnight);
+}
+
+scheduleMidnightUpdate();
+
+function openCalendar() {
+  const appLink =
+    "intent://calendar.google.com/calendar#Intent;scheme=https;package=com.google.android.calendar;end";
+
+  const webLink = "https://calendar.google.com";
+
+  // Try to open the app first
+  window.location.href = appLink;
+
+  // Fallback to browser if app doesn't open
+  setTimeout(() => {
+    window.open(webLink, "_blank");
+  }, 800);
+}
+
+</script>
+
+</body>
+</html>
