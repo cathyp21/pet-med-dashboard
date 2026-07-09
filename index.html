@@ -300,6 +300,7 @@ Import Backup
 </button>
 
 <div id="backupInfo"></div>
+<div id="syncInfo">🟡 Waiting for sync...</div>
   </div>
 </div>
 
@@ -742,6 +743,17 @@ async function saveToFirebase() {
     );
 
     console.log("Saved to Firebase");
+    const sync = document.getElementById("syncInfo");
+
+if (sync) {
+  sync.textContent =
+    "🟢 Saved: " +
+    new Date().toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true
+    });
+}
 
   } catch (error) {
     console.error("Firebase save error:", error);
@@ -1141,7 +1153,19 @@ function startRealtimeSync() {
 
       });
 
-      console.log("Realtime sync updated");
+const sync = document.getElementById("syncInfo");
+
+if (sync) {
+  sync.textContent =
+    "🟢 Synced: " +
+    new Date().toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true
+    });
+}
+
+console.log("Realtime sync updated");
 
     },
 
