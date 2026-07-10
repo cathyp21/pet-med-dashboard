@@ -47,6 +47,14 @@ body {
   border-radius: 8px;
   margin-left: 8px;
 }
+
+.top-layout {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
 /* =========================
    GRID SYSTEM
 ========================= */
@@ -393,6 +401,46 @@ body {
 
 }
 
+/* =========================
+   MOBILE HORIZONTAL GRID FIX
+========================= */
+
+@media (max-width: 900px) {
+
+  .matrix {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  .grid-header,
+  .grid-row {
+    grid-template-columns: 140px repeat(7, 72px);
+    width: max-content;
+  }
+
+  .dog {
+    width: max-content;
+    min-width: 100%;
+  }
+
+  .grid-header {
+    position: sticky;
+    left: 0;
+  }
+
+  .cell {
+    width: 72px;
+    height: 55px;
+    font-size: 12px;
+  }
+
+  .med-name {
+    width: 125px;
+    font-size: 12px;
+  }
+
+}
+
 </style>
 </head>
 
@@ -402,7 +450,7 @@ body {
      TOP HEADER
 ========================= -->
 <div class="top">
-  <div style="display:flex; justify-content:space-between; align-items:center;">
+  <div class="top-layout">
     <div style="font-size:18px; font-weight:bold;">
       🐾 Pet Med Dashboard
     </div>
