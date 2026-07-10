@@ -298,6 +298,41 @@ body {
     display: flex;
   }
 
+  .matrix {
+    padding: 6px;
+  }
+
+  .grid-header,
+  .grid-row {
+    grid-template-columns: 90px repeat(7, 52px);
+    gap: 3px;
+  }
+
+  .grid-header {
+    overflow-x: auto;
+  }
+
+  .grid-row {
+    width: max-content;
+  }
+
+  .med-name {
+    font-size: 11px;
+    padding: 5px;
+  }
+
+  .grid-header div {
+    font-size: 11px;
+    padding: 6px 2px;
+  }
+
+  .cell {
+    width: 52px;
+    height: 48px;
+    font-size: 11px;
+    padding: 2px;
+  }
+
 }
 
 /* =========================
