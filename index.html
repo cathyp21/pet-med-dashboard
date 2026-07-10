@@ -326,10 +326,12 @@ Import Backup
 </button>
 
 <div id="backupInfo"></div>
+
 <div class="view-toggle">
   <button onclick="showTodayView()">📅 Today</button>
   <button onclick="showWeekView()">📆 Week</button>
 </div>
+
 <div id="syncInfo">🟡 Waiting for sync...</div>
   </div>
 </div>
@@ -1114,6 +1116,10 @@ function updateBackupInfo() {
 window.addEventListener("load", () => {
   loadState();
   setTimeout(loadFromFirebase, 1000);
+
+  if (window.innerWidth <= 900) {
+    showTodayView();
+  }
 });
 
 updateCurrentDayHighlight();
