@@ -276,53 +276,29 @@ body {
 }
 
 /* =========================
-   PHONE LAYOUT
+   PHONE TODAY / WEEK VIEW
 ========================= */
+
+.view-toggle {
+  display: none;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.view-toggle button {
+  background: #1f2937;
+  color: white;
+  border: 1px solid #334155;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
 @media (max-width: 900px) {
 
-  .grid-header,
-  .grid-row {
-    grid-template-columns: 95px repeat(7, minmax(42px, 1fr));
-    gap: 3px;
+  .view-toggle {
+    display: flex;
   }
 
-  .med-name {
-    font-size: 12px;
-    padding: 6px;
-    word-break: break-word;
-  }
-
-  .grid-header div {
-    font-size: 11px;
-    padding: 6px 2px;
-  }
-
-  .cell {
-    min-height: 52px;
-    font-size: 11px;
-    padding: 2px;
-    text-align: center;
-    line-height: 1.1;
-    overflow-wrap: anywhere;
-  }
-
-  .dog {
-    padding: 6px;
-  }
-
-  .dog-title {
-    font-size: 16px;
-  }
-
-  .top {
-    padding: 8px;
-  }
-
-  .top button,
-  .bottom-bar button {
-    font-size: 12px;
-    padding: 8px;
-  }
 }
 
 </style>
@@ -350,6 +326,10 @@ Import Backup
 </button>
 
 <div id="backupInfo"></div>
+<div class="view-toggle">
+  <button onclick="showTodayView()">📅 Today</button>
+  <button onclick="showWeekView()">📆 Week</button>
+</div>
 <div id="syncInfo">🟡 Waiting for sync...</div>
   </div>
 </div>
