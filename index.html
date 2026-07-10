@@ -275,6 +275,56 @@ body {
   z-index: 9999;
 }
 
+/* =========================
+   PHONE LAYOUT
+========================= */
+@media (max-width: 900px) {
+
+  .grid-header,
+  .grid-row {
+    grid-template-columns: 95px repeat(7, minmax(42px, 1fr));
+    gap: 3px;
+  }
+
+  .med-name {
+    font-size: 12px;
+    padding: 6px;
+    word-break: break-word;
+  }
+
+  .grid-header div {
+    font-size: 11px;
+    padding: 6px 2px;
+  }
+
+  .cell {
+    min-height: 52px;
+    font-size: 11px;
+    padding: 2px;
+    text-align: center;
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+  }
+
+  .dog {
+    padding: 6px;
+  }
+
+  .dog-title {
+    font-size: 16px;
+  }
+
+  .top {
+    padding: 8px;
+  }
+
+  .top button,
+  .bottom-bar button {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
+
 </style>
 </head>
 
