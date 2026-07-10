@@ -123,6 +123,10 @@ body {
   border-radius: 6px;
 }
 
+.today-col {
+  background: rgba(255,255,255,0.08);
+}
+
 .grid-row {
   transition: background 0.2s ease, filter 0.15s ease;
 }
@@ -440,6 +444,20 @@ body {
   .med-name {
     width: 125px;
     font-size: 12px;
+  }
+
+}
+
+@media (max-width: 900px) {
+
+  .grid-header,
+  .grid-row {
+    grid-template-columns: 140px repeat(7, 72px);
+  }
+
+  .grid-header div {
+    margin: 0;
+    padding: 6px 0;
   }
 
 }
@@ -873,11 +891,28 @@ function openApp(app) {
 function updateCurrentDayHighlight() {
   const today = new Date().getDay(); // 0 = Sunday
 
-  document.querySelectorAll(".grid-header div").forEach((el, index) => {
+  // Clear old highlights
+  document.querySelectorAll(".today").forEach(el => {
     el.classList.remove("today");
-    if (index === today + 1) { 
-      // +1 because first column is blank (med names)
+  });
+
+  document.querySelectorAll(".today-col").forEach(el => {
+    el.classList.remove("today-col");
+  });
+
+  // Highlight today's day header
+  document.querySelectorAll(".grid-header div").forEach((el, index) => {
+    if (index === today + 1) {
       el.classList.add("today");
+    }
+  });
+
+  // Highlight today's column below
+  document.querySelectorAll(".grid-row").forEach(row => {
+    const cells = row.querySelectorAll(".cell");
+
+    if (cells[today]) {
+      cells[today].classList.add("today-col");
     }
   });
 }
