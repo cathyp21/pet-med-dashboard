@@ -8,459 +8,838 @@
 
 <style>
 
-/* =========================
-   BASE APP STYLES
-========================= */
+/* =========================================================
+   PAWHUB — MOCKUP LAYOUT
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --page-bg: #0c1b2c;
+  --panel-bg: #172a3e;
+  --panel-dark: #0d1a29;
+  --border: rgba(174, 202, 231, 0.25);
+  --text: #f8fafc;
+  --muted: #a9c8eb;
+  --purple: #c8a7ff;
+  --today: #4ade80;
+
+  --dog-column: 180px;
+  --med-column: 190px;
+  --day-column: minmax(108px, 1fr);
+  --grid-gap: 5px;
+}
+
+html {
+  min-height: 100%;
+  background: var(--page-bg);
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0f172a;
-  color: white;
-
-  /* IMPORTANT: allow real page scroll */
-  height: auto;
+  min-height: 100vh;
+  padding: 12px;
   overflow-y: auto;
+  overflow-x: auto;
+  background:
+    radial-gradient(circle at top, rgba(57, 91, 125, 0.22), transparent 42%),
+    linear-gradient(180deg, #0b1a2a 0%, #102439 100%);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-/* TOP BAR */
+/* =========================================================
+   OUTER APP SHELL
+========================================================= */
+
+.pawhub-app {
+  width: 100%;
+  min-height: calc(100vh - 24px);
+  padding: 16px;
+  border: 1px solid rgba(151, 190, 225, 0.14);
+  border-radius: 15px;
+  background: rgba(24, 44, 64, 0.94);
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* =========================================================
+   TOP DASHBOARD
+========================================================= */
+
 .top {
-  padding: 10px 12px;
-  background: #111827;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  position: relative;
+  z-index: 20;
+  margin-bottom: 18px;
 }
 
-.top button {
-  background: #1f2937;
-  color: white;
-  border: 1px solid #334155;
-  padding: 8px 10px;
-  border-radius: 8px;
-  font-size: 14px;
+.top-dashboard {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-areas:
+    "lock logo actions"
+    "date subtitle actions";
+  align-items: center;
+  gap: 10px 20px;
+}
+
+.header-lock-area {
+  grid-area: lock;
+  display: flex;
+  justify-content: flex-start;
 }
 
 #lockModeBtn {
-  background: #1f2937;
+  min-width: 185px;
+  min-height: 68px;
+  padding: 12px 22px;
+  border: 1px solid rgba(100, 135, 171, 0.24);
+  border-radius: 13px;
+  background: #0d1c2c;
   color: white;
-  border: 1px solid #334155;
-  padding: 8px 10px;
-  border-radius: 8px;
-  margin-left: 8px;
+  box-shadow:
+    0 7px 18px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  cursor: pointer;
 }
 
-.top-layout {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  flex-wrap:wrap;
+#lockModeBtn .lock-symbol {
+  margin-right: 10px;
+  font-size: 25px;
+  vertical-align: middle;
 }
 
-/* =========================
-   GRID SYSTEM
-========================= */
+.brand {
+  grid-area: logo;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  white-space: nowrap;
+}
+
+.brand-paw {
+  color: var(--purple);
+  font-size: 49px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25));
+}
+
+.brand-name {
+  color: #f5f1ff;
+  font-size: 48px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -2px;
+  text-shadow: 0 3px 3px rgba(0, 0, 0, 0.28);
+}
+
+.header-actions {
+  grid-area: actions;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.header-action {
+  min-width: 175px;
+  min-height: 68px;
+  padding: 12px 18px;
+  border: 2px solid rgba(121, 158, 194, 0.35);
+  border-radius: 14px;
+  background: rgba(31, 52, 75, 0.88);
+  color: white;
+  box-shadow:
+    0 5px 14px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.header-action:hover,
+#lockModeBtn:hover {
+  filter: brightness(1.12);
+}
+
+.header-action:active,
+#lockModeBtn:active {
+  transform: translateY(1px);
+}
+
+.header-date {
+  grid-area: date;
+  color: #a7cbf7;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.header-subtitle {
+  grid-area: subtitle;
+  color: #eef2f7;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+#syncInfo {
+  position: absolute;
+  right: 0;
+  bottom: -18px;
+  color: #a7cbf7;
+  font-size: 12px;
+}
+
+#backupInfo {
+  position: absolute;
+  left: 0;
+  bottom: -18px;
+  color: #a7cbf7;
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   SCROLLING GRID AREA
+========================================================= */
+
 .matrix {
-  padding: 12px;
-  padding-bottom: 140px; /* space for bottom bar */
-  min-height: 100vh;     /* NOT fixed height */
+  width: 100%;
+  padding: 0;
+  padding-bottom: 92px;
+  overflow: visible;
 }
 
-.dog-content {
-  overflow-y: auto;
+.matrix-inner {
+  min-width: 1120px;
 }
+
+/* =========================================================
+   SHARED GRID COLUMNS
+========================================================= */
+
+.grid-header,
+.dog {
+  display: grid;
+  grid-template-columns:
+    var(--dog-column)
+    var(--med-column)
+    repeat(7, var(--day-column));
+  gap: var(--grid-gap);
+}
+
+/* =========================================================
+   WEEKDAY HEADER
+========================================================= */
 
 .grid-header {
   position: sticky;
   top: 0;
-  z-index: 9999;
-  background: #0f172a;
+  z-index: 1000;
+  margin-bottom: 1px;
+  padding: 0;
+  border: 1px solid rgba(186, 211, 234, 0.25);
+  border-radius: 11px;
+  overflow: hidden;
+  background: #dbe6f2;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.22);
 }
 
-.grid-header, .grid-row {
-  display: grid;
-  grid-template-columns: 180px repeat(7, 1fr);
-  gap: 6px;
-  align-items: center;
-  margin-bottom: 0;
-}
-
-.grid-header div {
+.grid-header > div {
+  min-height: 90px;
+  margin: 0;
+  padding: 10px 7px;
+  border-right: 1px solid rgba(75, 103, 134, 0.22);
+  border-radius: 0;
+  background: linear-gradient(180deg, #edf4fb, #d6e2ee);
+  color: #111c2b;
   text-align: center;
-  font-weight: 600;
-  color: #38bdf8;
-
-  padding: 8px 6px;
-  margin: 2px;
-
-  border-radius: 8px;
-  background: rgba(56, 189, 248, 0.08);
-
   cursor: pointer;
   user-select: none;
 
-  transition: 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.grid-header div:hover {
-  background: rgba(56, 189, 248, 0.2);
-  transform: translateY(-1px);
+.grid-header > div:last-child {
+  border-right: none;
 }
 
-.grid-header div:active {
-  transform: translateY(1px);
-  background: rgba(56, 189, 248, 0.3);
+.grid-header .today {
+  box-shadow:
+    0 0 0 3px white,
+    0 0 22px rgba(74,222,128,.75);
 }
 
-.grid-header div:first-child {
-  background: transparent;
-  cursor: default;
-  padding: 0;
+.grid-header .medication-header {
+  grid-column: 1 / span 2;
+  align-items: flex-start;
+  padding-left: 18px;
+  text-align: left;
+  font-size: 19px;
+  font-weight: 900;
+  text-decoration: underline;
+}
+
+.medication-header .clipboard {
+  margin-left: 7px;
+  color: #9b67d9;
+  text-decoration: none;
+}
+
+.day-btn .weekday {
+  font-size: 19px;
+  font-weight: 900;
+}
+
+.day-btn .day-date {
+  margin-top: 7px;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.day-btn.today,
+.day-btn.today-col {
+  position: relative;
+  border: 4px solid white !important;
+  border-radius: 11px !important;
+  background:
+    linear-gradient(180deg,#eef4fb,#dde8f6) !important;
+
+box-shadow:
+  0 0 0 3px rgba(74,222,128,.70),
+  0 0 26px rgba(74,222,128,.90),
+  0 0 38px rgba(74,222,128,.55);
+
+  z-index: 10;
+}
+
+/* =========================================================
+   DOG SECTIONS
+========================================================= */
+
+.dog {
+  position: relative;
+  margin-bottom: 16px;
+  padding: 5px;
+  border: 2px solid var(--dog-border);
+  border-radius: 13px;
+  overflow: hidden;
+  background: var(--dog-background);
+  color: #172131;
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.dog.aidan {
+  --dog-background: linear-gradient(90deg, #ffc27c, #ffe0b5);
+  --dog-panel: linear-gradient(180deg, #ffc27b, #ffd4a0);
+  --dog-border: #eca24a;
+  --dog-accent: #dc7413;
+}
+
+.dog.callie {
+  --dog-background: linear-gradient(90deg, #f5afd0, #f8cde0);
+  --dog-panel: linear-gradient(180deg, #f0a4c8, #f6bfda);
+  --dog-border: #dc79ab;
+  --dog-accent: #df347e;
+}
+
+.dog.logan {
+  --dog-background: linear-gradient(90deg, #a9cdf1, #d3e6fa);
+  --dog-panel: linear-gradient(180deg, #9fc8ef, #bad8f5);
+  --dog-border: #619ddd;
+  --dog-accent: #247bdb;
+}
+
+.dog.ate {
+  --dog-background: linear-gradient(90deg, #c5afea, #ded0f5);
+  --dog-panel: linear-gradient(180deg, #bca2e5, #d3bef0);
+  --dog-border: #8f6ac6;
+  --dog-accent: #7544ad;
+}
+
+.dog-title {
+  display: none;
+}
+
+.dog-content {
+  display: contents;
   margin: 0;
+  overflow: visible;
 }
 
-.today {
-  background: rgba(34, 197, 94, 0.25);
-  border: 3px solid white !important;
-  border-radius: 6px;
+.dog.collapsed .dog-content {
+  display: none;
 }
 
-.today-col {
-  border: 5px solid white !important;
+/* =========================================================
+   DOG INFORMATION PANEL
+========================================================= */
+
+.dog-info {
+  grid-column: 1;
+  grid-row: 1 / span var(--row-count);
+  min-height: 100%;
+  padding: 16px 13px;
+  border-radius: 8px;
+  background: var(--dog-panel);
+  color: #243044;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    inset -1px 0 0 rgba(90, 95, 112, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
+
+.dog-name-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dog-paw {
+  color: var(--dog-accent);
+  font-size: 33px;
+  line-height: 1;
+}
+
+.dog-name {
+  color: #243044;
+  font-size: 31px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+
+.dog-detail {
+  margin-top: 14px;
+  color: #253044;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+/* =========================================================
+   MEDICATION ROWS
+========================================================= */
 
 .grid-row {
-  transition: background 0.2s ease, filter 0.15s ease;
+  display: contents;
 }
 
-.grid-row:active {
-  filter: brightness(1.15);
-}
-
-/* MED LABEL */
 .med-name {
-  background: rgba(0,0,0,0.25);
-  padding: 8px;
-  border-radius: 6px;
+  min-height: 45px;
+  padding: 10px 14px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.28);
+  color: #233044;
+  font-size: 15px;
+  font-weight: 800;
+
+  display: flex;
+  align-items: center;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(75, 94, 116, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26);
 }
 
-/* CHECKBOX CELLS */
+/* Remove old Logan stripe styling */
+.med-loxicom,
+.med-amoxicillin,
+.med-trazodone,
+.med-gabapentin,
+.med-wuffes {
+  border-left: none;
+  background: transparent;
+}
+
+/* =========================================================
+   MEDICATION CELLS
+========================================================= */
+
 .cell {
-  height: 30px;
-  background: #111827;
-  border: 1px solid #334155;
-  border-radius: 6px;
+  position: relative;
+  width: auto;
+  height: 45px;
+  min-width: 0;
+  padding: 5px;
+  border: 2px solid rgba(75, 96, 120, 0.74);
+  border-radius: 10px;
+    background: linear-gradient(180deg, #101a27 0%, #080f18 100%);
+  color: #edf3fb;
   cursor: pointer;
+  overflow: hidden;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px; 
-  font-weight: bold;
-  color: black;
+
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.2;
+  white-space: pre-line;
+
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.06),
+    0 2px 4px rgba(0, 0, 0, 0.28);
+
+  transition:
+    transform 0.1s ease,
+    filter 0.1s ease,
+    background 0.15s ease;
 }
 
+/* Empty cell display */
+.cell:empty::before {
+  content: "--:--";
+  color: #b9c1cd;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.cell:hover {
+  filter: brightness(1.18);
+}
+
+.cell:active {
+  transform: scale(0.98);
+}
+
+/* Checked/completed cell */
 .cell.active {
-  background: #a8e4a0;
+  border-color: #5abf5a;
+
+  background:
+    linear-gradient(180deg, #b9f8b0 0%, #97ea8f 55%, #7edb76 100%);
+
+  color: #143814;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.45),
+    0 0 8px rgba(126,219,118,0.45);
 }
 
+.cell.active::before {
+  content: "✓\A";
+  color: #1b5e20;
+  font-size: 20px;
+  font-weight: 900;
+  white-space: pre;
+}
+
+.cell.active:empty::before {
+  content: "✓";
+}
+
+/* Current-day column border */
+
+.cell.today-col {
+  position: relative;
+
+  border: 4px solid white !important;
+
+  background-image:
+    linear-gradient(rgba(74,222,128,.07), rgba(74,222,128,.07)),
+    linear-gradient(180deg, #101a27 0%, #080f18 100%);
+
+  background-clip: padding-box;
+
+box-shadow:
+  0 0 0 3px rgba(74,222,128,.70),
+  0 0 26px rgba(74,222,128,.90),
+  0 0 38px rgba(74,222,128,.55);
+
+  z-index: 2;
+}
+
+.cell.active.today-col {
+  background-image:
+    linear-gradient(rgba(74,222,128,.05), rgba(74,222,128,.05)),
+    linear-gradient(180deg, #b9f8b0 0%, #97ea8f 55%, #7edb76 100%);
+}
+
+/* Locked indicator */
 .cell.locked::after {
   content: "🔒";
-  font-size: 10px;
   position: absolute;
-  top: 2px;
-  right: 4px;
-}
-.cell {
-  position: relative;
+  top: 3px;
+  right: 5px;
+  font-size: 10px;
 }
 
-.today {
-  background: rgba(34, 197, 94, 0.25);
-  border-radius: 6px;
-}
-
-/* =========================
-   DOG SECTIONS
-========================= */
-.dog {
-  padding: 10px;
-  border-radius: 12px;
-  margin-bottom: 12px;
-}
-
-/* YOUR COLORS */
-.aidan { background: #FF7F00; }
-.callie { background: #FF69B4; }
-.logan { background: #4169E1; }
-.ate { background: #9966cb; }
-
-/* DOG TITLE */
-.dog-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 8px;
-  padding: 6px 10px;
-  background: rgba(0,0,0,0.25);
-  border-radius: 6px;
-}
-
-.logan .grid-row {
-  border-radius: 6px;
-  margin-bottom: 4px;
-  padding: 2px 0;
-}
-
-/* Base blue family already handled by Logan section */
-
-.med-loxicom {
-  background: rgba(160, 200, 255, 0.18);
-  border-left: 6px solid #7fb3ff;
-}
-
-.med-amoxicillin {
-  background: rgba(120, 170, 255, 0.20);
-  border-left: 6px solid #4f97ff;
-}
-
-.med-trazodone {
-  background: rgba(180, 220, 255, 0.22);
-  border-left: 6px solid #9fd3ff;
-}
-
-.med-gabapentin {
-  background: rgba(110, 160, 240, 0.22);
-  border-left: 6px solid #5a9cff;
-}
-
-.med-wuffes {
-  background: rgba(200, 220, 255, 0.14);
-  border-left: 6px solid #b3d1ff;
-}
-
-/* =========================
-   BOTTOM NAV BAR
-========================= */
-.bottom-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #111827;
-  border-top: 1px solid #334155;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px;
-}
-
-.bottom-bar button {
-  background: #1f2937;
+/* Optional status colors */
+.cell.due-now {
+  border-color: #ffbd19;
+  background: linear-gradient(180deg, #ffc52a, #f4a900);
   color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 14px;
 }
 
-.dog-content {
-  margin-top: 6px;
+.cell.overdue {
+  border-color: #ff5252;
+  background: linear-gradient(180deg, #ff5858, #df3333);
+  color: white;
 }
-.dog.collapsed .dog-content {
+
+/* =========================================================
+   ATE / FOOD CELLS
+========================================================= */
+
+.ate .cell {
+  border-color: rgba(110, 73, 160, 0.18);
+  background: rgba(255, 255, 255, 0.18);
+  color: #7040a4;
+  box-shadow: inset 0 0 0 1px rgba(116, 76, 163, 0.09);
+}
+
+.ate .cell:empty::before {
+  content: "♥";
+  color: #7444a7;
+  font-size: 18px;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.ate .cell.active {
+  border-color: #7b51b3;
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.ate .cell.active::before,
+.ate .cell.active:empty::before {
+  content: "♥";
+  color: #673394;
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* =========================================================
+   BACKUP / SETTINGS POPOVER
+========================================================= */
+
+.settings-panel {
   display: none;
+  position: fixed;
+  top: 100px;
+  right: 24px;
+  z-index: 99999;
+  width: 230px;
+  padding: 12px;
+  border: 1px solid rgba(161, 192, 222, 0.3);
+  border-radius: 13px;
+  background: #172a3e;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.45);
 }
-.dog-title {
+
+.settings-panel.open {
+  display: grid;
+  gap: 8px;
+}
+
+.settings-panel button {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid rgba(151, 185, 218, 0.25);
+  border-radius: 9px;
+  background: #263d55;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
 }
 
-#statusBar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-
-  background: #0f172a;
-  border-top: 1px solid rgba(255,255,255,0.1);
-
-  padding: 10px 14px;
-  font-size: 14px;
-  color: #38bdf8;
-
-  display: flex;
-  justify-content: space-between;
-  z-index: 9999;
-}
-
-/* =========================
-   PHONE TODAY / WEEK VIEW
-========================= */
+/* =========================================================
+   TODAY / WEEK BUTTONS
+========================================================= */
 
 .view-toggle {
   display: none;
-  gap: 8px;
-  margin-top: 8px;
+  gap: 7px;
+  margin-bottom: 8px;
 }
 
 .view-toggle button {
-  background: #1f2937;
-  color: white;
-  border: 1px solid #334155;
   padding: 8px 12px;
+  border: 1px solid rgba(151, 185, 218, 0.35);
   border-radius: 8px;
+  background: #263d55;
+  color: white;
+  font-weight: 700;
 }
 
-@media (max-width: 900px) {
+/* =========================================================
+   BOTTOM BAR
+========================================================= */
+
+.bottom-bar {
+  position: fixed;
+  right: 22px;
+  bottom: 14px;
+  left: 22px;
+  z-index: 10000;
+
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+
+  padding: 9px;
+  border: 1px solid rgba(151, 185, 218, 0.22);
+  border-radius: 13px;
+  background: rgba(14, 29, 45, 0.94);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 7px 22px rgba(0, 0, 0, 0.38);
+}
+
+.bottom-bar button {
+  min-width: 130px;
+  padding: 10px 15px;
+  border: 1px solid rgba(151, 185, 218, 0.22);
+  border-radius: 9px;
+  background: #294158;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+#statusBar {
+  display: none;
+}
+
+/* =========================================================
+   TABLET / PORTRAIT
+========================================================= */
+
+@media (max-width: 1100px) {
+  body {
+    padding: 6px;
+  }
+
+  .pawhub-app {
+    min-height: calc(100vh - 12px);
+    padding: 10px;
+  }
+
+  .top-dashboard {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  #lockModeBtn {
+    min-width: 145px;
+    min-height: 58px;
+    padding: 10px 13px;
+    font-size: 15px;
+  }
+
+  .brand-paw {
+    font-size: 39px;
+  }
+
+  .brand-name {
+    font-size: 39px;
+  }
+
+  .header-action {
+    min-width: 125px;
+    min-height: 58px;
+    padding: 9px 12px;
+    font-size: 14px;
+  }
+
+  .header-subtitle {
+    font-size: 18px;
+  }
 
   .view-toggle {
     display: flex;
   }
 
-  .matrix {
-    padding: 6px;
+  .matrix-inner {
+    min-width: 1120px;
   }
 
-  .grid-header,
-  .grid-row {
-    grid-template-columns: 90px repeat(7, 52px);
-    gap: 3px;
+  .bottom-bar {
+    right: 8px;
+    bottom: 7px;
+    left: 8px;
   }
-
-  .grid-header {
-    overflow-x: auto;
-  }
-
-  .grid-row {
-    width: max-content;
-  }
-
-  .med-name {
-    font-size: 11px;
-    padding: 5px;
-  }
-
-  .grid-header div {
-    font-size: 11px;
-    padding: 6px 2px;
-  }
-
-  .cell {
-    width: 52px;
-    height: 48px;
-    font-size: 11px;
-    padding: 2px;
-  }
-
 }
 
-/* =========================
-   PHONE APP CLEANUP
-========================= */
+/* =========================================================
+   SMALL PHONE HEADER
+========================================================= */
 
-@media (max-width: 900px) {
-
-  body {
-    font-size: 14px;
+@media (max-width: 700px) {
+  .top-dashboard {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "logo logo"
+      "lock actions"
+      "date date"
+      "subtitle subtitle";
   }
 
-  .top {
-    padding: 8px;
+  .brand {
+    margin-bottom: 7px;
   }
 
-  .top button {
+  .brand-paw {
+    font-size: 35px;
+  }
+
+  .brand-name {
+    font-size: 35px;
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+
+  .header-action {
+    min-width: 96px;
+    min-height: 49px;
+    padding: 7px;
     font-size: 12px;
-    padding: 6px 8px;
   }
 
-  .matrix {
-    padding: 6px;
-    padding-bottom: 90px;
+  #lockModeBtn {
+    min-width: 125px;
+    min-height: 49px;
+    font-size: 13px;
   }
 
-  .dog {
-    padding: 6px;
-    margin-bottom: 8px;
-    border-radius: 10px;
+  .header-date,
+  .header-subtitle {
+    text-align: center;
   }
 
-  .dog-title {
-    font-size: 16px;
-    padding: 8px;
-  }
-
-  .grid-header,
-  .grid-row {
-    grid-template-columns: 120px repeat(7, 55px);
-    gap: 3px;
-  }
-
-  .med-name {
-    font-size: 11px;
-    padding: 5px;
-  }
-
-  .cell {
-    height: 42px;
-    font-size: 12px;
+  #syncInfo,
+  #backupInfo {
+    display: none;
   }
 
   .bottom-bar button {
-    font-size: 12px;
-    padding: 8px;
-  }
-
-}
-
-/* =========================
-   MOBILE HORIZONTAL GRID FIX
-========================= */
-
-@media (max-width: 900px) {
-
-  .matrix {
-    overflow-x: auto;
-    width: 100%;
-  }
-
-  .grid-header,
-  .grid-row {
-    grid-template-columns: 140px repeat(7, 72px);
-    width: max-content;
-  }
-
-  .dog {
-    width: max-content;
-    min-width: 100%;
-  }
-
-  .grid-header {
-    position: sticky;
-    left: 0;
-  }
-
-  .cell {
-    width: 72px;
-    height: 30px;
-    font-size: 12px;
-    padding: 0;
-  }
-
-  .med-name {
-    width: 125px;
+    min-width: 0;
+    flex: 1;
+    padding: 9px 5px;
     font-size: 12px;
   }
-
-}
-
-@media (max-width: 900px) {
-
-  .grid-header,
-  .grid-row {
-    grid-template-columns: 140px repeat(7, 72px);
-  }
-
-  .grid-header div {
-    margin: 0;
-    padding: 6px 0;
-  }
-
 }
 
 </style>
@@ -468,291 +847,583 @@ body {
 
 <body>
 
-<!-- =========================
-     TOP HEADER
-========================= -->
-<div class="top">
-  <div class="top-layout">
-    <div style="font-size:18px; font-weight:bold;">
-      🐾 Pet Med Dashboard
+<body>
+
+<div class="pawhub-app">
+
+  <!-- =====================================================
+       TOP DASHBOARD
+  ====================================================== -->
+  <header class="top">
+
+    <div class="top-dashboard">
+
+      <div class="header-lock-area">
+        <button id="lockModeBtn" onclick="toggleLockMode()">
+          <span class="lock-symbol">🔒</span>
+          <span id="lockModeText">LOCKED</span>
+        </button>
+      </div>
+
+      <div class="brand">
+        <span class="brand-paw">🐾</span>
+        <span class="brand-name">PawHub</span>
+      </div>
+
+      <div class="header-actions">
+
+        <button class="header-action" onclick="exportBackup()">
+          ☁️ &nbsp; BACKUP
+        </button>
+
+        <button class="header-action" onclick="toggleSettingsPanel()">
+          ⚙️ &nbsp; SETTINGS
+        </button>
+
+      </div>
+
+      <div class="header-date" id="currentDateTime">
+        Loading date and time...
+      </div>
+
+      <div class="header-subtitle">
+        Medication Tracker
+      </div>
+
     </div>
 
-<button onclick="goFullScreen()">⛶ Full Screen</button>
-<button onclick="exportBackup()">Export Backup</button>
-<button onclick="restoreBackup()">Restore Backup</button>
+    <div id="backupInfo"></div>
+    <div id="syncInfo">🟡 Waiting for sync...</div>
 
-<input type="file" id="importFile" accept=".json" onchange="importBackup(event)" style="display:none;">
+  </header>
 
-<button onclick="document.getElementById('importFile').click()">
-Import Backup
-</button>
 
-<div id="backupInfo"></div>
+  <!-- Hidden import input -->
+  <input
+    type="file"
+    id="importFile"
+    accept=".json"
+    onchange="importBackup(event)"
+    style="display:none;"
+  >
 
-<div class="view-toggle">
-  <button onclick="showTodayView()">📅 Today</button>
-  <button onclick="showWeekView()">📆 Week</button>
+
+  <!-- =====================================================
+       SETTINGS PANEL
+  ====================================================== -->
+  <div class="settings-panel" id="settingsPanel">
+
+    <button onclick="goFullScreen(); closeSettingsPanel();">
+      ⛶ Full Screen
+    </button>
+
+    <button onclick="exportBackup(); closeSettingsPanel();">
+      Export Backup
+    </button>
+
+    <button onclick="restoreBackup(); closeSettingsPanel();">
+      Restore Backup
+    </button>
+
+    <button onclick="document.getElementById('importFile').click();">
+      Import Backup
+    </button>
+
+  </div>
+
+
+  <!-- Phone-only view controls -->
+  <div class="view-toggle">
+    <button onclick="showTodayView()">📅 Today</button>
+    <button onclick="showWeekView()">📆 Week</button>
+  </div>
+
+
+  <!-- =====================================================
+       MAIN TRACKER
+  ====================================================== -->
+  <main class="matrix">
+
+    <div class="matrix-inner">
+
+      <!-- DAYS HEADER -->
+      <div class="grid-header">
+
+        <div class="medication-header">
+          MEDICATION 
+        </div>
+
+        <div class="day-btn" onclick="clearDay(0)">
+          <span class="weekday">SUN</span>
+          <span class="day-date" id="date-0"></span>
+        </div>
+
+        <div class="day-btn" onclick="clearDay(1)">
+          <span class="weekday">MON</span>
+          <span class="day-date" id="date-1"></span>
+        </div>
+
+        <div class="day-btn" onclick="clearDay(2)">
+          <span class="weekday">TUE</span>
+          <span class="day-date" id="date-2"></span>
+        </div>
+
+        <div class="day-btn" onclick="clearDay(3)">
+          <span class="weekday">WED</span>
+          <span class="day-date" id="date-3"></span>
+        </div>
+
+        <div class="day-btn" onclick="clearDay(4)">
+          <span class="weekday">THU</span>
+          <span class="day-date" id="date-4"></span>
+        </div>
+
+        <div class="day-btn" onclick="clearDay(5)">
+          <span class="weekday">FRI</span>
+          <span class="day-date" id="date-5"></span>
+        </div>
+
+        <div class="day-btn" onclick="clearDay(6)">
+          <span class="weekday">SAT</span>
+          <span class="day-date" id="date-6"></span>
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           AIDAN
+      ================================================== -->
+      <section class="dog aidan" style="--row-count:1;">
+
+        <div class="dog-info">
+          <div class="dog-name-line">
+            <span class="dog-paw">🐾</span>
+            <span class="dog-name">Aidan</span>
+          </div>
+
+        </div>
+
+        <div class="dog-title">Aidan</div>
+
+        <div class="dog-content">
+
+          <div class="grid-row">
+            <div class="med-name" data-med="anypril">
+              Anipryl
+            </div>
+
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- =================================================
+           CALLIE
+      ================================================== -->
+      <section class="dog callie" style="--row-count:5;">
+
+        <div class="dog-info">
+          <div class="dog-name-line">
+            <span class="dog-paw">🐾</span>
+            <span class="dog-name">Callie</span>
+          </div>
+
+        </div>
+
+        <div class="dog-title">Callie</div>
+
+        <div class="dog-content">
+
+          <div class="grid-row">
+            <div class="med-name" data-med="calliegab1">Gab 1</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row">
+            <div class="med-name" data-med="calliegab2">Gab 2</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row">
+            <div class="med-name" data-med="callietraz1">Traz 1</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row">
+            <div class="med-name" data-med="callietraz2">Traz 2</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row">
+            <div class="med-name" data-med="calliewuffes">Wuffes</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- =================================================
+           LOGAN
+      ================================================== -->
+      <section class="dog logan" style="--row-count:11;">
+
+        <div class="dog-info">
+          <div class="dog-name-line">
+            <span class="dog-paw">🐾</span>
+            <span class="dog-name">Logan</span>
+          </div>
+
+        </div>
+
+        <div class="dog-title">Logan</div>
+
+        <div class="dog-content">
+
+          <div class="grid-row med-loxicom">
+            <div class="med-name" data-med="loxicom">Loxicom</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row med-amoxicillin">
+            <div class="med-name">Amoxicillin 1</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row med-amoxicillin">
+            <div class="med-name">Amoxicillin 2</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row med-trazodone">
+            <div class="med-name" data-med="logantraz1">Traz 1</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row med-trazodone">
+            <div class="med-name" data-med="logantraz2">Traz 2</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row med-trazodone">
+            <div class="med-name" data-med="logantraz3">Traz 3</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row med-trazodone">
+            <div class="med-name" data-med="bedtraz">
+              Bedtime Traz 50mg 10pm
+            </div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row med-gabapentin">
+            <div class="med-name" data-med="logangab1">Gab 1</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row med-gabapentin">
+            <div class="med-name" data-med="bedgab1">
+              1st Bed Gab 50mg 7:30pm
+            </div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row med-gabapentin">
+            <div class="med-name" data-med="bedgab2">
+              2nd Bed Gab 100mg 10pm
+            </div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row med-wuffes">
+            <div class="med-name">Wuffes</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- =================================================
+           ATE / FOOD
+      ================================================== -->
+      <section class="dog ate" style="--row-count:8;">
+
+        <div class="dog-info">
+          <div class="dog-name-line">
+            <span class="dog-paw">🐾</span>
+            <span class="dog-name">Ate</span>
+          </div>
+
+          <div class="dog-detail">
+            Meals &amp; feeding
+          </div>
+        </div>
+
+        <div class="dog-title">Ate</div>
+
+        <div class="dog-content">
+
+          <div class="grid-row">
+            <div class="med-name">Aidan 1</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row">
+            <div class="med-name">Aidan 2</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row">
+            <div class="med-name">Callie 1</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row">
+            <div class="med-name">Callie 2</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row">
+            <div class="med-name">Logan 1</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row">
+            <div class="med-name">Logan 2</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row">
+            <div class="med-name">Jasmine 1</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+          <div class="grid-row">
+            <div class="med-name">Jasmine 2</div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div><div class="cell"></div>
+            <div class="cell"></div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+
+  <!-- =====================================================
+       BOTTOM APP BAR
+  ====================================================== -->
+  <div class="bottom-bar">
+
+    <button onclick="openApp('calendar')">
+      📅 Calendar
+    </button>
+
+    <button onclick="openApp('notes')">
+      📝 Notes
+    </button>
+
+    <button onclick="openApp('grocery')">
+      🛒 Grocery
+    </button>
+
+  </div>
+
+  <div id="backupDot"></div>
+
 </div>
 
-<div id="syncInfo">🟡 Waiting for sync...</div>
-  </div>
-</div>
+
+<!-- =====================================================
+     NEW DISPLAY HELPERS
+     Keep this before your existing main script.
+====================================================== -->
+<script>
+
+function toggleSettingsPanel() {
+  document.getElementById("settingsPanel").classList.toggle("open");
+}
+
+function closeSettingsPanel() {
+  document.getElementById("settingsPanel").classList.remove("open");
+}
+
+/* Close settings when tapping elsewhere */
+document.addEventListener("click", function(event) {
+  const panel = document.getElementById("settingsPanel");
+  const settingsButton = event.target.closest(
+    'button[onclick*="toggleSettingsPanel"]'
+  );
+
+  if (
+    panel &&
+    panel.classList.contains("open") &&
+    !panel.contains(event.target) &&
+    !settingsButton
+  ) {
+    panel.classList.remove("open");
+  }
+});
 
 
-<!-- =========================
-     MAIN GRID
-========================= -->
-<div class="matrix">
+/* Header date and time */
+function updatePawHubClock() {
+  const now = new Date();
 
-  <!-- DAYS HEADER -->
-<div class="grid-header">
-  <div class="header-spacer"></div>
+  const dateText = now.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric"
+  });
 
-  <div class="day-btn" onclick="clearDay(0)">SUN</div>
-  <div class="day-btn" onclick="clearDay(1)">MON</div>
-  <div class="day-btn" onclick="clearDay(2)">TUE</div>
-  <div class="day-btn" onclick="clearDay(3)">WED</div>
-  <div class="day-btn" onclick="clearDay(4)">THU</div>
-  <div class="day-btn" onclick="clearDay(5)">FRI</div>
-  <div class="day-btn" onclick="clearDay(6)">SAT</div>
-</div>
+  const timeText = now.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit"
+  });
 
-  <!-- =========================
-       AIDAN
-  ========================= -->
-  <div class="dog aidan">
-    <div class="dog-title">Aidan</div>
-     <div class="dog-content">
-    <div class="grid-row">
-      <div class="med-name">Anypril</div>
-      <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    </div>
-   </div> 
-  </div>
+  const display = document.getElementById("currentDateTime");
 
-  <!-- =========================
-       CALLIE
-  ========================= -->
-  <div class="dog callie">
-    <div class="dog-title">Callie</div>
-    <div class="dog-content">
-    <div class="grid-row">
-      <div class="med-name">Gab 1</div>
-      <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    </div>
-    
-    <div class="grid-row">
-      <div class="med-name">Gab 2</div>
-      <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    </div>
-    
-    <div class="grid-row">
-      <div class="med-name">Traz 1</div>
-      <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    </div>
-    
-    <div class="grid-row">
-      <div class="med-name">Traz 2</div>
-      <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    </div>
-    
-<div class="grid-row">
-      <div class="med-name">Wuffes</div>
-      <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    </div>    
-    </div>
-  </div>
-
-  <!-- =========================
-       LOGAN
-  ========================= -->
-  <div class="dog logan">
-  <div class="dog-title">Logan</div>
- <div class="dog-content">
- 
-<div class="grid-row med-loxicom">
-    <div class="med-name">Loxicom</div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-  </div>
-  
-  <div class="grid-row med-amoxicillin">
-    <div class="med-name">Amoxicillin 1</div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-  </div>
-  
-  <div class="grid-row med-amoxicillin">
-    <div class="med-name">Amoxicillin 2</div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-  </div>
-  
-<div class="grid-row med-trazodone">
-    <div class="med-name">Traz 1</div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-  </div>
-
-<div class="grid-row med-trazodone">
-    <div class="med-name">Traz 2</div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-  </div>
-
-<div class="grid-row med-trazodone">
-    <div class="med-name">Traz 3</div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-  </div>
-
-<div class="grid-row med-trazodone">
-    <div class="med-name">Bedtime Traz 50mg 10PM</div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-  </div>
-
-<div class="grid-row med-gabapentin">
-    <div class="med-name">Gab 1</div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-  </div>
-
-<div class="grid-row med-gabapentin">
-    <div class="med-name">1st Bed Gab 50mg 7:30PM</div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-  </div>
-
-<div class="grid-row med-gabapentin">
-    <div class="med-name">2nd Bed Gab 100mg 10PM</div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-  </div>
-
-<div class="grid-row med-wuffes">
-    <div class="med-name">Wuffes</div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div>
-    <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-  </div>
-  </div>
-</div>
+  if (display) {
+    display.textContent = dateText + "  •  " + timeText;
+  }
+}
 
 
-<!-- =========================
-       FOOD
-  ========================= -->
-<div class="dog ate">
-  <div class="dog-title">Ate</div>
+/* Sunday-through-Saturday header dates */
+function updatePawHubWeekDates() {
+  const today = new Date();
+  const currentDay = today.getDay();
 
-  <div class="dog-content">
+  const sunday = new Date(today);
+  sunday.setDate(today.getDate() - currentDay);
 
-    <div class="grid-row">
-      <div class="med-name">Aidan 1</div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-    
-    <div class="grid-row">
-      <div class="med-name">Aidan 2</div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-    </div>
+  const headerDays = document.querySelectorAll(".day-btn");
 
-<div class="grid-row">
-      <div class="med-name">Callie 1</div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-    
-<div class="grid-row">
-      <div class="med-name">Callie 2</div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-    
-<div class="grid-row">
-      <div class="med-name">Logan 1</div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-    
-    <div class="grid-row">
-      <div class="med-name">Logan 2</div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-    </div>
+  for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
+    const date = new Date(sunday);
+    date.setDate(sunday.getDate() + dayIndex);
 
-<div class="grid-row">
-      <div class="med-name">Jasmine 1</div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-    
-<div class="grid-row">
-      <div class="med-name">Jasmine 2</div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-  </div>
-</div>
+    const dateDisplay = document.getElementById("date-" + dayIndex);
 
-<!-- =========================
-     BOTTOM BAR (SAFE POSITION)
-========================= -->
-<div class="bottom-bar">
-  <button onclick="openApp('calendar')">📅 Calendar</button>
-  <button onclick="openApp('notes')">📝 Notes</button>
-  <button onclick="openApp('grocery')">🛒 Grocery</button>
-</div>
+    if (dateDisplay) {
+      dateDisplay.textContent =
+        (date.getMonth() + 1) + "/" + date.getDate();
+    }
 
-<div id="backupDot"></div>
+    if (headerDays[dayIndex]) {
+      headerDays[dayIndex].classList.toggle(
+        "today",
+        dayIndex === currentDay
+      );
+    }
+  }
+}
+
+
+/* Add the glowing border to today's cells */
+function highlightPawHubTodayColumn() {
+  const todayIndex = new Date().getDay();
+
+  document.querySelectorAll(".grid-row").forEach(function(row) {
+    const cells = row.querySelectorAll(".cell");
+
+    cells.forEach(function(cell, index) {
+      cell.classList.toggle("today-col", index === todayIndex);
+    });
+  });
+}
+
+
+updatePawHubClock();
+updatePawHubWeekDates();
+highlightPawHubTodayColumn();
+
+setInterval(updatePawHubClock, 30000);
+
+</script>
 
 <script type="module">
 
@@ -792,6 +1463,31 @@ console.log("Firebase connected and db ready");
 let lockMode = true;
 
 const doseMeds = ["Gab 1", "Gab 2", "Gab 3", "Traz 1", "Traz 2" , "Traz 3" , "Bedtime Traz"];
+
+const medSchedules = {
+
+  // Aidan
+  "Anypril": 24,
+
+  // Callie
+  "Wuffes": 24,
+
+  // Logan
+  "Loxicom": 24,
+  "Amoxicillin 1": 12,
+  "Amoxicillin 2": 12,
+
+  "Traz 1": "TRAZ",
+  "Traz 2": "TRAZ",
+  "Traz 3": "TRAZ",
+
+  "Bedtime Traz 50mg 10PM": 24,
+
+  "1st Bed Gab 50mg 7:30PM": 24,
+  "2nd Bed Gab 100mg 10PM": 24,
+
+  "Wuffes": 24
+};
 
 /* =========================
    CELL CLICK + TIME LOGIC
