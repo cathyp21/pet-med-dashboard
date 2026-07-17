@@ -909,6 +909,446 @@ box-shadow:
   align-items: flex-start;
 }
 
+/* =========================================================
+   DOSE ENTRY CARD
+========================================================= */
+
+.dose-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200000;
+
+  padding: 20px;
+
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(3, 10, 18, 0.72);
+  backdrop-filter: blur(7px);
+}
+
+.dose-modal.open {
+  display: flex;
+}
+
+.dose-card {
+  width: min(480px, 94vw);
+  max-height: 90vh;
+  overflow-y: auto;
+
+  border: 1px solid rgba(174, 202, 231, 0.3);
+  border-radius: 20px;
+
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(91, 132, 173, 0.24),
+      transparent 44%
+    ),
+    linear-gradient(
+      180deg,
+      #1a3046 0%,
+      #102236 100%
+    );
+
+  color: white;
+
+  box-shadow:
+    0 25px 65px rgba(0, 0, 0, 0.58),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+
+  animation: doseCardOpen 0.2s ease-out;
+}
+
+@keyframes doseCardOpen {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Card header */
+
+/* Dog-colored Dose Card identity */
+
+.dose-modal {
+  --dose-dog-color: #a9c8eb;
+  --dose-dog-dark: #315b80;
+  --dose-dog-light: rgba(91, 132, 173, 0.28);
+}
+
+/* Aidan — apricot */
+.dose-modal[data-dog="aidan"] {
+  --dose-dog-color: #ffb35f;
+  --dose-dog-dark: #b95e0a;
+  --dose-dog-light: rgba(255, 178, 94, 0.32);
+}
+
+/* Callie — pink */
+.dose-modal[data-dog="callie"] {
+  --dose-dog-color: #f58fbd;
+  --dose-dog-dark: #b92f70;
+  --dose-dog-light: rgba(245, 143, 189, 0.32);
+}
+
+/* Logan — blue */
+.dose-modal[data-dog="logan"] {
+  --dose-dog-color: #79b8f3;
+  --dose-dog-dark: #246fbd;
+  --dose-dog-light: rgba(92, 163, 231, 0.34);
+}
+
+/* Jasmine — gold */
+.dose-modal[data-dog="jasmine"] {
+  --dose-dog-color: #f2cd55;
+  --dose-dog-dark: #a87700;
+  --dose-dog-light: rgba(242, 205, 85, 0.32);
+}
+
+/* Theo — sage */
+.dose-modal[data-dog="theo"] {
+  --dose-dog-color: #91c58d;
+  --dose-dog-dark: #4c7d47;
+  --dose-dog-light: rgba(145, 197, 141, 0.32);
+}
+
+/* Ate — lavender */
+.dose-modal[data-dog="ate"] {
+  --dose-dog-color: #c8a7ff;
+  --dose-dog-dark: #7544ad;
+  --dose-dog-light: rgba(200, 167, 255, 0.32);
+}
+
+.dose-card-header {
+  position: relative;
+
+  padding: 22px 22px 18px;
+
+  border-bottom: 2px solid var(--dose-dog-color);
+
+  background:
+    radial-gradient(
+      circle at top,
+      var(--dose-dog-light),
+      transparent 72%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--dose-dog-dark) 60%, #1a3046),
+      #152a3f
+    );
+
+  text-align: center;
+
+  box-shadow:
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    0 5px 18px rgba(0, 0, 0, 0.18);
+}
+
+.dose-dog-name {
+  color: var(--dose-dog-color);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.32);
+}
+
+.dose-dog-name::before {
+  content: "🐾";
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+.dose-med-name {
+  margin-top: 6px;
+
+  color: #ffffff;
+  font-size: 27px;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.dose-close-btn {
+  position: absolute;
+  top: 13px;
+  right: 14px;
+
+  width: 39px;
+  height: 39px;
+
+  padding: 0;
+
+  border: 1px solid rgba(174, 202, 231, 0.22);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.07);
+  color: white;
+
+  font-size: 24px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+/* Card body */
+
+.dose-card-body {
+  padding: 22px;
+}
+
+.dose-field {
+  margin-bottom: 22px;
+}
+
+.dose-field:last-child {
+  margin-bottom: 0;
+}
+
+.dose-field-label {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: #b9d5f2;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.dose-time-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 9px;
+}
+
+.dose-time-row select,
+.dose-amount-select,
+.dose-custom-input {
+  width: 100%;
+  min-height: 55px;
+
+  padding: 10px 12px;
+
+  border: 1px solid rgba(151, 190, 225, 0.3);
+  border-radius: 11px;
+
+  background: #0d1c2c;
+  color: white;
+
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 800;
+
+  outline: none;
+}
+
+.dose-time-row select:focus,
+.dose-amount-select:focus,
+.dose-custom-input:focus {
+  border-color: #9ecbfa;
+
+  box-shadow:
+    0 0 0 3px rgba(87, 157, 220, 0.2);
+}
+
+.dose-now-btn {
+  width: 100%;
+  min-height: 51px;
+
+  margin-top: 11px;
+  padding: 10px 15px;
+
+  border: 1px solid rgba(131, 183, 230, 0.42);
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #315b80,
+      #244764
+    );
+
+  color: white;
+
+  font-size: 16px;
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+.dose-now-btn:active {
+  transform: translateY(1px);
+}
+
+.dose-custom-wrap {
+  display: none;
+  margin-top: 10px;
+}
+
+.dose-custom-wrap.open {
+  display: block;
+}
+
+/* Footer buttons */
+
+.dose-card-footer {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 11px;
+
+  padding: 17px 22px 22px;
+
+  border-top: 1px solid rgba(174, 202, 231, 0.16);
+}
+
+.dose-card-footer button {
+  min-height: 53px;
+
+  padding: 11px 16px;
+
+  border-radius: 12px;
+
+  color: white;
+
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+.dose-cancel-btn {
+  border: 1px solid rgba(174, 202, 231, 0.24);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.dose-save-btn {
+  border: 1px solid rgba(132, 211, 147, 0.5);
+
+  background:
+    linear-gradient(
+      180deg,
+      #3e9d59,
+      #287a40
+    );
+
+  box-shadow:
+    0 7px 18px rgba(23, 105, 53, 0.3);
+}
+
+.dose-card-footer button:active,
+.dose-close-btn:active {
+  transform: translateY(1px);
+}
+
+/* Large one-tap dose choices */
+
+.dose-choice-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 11px;
+}
+
+.dose-choice-btn {
+  min-height: 62px;
+  padding: 12px;
+
+  border: 2px solid rgba(151, 190, 225, 0.3);
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #183149,
+      #0d1c2c
+    );
+
+  color: white;
+
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 4px 10px rgba(0, 0, 0, 0.22);
+
+  transition:
+    transform 0.1s ease,
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.dose-choice-btn:active {
+  transform: scale(0.97);
+}
+
+.dose-choice-btn.selected {
+  border-color: #78d890;
+
+  background:
+    linear-gradient(
+      180deg,
+      #43a962,
+      #287a40
+    );
+
+  box-shadow:
+    0 0 0 3px rgba(120, 216, 144, 0.2),
+    0 7px 18px rgba(23, 105, 53, 0.32);
+}
+
+.dose-choice-btn.selected::after {
+  content: " ✓";
+}
+
+/* Only shown for medications that allow a dose */
+
+.dose-section-hidden {
+  display: none;
+}
+
+/* Tablet and phone adjustment */
+
+@media (max-width: 600px) {
+  .dose-modal {
+    padding: 10px;
+  }
+
+  .dose-card {
+    width: 96vw;
+    border-radius: 17px;
+  }
+
+  .dose-card-header {
+    padding: 20px 17px 16px;
+  }
+
+  .dose-card-body {
+    padding: 18px;
+  }
+
+  .dose-card-footer {
+    padding: 15px 18px 18px;
+  }
+
+  .dose-med-name {
+    font-size: 23px;
+  }
+}
 
 </style>
 </head>
@@ -1687,6 +2127,8 @@ let lockMode = true;
 
 const doseMeds = ["Gab 1", "Gab 2", "Gab 3", "Traz 1", "Traz 2" , "Traz 3" , "Bedtime Traz"];
 
+
+
 const medSchedules = {
 
   // Aidan
@@ -1739,44 +2181,8 @@ document.querySelectorAll(".cell").forEach(cell => {
 return;
 }
 
-    // OTHERWISE ADD TIME
-    const useNow = confirm("Use current time?\n\nOK = Now\nCancel = Enter custom time");
-
-    let timeText;
-
-    if (useNow) {
-      const now = new Date();
-      timeText = now.toLocaleTimeString([], {
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true
-      });
-    } else {
-      const input = prompt("Enter time (example: 8:30 AM)");
-      if (!input) return;
-      timeText = input;
-    }
-
-    let display = timeText;
-
-    // ✅ ONLY THESE MEDS GET DOSE OPTION
-    const medName = cell.parentElement.querySelector(".med-name")?.textContent?.trim();
-
-    if (doseMeds.includes(medName)) {
-      const dose = prompt("Dose? (optional)\nExamples: 1/4, 1/2, 1");
-
-      if (dose && dose.trim() !== "") {
-        display += " (" + dose.trim() + ")";
-      }
-    }
-
-    cell.dataset.time = display;
-    cell.textContent = display;
-    cell.classList.add("active");
-    cell.dataset.locked = "true";
-    cell.classList.add("locked");
-saveState();
-saveToFirebase();
+    // OTHERWISE OPEN THE DOSE ENTRY CARD
+openDoseCard(cell);
   });
 });
 
@@ -2371,6 +2777,431 @@ if ("serviceWorker" in navigator) {
     .then(() => console.log("Service Worker registered"))
     .catch(error => console.log("Service Worker error:", error));
 }
+</script>
+   
+   <!-- =========================================================
+     DOSE ENTRY CARD
+========================================================= -->
+
+<div id="doseModal" class="dose-modal" aria-hidden="true">
+
+  <div
+    class="dose-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="doseMedName"
+  >
+
+    <div class="dose-card-header">
+
+      <button
+        id="doseCloseBtn"
+        class="dose-close-btn"
+        type="button"
+        aria-label="Close dose entry"
+      >
+        ×
+      </button>
+
+      <div id="doseDogName" class="dose-dog-name">
+        Medication
+      </div>
+
+      <div id="doseMedName" class="dose-med-name">
+        Dose Entry
+      </div>
+
+    </div>
+
+    <div class="dose-card-body">
+
+      <div class="dose-field">
+
+        <label class="dose-field-label">
+          Time Given
+        </label>
+
+        <div class="dose-time-row">
+
+          <select
+            id="doseHour"
+            aria-label="Hour"
+          ></select>
+
+          <select
+            id="doseMinute"
+            aria-label="Minute"
+          ></select>
+
+          <select
+            id="dosePeriod"
+            aria-label="AM or PM"
+          >
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+
+        </div>
+
+        <button
+          id="doseNowBtn"
+          class="dose-now-btn"
+          type="button"
+        >
+          Use Current Time
+        </button>
+
+      </div>
+
+      <div
+        id="doseAmountSection"
+        class="dose-field dose-section-hidden"
+      >
+
+        <label
+          class="dose-field-label"
+          for="doseAmount"
+        >
+          Dose
+        </label>
+
+<div
+  id="doseChoices"
+  class="dose-choice-buttons"
+></div>
+
+      </div>
+
+    </div>
+
+    <div class="dose-card-footer">
+
+      <button
+        id="doseCancelBtn"
+        class="dose-cancel-btn"
+        type="button"
+      >
+        Cancel
+      </button>
+
+      <button
+        id="doseSaveBtn"
+        class="dose-save-btn"
+        type="button"
+      >
+        Save Dose
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+   
+   <script>
+   /* =========================================================
+   DOSE ENTRY CARD
+========================================================= */
+
+const doseModal = document.getElementById("doseModal");
+const doseDogName = document.getElementById("doseDogName");
+const doseMedName = document.getElementById("doseMedName");
+
+const doseHour = document.getElementById("doseHour");
+const doseMinute = document.getElementById("doseMinute");
+const dosePeriod = document.getElementById("dosePeriod");
+
+const doseAmountSection =
+  document.getElementById("doseAmountSection");
+
+const doseChoices =
+  document.getElementById("doseChoices");
+
+const doseNowBtn =
+  document.getElementById("doseNowBtn");
+
+const doseSaveBtn =
+  document.getElementById("doseSaveBtn");
+
+const doseCancelBtn =
+  document.getElementById("doseCancelBtn");
+
+const doseCloseBtn =
+  document.getElementById("doseCloseBtn");
+
+let activeDoseCell = null;
+let selectedDoseValue = "";
+
+/* Build the hour choices */
+
+for (let hour = 1; hour <= 12; hour++) {
+  const option = document.createElement("option");
+
+  option.value = String(hour);
+  option.textContent = String(hour);
+
+  doseHour.appendChild(option);
+}
+
+
+/* Build the minute choices */
+
+for (let minute = 0; minute < 60; minute++) {
+  const option = document.createElement("option");
+
+  option.value = String(minute).padStart(2, "0");
+  option.textContent = String(minute).padStart(2, "0");
+
+  doseMinute.appendChild(option);
+}
+
+
+/* Put a Date value into the 12-hour picker */
+
+function setDosePickerTime(dateValue = new Date()) {
+  let hour = dateValue.getHours();
+  const minute = dateValue.getMinutes();
+
+  const period = hour >= 12 ? "PM" : "AM";
+
+  hour = hour % 12;
+
+  if (hour === 0) {
+    hour = 12;
+  }
+
+  doseHour.value = String(hour);
+  doseMinute.value = String(minute).padStart(2, "0");
+  dosePeriod.value = period;
+}
+
+
+/* Create the displayed time text */
+
+function getDoseTimeText() {
+  return (
+    doseHour.value +
+    ":" +
+    doseMinute.value +
+    " " +
+    dosePeriod.value
+  );
+}
+
+
+/* Get the medication name cleanly */
+
+function getCellMedicationName(cell) {
+  const medNameElement =
+    cell.parentElement.querySelector(".med-name");
+
+  const mainName =
+    medNameElement?.querySelector(".med-main");
+
+  return (
+    mainName?.textContent ||
+    medNameElement?.textContent ||
+    "Medication"
+  ).trim();
+}
+
+/* Check whether this medication uses dose choices */
+
+function medicationUsesDose(medName) {
+  const name = medName.toLowerCase();
+
+  return (
+    name.includes("gab") ||
+    name.includes("traz")
+  );
+}
+
+
+/* Load the correct dose choices */
+
+function loadDoseChoices(medName) {
+  const name = medName.toLowerCase();
+
+  selectedDoseValue = "";
+  doseChoices.innerHTML = "";
+
+  let choices = [];
+
+  if (name.includes("gab")) {
+    choices = ["50 mg", "100 mg"];
+  }
+
+  if (name.includes("traz")) {
+    choices = ["¼", "½"];
+  }
+
+  choices.forEach(choice => {
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "dose-choice-btn";
+    button.textContent = choice;
+    button.dataset.value = choice;
+
+    button.addEventListener("click", () => {
+      selectedDoseValue = choice;
+
+      doseChoices
+        .querySelectorAll(".dose-choice-btn")
+        .forEach(otherButton => {
+          otherButton.classList.remove("selected");
+        });
+
+      button.classList.add("selected");
+    });
+
+    doseChoices.appendChild(button);
+  });
+}
+
+/* Get the dog name */
+
+function getCellDogName(cell) {
+  const dogSection = cell.closest(".dog");
+
+  return (
+    dogSection
+      ?.querySelector(".dog-name")
+      ?.textContent
+      ?.trim() ||
+    "Medication"
+  );
+}
+
+/* Get the dog's color identity */
+
+function getCellDogKey(cell) {
+  const dogSection = cell.closest(".dog");
+
+  if (!dogSection) {
+    return "";
+  }
+
+  const dogKeys = [
+    "aidan",
+    "callie",
+    "logan",
+    "jasmine",
+    "theo",
+    "ate"
+  ];
+
+  return (
+    dogKeys.find(key =>
+      dogSection.classList.contains(key)
+    ) || ""
+  );
+}
+
+/* Open the card */
+
+function openDoseCard(cell) {
+  activeDoseCell = cell;
+
+const medName = getCellMedicationName(cell);
+const dogName = getCellDogName(cell);
+const dogKey = getCellDogKey(cell);
+
+  doseDogName.textContent = dogName;
+  doseMedName.textContent = medName;
+  doseModal.dataset.dog = dogKey;
+  
+  setDosePickerTime(new Date());
+
+  selectedDoseValue = "";
+doseChoices.innerHTML = "";
+
+if (medicationUsesDose(medName)) {
+  loadDoseChoices(medName);
+
+  doseAmountSection.classList.remove(
+    "dose-section-hidden"
+  );
+} else {
+  doseAmountSection.classList.add(
+    "dose-section-hidden"
+  );
+}
+
+  doseModal.classList.add("open");
+  doseModal.setAttribute("aria-hidden", "false");
+}
+
+
+/* Close the card */
+
+function closeDoseCard() {
+  doseModal.classList.remove("open");
+  doseModal.setAttribute("aria-hidden", "true");
+
+  activeDoseCell = null;
+}
+
+
+/* Use the current time */
+
+doseNowBtn.addEventListener("click", () => {
+  setDosePickerTime(new Date());
+});
+
+/* Cancel or close */
+
+doseCancelBtn.addEventListener(
+  "click",
+  closeDoseCard
+);
+
+doseCloseBtn.addEventListener(
+  "click",
+  closeDoseCard
+);
+
+
+/* Tap outside the card to close */
+
+doseModal.addEventListener("click", event => {
+  if (event.target === doseModal) {
+    closeDoseCard();
+  }
+});
+
+
+/* Save the time and optional dose */
+
+doseSaveBtn.addEventListener("click", () => {
+  if (!activeDoseCell) {
+    return;
+  }
+
+  let display = getDoseTimeText();
+
+  const medName =
+    getCellMedicationName(activeDoseCell);
+
+if (
+  medicationUsesDose(medName) &&
+  selectedDoseValue
+) {
+  display += " (" + selectedDoseValue + ")";
+}
+
+  activeDoseCell.dataset.time = display;
+  activeDoseCell.textContent = display;
+
+  activeDoseCell.classList.add("active");
+  activeDoseCell.dataset.locked = "true";
+  activeDoseCell.classList.add("locked");
+
+  saveState();
+  saveToFirebase();
+
+  closeDoseCard();
+});
 </script>
    
 </body>
