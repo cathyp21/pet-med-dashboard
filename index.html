@@ -362,6 +362,20 @@ box-shadow:
   --dog-accent: #247bdb;
 }
 
+.dog.jasmine {
+  --dog-background: linear-gradient(90deg, #f4d77a, #faedb7);
+  --dog-panel: linear-gradient(180deg, #edca5f, #f6df95);
+  --dog-border: #d4a92f;
+  --dog-accent: #b98500;
+}
+
+.dog.theo {
+  --dog-background: linear-gradient(90deg, #abc9a8, #d5e5d0);
+  --dog-panel: linear-gradient(180deg, #9fc19b, #bfd7ba);
+  --dog-border: #6f9f69;
+  --dog-accent: #4f7f49;
+}
+
 .dog.ate {
   --dog-background: linear-gradient(90deg, #c5afea, #ded0f5);
   --dog-panel: linear-gradient(180deg, #bca2e5, #d3bef0);
@@ -454,10 +468,28 @@ box-shadow:
 
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 
   box-shadow:
     inset 0 0 0 1px rgba(75, 94, 116, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.26);
+}
+
+.med-main {
+  display: block;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.med-note {
+  display: block;
+  margin-top: 3px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: .78;
+  letter-spacing: .2px;
 }
 
 /* Remove old Logan stripe styling */
@@ -842,10 +874,44 @@ box-shadow:
   }
 }
 
+/* =========================
+   LOGAN NIGHT ROUTINE
+========================= */
+
+.night-routine-title {
+  grid-column: 2 / -1;
+  width: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  min-height: 38px;
+  padding: 7px 14px;
+  margin-top: 6px;
+
+  font-size: 15px;
+  font-weight: 800;
+
+  background: rgba(15, 23, 42, 0.22);
+  border-radius: 7px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Keep every Night Routine row aligned correctly */
+.night-routine-row .med-name {
+  grid-column: 2;
+
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+
 </style>
 </head>
-
-<body>
 
 <body>
 
@@ -991,304 +1057,461 @@ box-shadow:
       </div>
 
 
-      <!-- =================================================
-           AIDAN
-      ================================================== -->
-      <section class="dog aidan" style="--row-count:1;">
+<!-- =================================================
+     AIDAN
+================================================== -->
+<section class="dog aidan" style="--row-count:1;">
 
-        <div class="dog-info">
-          <div class="dog-name-line">
-            <span class="dog-paw">🐾</span>
-            <span class="dog-name">Aidan</span>
-          </div>
+  <div class="dog-info">
+    <div class="dog-name-line">
+      <span class="dog-paw">🐾</span>
+      <span class="dog-name">Aidan</span>
+    </div>
+  </div>
 
-        </div>
+  <div class="dog-title">Aidan</div>
 
-        <div class="dog-title">Aidan</div>
+  <div class="dog-content">
 
-        <div class="dog-content">
+    <div class="grid-row" data-row-key="aidan-anypril">
+      <div class="med-name" data-med="anypril">
+        Anipryl
+      </div>
 
-          <div class="grid-row">
-            <div class="med-name" data-med="anypril">
-              Anipryl
-            </div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+    </div>
 
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-          </div>
-
-        </div>
-      </section>
-
-
-      <!-- =================================================
-           CALLIE
-      ================================================== -->
-      <section class="dog callie" style="--row-count:5;">
-
-        <div class="dog-info">
-          <div class="dog-name-line">
-            <span class="dog-paw">🐾</span>
-            <span class="dog-name">Callie</span>
-          </div>
-
-        </div>
-
-        <div class="dog-title">Callie</div>
-
-        <div class="dog-content">
-
-          <div class="grid-row">
-            <div class="med-name" data-med="calliegab1">Gab 1</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
-
-          <div class="grid-row">
-            <div class="med-name" data-med="calliegab2">Gab 2</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
-
-          <div class="grid-row">
-            <div class="med-name" data-med="callietraz1">Traz 1</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
-
-          <div class="grid-row">
-            <div class="med-name" data-med="callietraz2">Traz 2</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
-
-          <div class="grid-row">
-            <div class="med-name" data-med="calliewuffes">Wuffes</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
-
-        </div>
-      </section>
+  </div>
+</section>
 
 
-      <!-- =================================================
-           LOGAN
-      ================================================== -->
-      <section class="dog logan" style="--row-count:11;">
+<!-- =================================================
+     CALLIE
+================================================== -->
+<section class="dog callie" style="--row-count:7;">
 
-        <div class="dog-info">
-          <div class="dog-name-line">
-            <span class="dog-paw">🐾</span>
-            <span class="dog-name">Logan</span>
-          </div>
+  <div class="dog-info">
+    <div class="dog-name-line">
+      <span class="dog-paw">🐾</span>
+      <span class="dog-name">Callie</span>
+    </div>
+  </div>
 
-        </div>
+  <div class="dog-title">Callie</div>
 
-        <div class="dog-title">Logan</div>
+  <div class="dog-content">
 
-        <div class="dog-content">
+    <div class="grid-row" data-row-key="callie-gab1">
+      <div class="med-name" data-med="calliegab1">Gab 1</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
 
-          <div class="grid-row med-loxicom">
-            <div class="med-name" data-med="loxicom">Loxicom</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
+    <div class="grid-row" data-row-key="callie-gab2">
+      <div class="med-name" data-med="calliegab2">Gab 2</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
 
-          <div class="grid-row med-amoxicillin">
-            <div class="med-name">Amoxicillin 1</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
+    <div class="grid-row" data-row-key="callie-traz1">
+      <div class="med-name" data-med="callietraz1">Traz 1</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
 
-          <div class="grid-row med-amoxicillin">
-            <div class="med-name">Amoxicillin 2</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
+    <div class="grid-row" data-row-key="callie-traz2">
+      <div class="med-name" data-med="callietraz2">Traz 2</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
 
-          <div class="grid-row med-trazodone">
-            <div class="med-name" data-med="logantraz1">Traz 1</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
+    <div class="grid-row" data-row-key="callie-dentastix">
+      <div class="med-name" data-med="calliedentastix">Dentastix</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
 
-          <div class="grid-row med-trazodone">
-            <div class="med-name" data-med="logantraz2">Traz 2</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
+    <div class="grid-row" data-row-key="callie-welactin">
+      <div class="med-name" data-med="calliewelactin">Welactin</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
 
-          <div class="grid-row med-trazodone">
-            <div class="med-name" data-med="logantraz3">Traz 3</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
+    <div class="grid-row" data-row-key="callie-cosequin">
+      <div class="med-name" data-med="calliecosequin">Cosequin</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
 
-          <div class="grid-row med-trazodone">
-            <div class="med-name" data-med="bedtraz">
-              Bedtime Traz 50mg 10pm
-            </div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
-
-          <div class="grid-row med-gabapentin">
-            <div class="med-name" data-med="logangab1">Gab 1</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
-
-          <div class="grid-row med-gabapentin">
-            <div class="med-name" data-med="bedgab1">
-              1st Bed Gab 50mg 7:30pm
-            </div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
-
-          <div class="grid-row med-gabapentin">
-            <div class="med-name" data-med="bedgab2">
-              2nd Bed Gab 100mg 10pm
-            </div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
-
-          <div class="grid-row med-wuffes">
-            <div class="med-name">Wuffes</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
-
-        </div>
-      </section>
+  </div>
+</section>
 
 
-      <!-- =================================================
-           ATE / FOOD
-      ================================================== -->
-      <section class="dog ate" style="--row-count:8;">
+<!-- =================================================
+     LOGAN
+================================================== -->
+<section class="dog logan" style="--row-count:13;">
 
-        <div class="dog-info">
-          <div class="dog-name-line">
-            <span class="dog-paw">🐾</span>
-            <span class="dog-name">Ate</span>
-          </div>
+  <div class="dog-info">
+    <div class="dog-name-line">
+      <span class="dog-paw">🐾</span>
+      <span class="dog-name">Logan</span>
+    </div>
+  </div>
 
-          <div class="dog-detail">
-            Meals &amp; feeding
-          </div>
-        </div>
+  <div class="dog-title">Logan</div>
 
-        <div class="dog-title">Ate</div>
+  <div class="dog-content">
 
-        <div class="dog-content">
+<div class="grid-row med-loxicom" data-row-key="logan-loxicom">
 
-          <div class="grid-row">
-            <div class="med-name">Aidan 1</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
+  <div class="med-name" data-med="loganloxicom">
+    Loxicom
+  </div>
 
-          <div class="grid-row">
-            <div class="med-name">Aidan 2</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div>
 
-          <div class="grid-row">
-            <div class="med-name">Callie 1</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
+</div>
 
-          <div class="grid-row">
-            <div class="med-name">Callie 2</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
+    <div class="grid-row med-trazodone" data-row-key="logan-traz1">
+      <div class="med-name" data-med="logantraz1">Traz 1</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
 
-          <div class="grid-row">
-            <div class="med-name">Logan 1</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
+    <div class="grid-row med-trazodone" data-row-key="logan-traz2">
+      <div class="med-name" data-med="logantraz2">Traz 2</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
 
-          <div class="grid-row">
-            <div class="med-name">Logan 2</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
+    <div class="grid-row med-trazodone" data-row-key="logan-traz3">
+      <div class="med-name" data-med="logantraz3">Traz 3</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
 
-          <div class="grid-row">
-            <div class="med-name">Jasmine 1</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
+    <div class="grid-row med-gabapentin" data-row-key="logan-gab1">
+      <div class="med-name" data-med="logangab1">Gab 1</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
 
-          <div class="grid-row">
-            <div class="med-name">Jasmine 2</div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div>
-          </div>
+    <div class="grid-row med-gabapentin" data-row-key="logan-extra-gab">
+      <div class="med-name" data-med="loganextragab">
+        Extra Gab <span class="med-note">(As Needed)</span>
+      </div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
 
-        </div>
-      </section>
+    <div class="grid-row" data-row-key="logan-dentastix">
+      <div class="med-name" data-med="logandentastix">Dentastix</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
 
+    <div class="grid-row" data-row-key="logan-welactin">
+      <div class="med-name" data-med="loganwelactin">Welactin</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row" data-row-key="logan-cosequin">
+      <div class="med-name" data-med="logancosequin">Cosequin</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="night-routine-title">
+      <span>🌙</span>
+      <span>Night Routine</span>
+    </div>
+
+    <div class="grid-row med-gabapentin night-routine-row"
+         data-row-key="logan-bed-gab1">
+      <div class="med-name" data-med="bedgab1">
+        <span class="med-main">
+  Bed Gab 1
+</span>
+
+<span class="med-note">
+  50 mg • 7:30 PM
+</span>
+      </div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row med-gabapentin night-routine-row"
+         data-row-key="logan-bed-gab2">
+      <div class="med-name" data-med="bedgab2">
+<span class="med-main">
+  Bed Gab 2
+</span>
+
+<span class="med-note">
+  100 mg • 10:00 PM
+</span>
+      </div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row med-trazodone night-routine-row"
+         data-row-key="logan-bed-traz">
+      <div class="med-name" data-med="bedtraz">
+<span class="med-main">
+  Bed Traz
+</span>
+
+<span class="med-note">
+  50 mg • 10:00 PM
+</span>
+      </div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- =================================================
+     JASMINE
+================================================== -->
+<section class="dog jasmine" style="--row-count:3;">
+
+  <div class="dog-info">
+    <div class="dog-name-line">
+      <span class="dog-paw">🐾</span>
+      <span class="dog-name">Jasmine</span>
+    </div>
+  </div>
+
+  <div class="dog-title">Jasmine</div>
+
+  <div class="dog-content">
+
+    <div class="grid-row" data-row-key="jasmine-dentastix">
+      <div class="med-name" data-med="jasminedentastix">Dentastix</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row" data-row-key="jasmine-welactin">
+      <div class="med-name" data-med="jasminewelactin">Welactin</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row" data-row-key="jasmine-cosequin">
+      <div class="med-name" data-med="jasminecosequin">Cosequin</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- =================================================
+     THEO
+================================================== -->
+<section class="dog theo" style="--row-count:3;">
+
+  <div class="dog-info">
+    <div class="dog-name-line">
+      <span class="dog-paw">🐾</span>
+      <span class="dog-name">Theo</span>
+    </div>
+  </div>
+
+  <div class="dog-title">Theo</div>
+
+  <div class="dog-content">
+
+    <div class="grid-row" data-row-key="theo-dentastix">
+      <div class="med-name" data-med="theodentastix">Dentastix</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row" data-row-key="theo-welactin">
+      <div class="med-name" data-med="theowelactin">Welactin</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row" data-row-key="theo-cosequin">
+      <div class="med-name" data-med="theocosequin">Cosequin</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- =================================================
+     ATE / FOOD
+================================================== -->
+<section class="dog ate" style="--row-count:10;">
+
+  <div class="dog-info">
+    <div class="dog-name-line">
+      <span class="dog-paw">🐾</span>
+      <span class="dog-name">Ate</span>
+    </div>
+
+    <div class="dog-detail">
+      Meals &amp; feeding
+    </div>
+  </div>
+
+  <div class="dog-title">Ate</div>
+
+  <div class="dog-content">
+
+    <div class="grid-row" data-row-key="ate-aidan1">
+      <div class="med-name">Aidan 1</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row" data-row-key="ate-aidan2">
+      <div class="med-name">Aidan 2</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row" data-row-key="ate-callie1">
+      <div class="med-name">Callie 1</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row" data-row-key="ate-callie2">
+      <div class="med-name">Callie 2</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row" data-row-key="ate-logan1">
+      <div class="med-name">Logan 1</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row" data-row-key="ate-logan2">
+      <div class="med-name">Logan 2</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row" data-row-key="ate-jasmine1">
+      <div class="med-name">Jasmine 1</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row" data-row-key="ate-jasmine2">
+      <div class="med-name">Jasmine 2</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row" data-row-key="ate-theo1">
+      <div class="med-name">Theo 1</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div class="grid-row" data-row-key="ate-theo2">
+      <div class="med-name">Theo 2</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+  </div>
+</section>
     </div>
   </main>
 
@@ -1614,6 +1837,157 @@ function updateCurrentDayHighlight() {
   });
 }
 
+/* =========================================================
+   PERMANENT CELL KEYS + OLD-DATA MIGRATION
+========================================================= */
+
+/*
+  This list matches the exact OLD row order before
+  Jasmine, Theo, and the new supplements are added.
+  It lets PawHub move existing numbered data to permanent keys.
+*/
+const LEGACY_ROW_KEYS = [
+  "aidan-anypril",
+
+  "callie-gab1",
+  "callie-gab2",
+  "callie-traz1",
+  "callie-traz2",
+  "callie-wuffes",
+
+  "logan-loxicom",
+  "logan-amoxicillin1",
+  "logan-amoxicillin2",
+  "logan-traz1",
+  "logan-traz2",
+  "logan-traz3",
+  "logan-bed-traz",
+  "logan-gab1",
+  "logan-bed-gab1",
+  "logan-bed-gab2",
+  "logan-wuffes",
+
+  "ate-aidan1",
+  "ate-aidan2",
+  "ate-callie1",
+  "ate-callie2",
+  "ate-logan1",
+  "ate-logan2",
+  "ate-jasmine1",
+  "ate-jasmine2"
+];
+
+
+/* Build a permanent key such as:
+   logan-traz1::3
+   The number after :: is the day: Sunday 0 through Saturday 6.
+*/
+function getCellKey(cell) {
+  const row = cell.closest(".grid-row");
+  const rowKey = row?.dataset.rowKey;
+
+  if (!rowKey) {
+    console.warn("Missing data-row-key on row:", row);
+    return null;
+  }
+
+  const cells = Array.from(row.querySelectorAll(".cell"));
+  const dayIndex = cells.indexOf(cell);
+
+  if (dayIndex < 0) return null;
+
+  return `${rowKey}::${dayIndex}`;
+}
+
+
+/* Convert the old numbered save format into permanent row keys. */
+function migrateLegacyCellData(rawData) {
+  if (!rawData || typeof rawData !== "object") {
+    return {};
+  }
+
+  const keys = Object.keys(rawData);
+
+  if (keys.length === 0) {
+    return {};
+  }
+
+  const isOldNumberedFormat = keys.every(key => /^\d+$/.test(key));
+
+  if (!isOldNumberedFormat) {
+    return rawData;
+  }
+
+  const migrated = {};
+
+  keys.forEach(oldIndexText => {
+    const oldIndex = Number(oldIndexText);
+    const rowIndex = Math.floor(oldIndex / 7);
+    const dayIndex = oldIndex % 7;
+    const rowKey = LEGACY_ROW_KEYS[rowIndex];
+
+    if (!rowKey) return;
+
+    migrated[`${rowKey}::${dayIndex}`] = rawData[oldIndexText];
+  });
+
+  console.log("Old numbered PawHub data migrated to permanent keys.");
+
+  return migrated;
+}
+
+
+/* Gather all visible cells using their permanent keys. */
+function collectCellData() {
+  const data = {};
+
+  document.querySelectorAll(".cell").forEach(cell => {
+    const key = getCellKey(cell);
+
+    if (!key) return;
+
+    data[key] = {
+      text: cell.textContent || "",
+      active: cell.classList.contains("active"),
+      locked: cell.dataset.locked === "true"
+    };
+  });
+
+  return data;
+}
+
+
+/* Put saved values back into their matching permanent cells. */
+function applyCellData(rawData) {
+  const data = migrateLegacyCellData(rawData);
+
+  document.querySelectorAll(".cell").forEach(cell => {
+    const key = getCellKey(cell);
+    const saved = key ? data[key] : null;
+
+    cell.textContent = "";
+    cell.dataset.time = "";
+    cell.dataset.locked = "false";
+    cell.classList.remove("active", "locked");
+
+    if (!saved) return;
+
+    cell.textContent = saved.text || "";
+    cell.dataset.time = saved.text || "";
+
+    if (saved.active) {
+      cell.classList.add("active");
+    }
+
+    if (saved.locked) {
+      cell.dataset.locked = "true";
+      cell.classList.add("locked");
+    }
+  });
+
+  return data;
+}
+
 /* =========================
    SAVE STATE (FIREBASE STORAGE)
 ========================= */
@@ -1625,17 +1999,7 @@ async function saveToFirebase() {
     return;
   }
 
-  const cells = document.querySelectorAll(".cell");
-
-  const data = {};
-
-  cells.forEach((cell, index) => {
-    data[index] = {
-      text: cell.textContent,
-      active: cell.classList.contains("active"),
-      locked: cell.dataset.locked === "true"
-    };
-  });
+  const data = collectCellData();
 
   try {
 
@@ -1648,17 +2012,18 @@ async function saveToFirebase() {
     );
 
     console.log("Saved to Firebase");
+
     const sync = document.getElementById("syncInfo");
 
-if (sync) {
-  sync.textContent =
-    "🟢 Saved: " +
-    new Date().toLocaleTimeString([], {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true
-    });
-}
+    if (sync) {
+      sync.textContent =
+        "🟢 Saved: " +
+        new Date().toLocaleTimeString([], {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true
+        });
+    }
 
   } catch (error) {
     console.error("Firebase save error:", error);
@@ -1687,26 +2052,14 @@ async function loadFromFirebase() {
       return;
     }
 
-    const data = snap.data().cells;
+    const rawData = snap.data().cells || {};
+    const migratedData = applyCellData(rawData);
 
-    document.querySelectorAll(".cell").forEach((cell, index) => {
-
-      if (data[index]) {
-
-        cell.textContent = data[index].text || "";
-
-        if (data[index].active) {
-          cell.classList.add("active");
-        }
-
-        if (data[index].locked) {
-          cell.dataset.locked = "true";
-          cell.classList.add("locked");
-        }
-
-      }
-
-    });
+    /* Keep the local copy in the new permanent-key format too. */
+    localStorage.setItem(
+      "medData",
+      JSON.stringify(migratedData)
+    );
 
     console.log("Loaded from Firebase");
 
@@ -1719,42 +2072,25 @@ async function loadFromFirebase() {
    SAVE STATE (LOCAL STORAGE)
 ========================= */
 function saveState() {
+  const data = collectCellData();
 
-  const cells = document.querySelectorAll(".cell");
-
-  const data = {};
-
-  cells.forEach((cell, index) => {
-    data[index] = {
-      text: cell.textContent,
-      active: cell.classList.contains("active"),
-      locked: cell.dataset.locked === "true"
-    };
-  });
-
-  // 🧠 check if there is any real data
   const hasAnyData = Object.values(data).some(
     entry => entry.text && entry.text.trim() !== ""
   );
 
+  localStorage.setItem("medData", JSON.stringify(data));
+
   if (!hasAnyData) {
     console.warn("Save blocked: empty state not saved as backup");
-
-    // still allow main state to update (important!)
-    localStorage.setItem("medData", JSON.stringify(data));
     return;
   }
 
-  // 💾 main save
-  localStorage.setItem("medData", JSON.stringify(data));
-
-  // 🟢 stable backup with timestamp
   localStorage.setItem("medData_backup", JSON.stringify({
-  data: data,
-  timestamp: Date.now()
-}));
+    data: data,
+    timestamp: Date.now()
+  }));
 
-updateBackupInfo();
+  updateBackupInfo();
 }
 
 
@@ -1829,17 +2165,7 @@ function importBackup(event) {
 }
 
 function createSafetyBackup() {
-  const cells = document.querySelectorAll(".cell");
-
-  const data = {};
-
-  cells.forEach((cell, index) => {
-    data[index] = {
-      text: cell.textContent,
-      active: cell.classList.contains("active"),
-      locked: cell.dataset.locked === "true"
-    };
-  });
+  const data = collectCellData();
 
   localStorage.setItem("medData_backup", JSON.stringify({
     data: data,
@@ -1852,25 +2178,16 @@ function createSafetyBackup() {
    LOAD STATE (RESTORE ON OPEN)
 ========================= */
 function loadState() {
-  const data = JSON.parse(localStorage.getItem("medData") || "{}");
+  const rawData = JSON.parse(
+    localStorage.getItem("medData") || "{}"
+  );
 
-  document.querySelectorAll(".cell").forEach((cell, index) => {
-    if (data[index]) {
+  const migratedData = applyCellData(rawData);
 
-      cell.textContent = data[index].text || "";
-
-      if (data[index].active) {
-        cell.classList.add("active");
-      }
-
-      if (data[index].locked) {
-        cell.dataset.locked = "true";
-        cell.classList.add("locked");
-      } else {
-        cell.dataset.locked = "false";
-      }
-    }
-  });
+  localStorage.setItem(
+    "medData",
+    JSON.stringify(migratedData)
+  );
 }
 
 function getBackupTime() {
@@ -2013,35 +2330,26 @@ function startRealtimeSync() {
 
       if (!firebaseData.cells) return;
 
-      document.querySelectorAll(".cell").forEach((cell, index) => {
+      const migratedData = applyCellData(firebaseData.cells);
 
-        const saved = firebaseData.cells[index];
+      localStorage.setItem(
+        "medData",
+        JSON.stringify(migratedData)
+      );
 
-        if (!saved) return;
+      const sync = document.getElementById("syncInfo");
 
-        cell.textContent = saved.text || "";
+      if (sync) {
+        sync.textContent =
+          "🟢 Synced: " +
+          new Date().toLocaleTimeString([], {
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true
+          });
+      }
 
-        cell.classList.toggle("active", saved.active);
-
-        cell.classList.toggle("locked", saved.locked);
-
-        cell.dataset.locked = saved.locked ? "true" : "false";
-
-      });
-
-const sync = document.getElementById("syncInfo");
-
-if (sync) {
-  sync.textContent =
-    "🟢 Synced: " +
-    new Date().toLocaleTimeString([], {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true
-    });
-}
-
-console.log("Realtime sync updated");
+      console.log("Realtime sync updated");
 
     },
 
