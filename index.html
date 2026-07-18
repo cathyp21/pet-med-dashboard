@@ -1048,24 +1048,31 @@ box-shadow:
 
   box-shadow:
     inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    0 2px 7px var(--dose-dog-light),
     0 5px 18px rgba(0, 0, 0, 0.18);
 }
 
 .dose-dog-name {
   color: var(--dose-dog-color);
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 900;
-  letter-spacing: 1.2px;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
 
   text-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.32);
+    0 2px 4px rgba(0, 0, 0, 0.36),
+    0 0 10px var(--dose-dog-light);
 }
 
 .dose-dog-name::before {
   content: "🐾";
-  margin-right: 8px;
-  font-size: 18px;
+  display: inline-block;
+  margin-right: 9px;
+  font-size: 21px;
+  vertical-align: -1px;
+
+  filter:
+    drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
 }
 
 .dose-med-name {
@@ -1320,6 +1327,74 @@ box-shadow:
 .dose-section-hidden {
   display: none;
 }
+/* =========================================================
+   REMOVE ENTRY CARD
+========================================================= */
+
+.remove-entry-title {
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.remove-entry-icon {
+  display: inline-block;
+  margin-right: 7px;
+  font-size: 22px;
+  vertical-align: -1px;
+}
+
+.remove-entry-details {
+  padding: 6px 0 2px;
+  text-align: center;
+}
+
+.remove-entry-med {
+  color: #ffffff;
+  font-size: 27px;
+  font-weight: 900;
+  line-height: 1.2;
+
+  text-shadow:
+    0 2px 4px rgba(0,0,0,.28);
+}
+
+.remove-entry-time {
+  margin-top: 12px;
+
+  color: #b9d5f2;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.remove-entry-question {
+  margin-top: 22px;
+
+  color: #e8f1fa;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.remove-delete-btn {
+  border: 1px solid rgba(255, 126, 126, 0.55);
+
+  background:
+    linear-gradient(
+      180deg,
+      #d94b4b,
+      #a92d2d
+    );
+
+  box-shadow:
+    0 7px 18px rgba(145, 32, 32, 0.34);
+}
+
+.remove-delete-btn:active {
+  transform: translateY(1px);
+}
+
 
 /* Tablet and phone adjustment */
 
@@ -2160,26 +2235,11 @@ const medSchedules = {
 document.querySelectorAll(".cell").forEach(cell => {
   cell.addEventListener("click", () => {
 
-    // REMOVE if already filled
+    // OPEN REMOVE CARD if already filled
     if (cell.textContent.trim() !== "") {
-
-  // If locked → require confirmation
-  if (cell.dataset.locked === "true") {
-    const unlock = confirm("This entry is locked.\nDelete it anyway?");
-
-    if (!unlock) return;
-
-    cell.dataset.locked = "false";
-  }
-
-  cell.dataset.time = "";
-  cell.textContent = "";
-  cell.classList.remove("active", "locked");
-
-  saveState();
-  saveToFirebase();
-return;
-}
+      openRemoveCard(cell);
+      return;
+    }
 
     // OTHERWISE OPEN THE DOSE ENTRY CARD
 openDoseCard(cell);
@@ -2778,6 +2838,101 @@ if ("serviceWorker" in navigator) {
     .catch(error => console.log("Service Worker error:", error));
 }
 </script>
+
+<!-- =========================================================
+     REMOVE ENTRY CARD
+========================================================= -->
+
+<div
+  id="removeModal"
+  class="dose-modal"
+  aria-hidden="true"
+>
+
+  <div
+    class="dose-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="removeEntryTitle"
+  >
+
+    <div class="dose-card-header">
+
+      <button
+        id="removeCloseBtn"
+        class="dose-close-btn"
+        type="button"
+        aria-label="Close remove entry card"
+      >
+        ×
+      </button>
+
+      <div
+        id="removeDogName"
+        class="dose-dog-name"
+      >
+        Medication
+      </div>
+
+      <div
+        id="removeEntryTitle"
+        class="remove-entry-title"
+      >
+        <span class="remove-entry-icon">🗑️</span>
+        Remove Entry
+      </div>
+
+    </div>
+
+    <div class="dose-card-body">
+
+      <div class="remove-entry-details">
+
+        <div
+          id="removeMedName"
+          class="remove-entry-med"
+        >
+          Medication
+        </div>
+
+        <div
+          id="removeEntryTime"
+          class="remove-entry-time"
+        >
+          Time
+        </div>
+
+        <div class="remove-entry-question">
+          Remove this entry?
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="dose-card-footer">
+
+      <button
+        id="removeCancelBtn"
+        class="dose-cancel-btn"
+        type="button"
+      >
+        Keep Entry
+      </button>
+
+      <button
+        id="removeConfirmBtn"
+        class="remove-delete-btn"
+        type="button"
+      >
+        Remove
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
    
    <!-- =========================================================
      DOSE ENTRY CARD
@@ -3032,7 +3187,7 @@ function loadDoseChoices(medName) {
   }
 
   if (name.includes("traz")) {
-    choices = ["¼", "½"];
+choices = ["25 mg", "50 mg", "100 mg"];
   }
 
   choices.forEach(choice => {
@@ -3202,6 +3357,125 @@ if (
 
   closeDoseCard();
 });
+</script>
+
+<script>
+/* =========================================================
+   REMOVE ENTRY CARD
+========================================================= */
+
+const removeModal =
+  document.getElementById("removeModal");
+
+const removeDogName =
+  document.getElementById("removeDogName");
+
+const removeMedName =
+  document.getElementById("removeMedName");
+
+const removeEntryTime =
+  document.getElementById("removeEntryTime");
+
+const removeConfirmBtn =
+  document.getElementById("removeConfirmBtn");
+
+const removeCancelBtn =
+  document.getElementById("removeCancelBtn");
+
+const removeCloseBtn =
+  document.getElementById("removeCloseBtn");
+
+let activeRemoveCell = null;
+
+
+/* Open the Remove Entry card */
+
+function openRemoveCard(cell) {
+  activeRemoveCell = cell;
+
+  const dogName = getCellDogName(cell);
+  const dogKey = getCellDogKey(cell);
+  const medName = getCellMedicationName(cell);
+
+  const entryText =
+    cell.textContent.trim() || "Saved entry";
+
+  removeDogName.textContent = dogName;
+  removeMedName.textContent = medName;
+  removeEntryTime.textContent = entryText;
+
+  removeModal.dataset.dog = dogKey;
+
+  removeModal.classList.add("open");
+  removeModal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+}
+
+
+/* Close without removing */
+
+function closeRemoveCard() {
+  removeModal.classList.remove("open");
+  removeModal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  activeRemoveCell = null;
+}
+
+
+/* Remove the selected entry */
+
+removeConfirmBtn.addEventListener(
+  "click",
+  () => {
+    if (!activeRemoveCell) {
+      return;
+    }
+
+    activeRemoveCell.dataset.time = "";
+    activeRemoveCell.dataset.locked = "false";
+    activeRemoveCell.textContent = "";
+
+    activeRemoveCell.classList.remove(
+      "active",
+      "locked"
+    );
+
+    saveState();
+    saveToFirebase();
+
+    closeRemoveCard();
+  }
+);
+
+
+/* Keep Entry and X buttons */
+
+removeCancelBtn.addEventListener(
+  "click",
+  closeRemoveCard
+);
+
+removeCloseBtn.addEventListener(
+  "click",
+  closeRemoveCard
+);
+
+
+/* Tap the dark background to cancel */
+
+removeModal.addEventListener(
+  "click",
+  event => {
+    if (event.target === removeModal) {
+      closeRemoveCard();
+    }
+  }
+);
 </script>
    
 </body>
