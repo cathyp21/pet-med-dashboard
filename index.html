@@ -1327,6 +1327,47 @@ box-shadow:
 .dose-section-hidden {
   display: none;
 }
+
+/* ================================================
+   CLEAR DAY POPUP
+================================================ */
+
+.clear-day-header {
+  --dose-dog-color: #ff8a80;
+  --dose-dog-dark: #8e2b2b;
+  --dose-dog-light: rgba(255, 92, 92, 0.28);
+}
+
+.clear-day-message {
+  text-align: center;
+  font-size: 22px;
+  line-height: 1.45;
+}
+
+.clear-day-warning {
+  margin-top: 18px;
+
+  color: #ffb3b3;
+
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.clear-day-confirm-btn {
+  border: 1px solid rgba(255,120,120,.45);
+
+  background:
+    linear-gradient(
+      180deg,
+      #d34b4b,
+      #9f2626
+    );
+
+  box-shadow:
+    0 8px 20px rgba(120,25,25,.35);
+}
+
 /* =========================================================
    REMOVE ENTRY CARD
 ========================================================= */
@@ -2199,6 +2240,7 @@ console.log("Firebase connected and db ready");
 <script>
 
 let lockMode = true;
+let clearDayIndex = null;
 
 const doseMeds = ["Gab 1", "Gab 2", "Gab 3", "Traz 1", "Traz 2" , "Traz 3" , "Bedtime Traz"];
 
@@ -2669,9 +2711,6 @@ function getBackupTime() {
 
 
 function clearDay(dayIndex) {
-
-createSafetyBackup();
-
   const dayNames = [
     "Sunday",
     "Monday",
@@ -2682,25 +2721,74 @@ createSafetyBackup();
     "Saturday"
   ];
 
-  if (!confirm(`Clear all entries for ${dayNames[dayIndex]}?`)) {
+  showClearDayDialog(
+    dayIndex,
+    dayNames[dayIndex]
+  );
+}
+
+
+function showClearDayDialog(dayIndex, dayName) {
+  clearDayIndex = dayIndex;
+
+  document.getElementById(
+    "clearDayTitle"
+  ).textContent = `🧹 Clear ${dayName}?`;
+
+  document.getElementById(
+    "clearDayName"
+  ).textContent = dayName;
+
+  const modal =
+    document.getElementById("clearDayModal");
+
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+}
+
+
+function closeClearDayDialog() {
+  const modal =
+    document.getElementById("clearDayModal");
+
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+
+  clearDayIndex = null;
+}
+
+
+function confirmClearDay() {
+  if (clearDayIndex === null) {
     return;
   }
 
-  document.querySelectorAll(".grid-row").forEach(row => {
-    const cell = row.querySelectorAll(".cell")[dayIndex];
+  createSafetyBackup();
 
-    if (!cell) return;
+  document
+    .querySelectorAll(".grid-row")
+    .forEach(row => {
+      const cell =
+        row.querySelectorAll(".cell")[clearDayIndex];
 
-    // FULL reset of cell state
-    cell.textContent = "";
-    cell.dataset.time = "";
-    cell.dataset.locked = "false";
+      if (!cell) {
+        return;
+      }
 
-    cell.classList.remove("active", "locked");
-  });
+      cell.textContent = "";
+      cell.dataset.time = "";
+      cell.dataset.locked = "false";
+
+      cell.classList.remove(
+        "active",
+        "locked"
+      );
+    });
 
   saveState();
   saveToFirebase();
+
+  closeClearDayDialog();
 }
 
 function updateBackupInfo() {
@@ -3003,7 +3091,7 @@ if ("serviceWorker" in navigator) {
           class="dose-now-btn"
           type="button"
         >
-          Use Current Time
+          NOW
         </button>
 
       </div>
@@ -3045,6 +3133,87 @@ if ("serviceWorker" in navigator) {
         type="button"
       >
         Save Dose
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- CLEAR DAY CONFIRMATION -->
+
+<div
+  id="clearDayModal"
+  class="dose-modal"
+  aria-hidden="true"
+>
+
+  <div
+    class="dose-card clear-day-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="clearDayTitle"
+  >
+
+    <div class="dose-card-header clear-day-header">
+
+      <button
+        id="clearDayCloseBtn"
+        class="dose-close-btn"
+        type="button"
+        aria-label="Close clear day confirmation"
+      >
+        ×
+      </button>
+
+      <div class="dose-dog-name">
+        PawHub
+      </div>
+
+      <div
+        id="clearDayTitle"
+        class="dose-med-name"
+      >
+        Clear Day?
+      </div>
+
+    </div>
+
+    <div class="dose-card-body">
+
+      <div class="clear-day-message">
+
+        Remove all medication entries for
+
+        <strong id="clearDayName">
+          this day
+        </strong>?
+
+      </div>
+
+      <div class="clear-day-warning">
+        This cannot be undone.
+      </div>
+
+    </div>
+
+    <div class="dose-card-footer">
+
+      <button
+        id="clearDayCancelBtn"
+        class="dose-cancel-btn"
+        type="button"
+      >
+        Keep Entries
+      </button>
+
+      <button
+        id="clearDayConfirmBtn"
+        class="clear-day-confirm-btn"
+        type="button"
+      >
+        Clear Day
       </button>
 
     </div>
@@ -3271,13 +3440,29 @@ const dogKey = getCellDogKey(cell);
   selectedDoseValue = "";
 doseChoices.innerHTML = "";
 
-if (medicationUsesDose(medName)) {
+const autoDoseMap = {
+  "Bed Gab 1": "50 mg",
+  "Bed Gab 2": "100 mg",
+  "Bed Traz": "50 mg"
+};
+
+const autoDose = autoDoseMap[medName];
+
+if (autoDose) {
+  selectedDoseValue = autoDose;
+
+  doseAmountSection.classList.add(
+    "dose-section-hidden"
+  );
+}
+else if (medicationUsesDose(medName)) {
   loadDoseChoices(medName);
 
   doseAmountSection.classList.remove(
     "dose-section-hidden"
   );
-} else {
+}
+else {
   doseAmountSection.classList.add(
     "dose-section-hidden"
   );
@@ -3473,6 +3658,52 @@ removeModal.addEventListener(
   event => {
     if (event.target === removeModal) {
       closeRemoveCard();
+    }
+  }
+);
+</script>
+
+<script>
+/* =========================================================
+   CLEAR DAY CONFIRMATION
+========================================================= */
+
+const clearDayModal =
+  document.getElementById("clearDayModal");
+
+const clearDayCancelBtn =
+  document.getElementById("clearDayCancelBtn");
+
+const clearDayCloseBtn =
+  document.getElementById("clearDayCloseBtn");
+
+const clearDayConfirmBtn =
+  document.getElementById("clearDayConfirmBtn");
+
+
+clearDayCancelBtn.addEventListener(
+  "click",
+  closeClearDayDialog
+);
+
+clearDayCloseBtn.addEventListener(
+  "click",
+  closeClearDayDialog
+);
+
+clearDayConfirmBtn.addEventListener(
+  "click",
+  confirmClearDay
+);
+
+
+/* Tap the dark background to cancel */
+
+clearDayModal.addEventListener(
+  "click",
+  event => {
+    if (event.target === clearDayModal) {
+      closeClearDayDialog();
     }
   }
 );
