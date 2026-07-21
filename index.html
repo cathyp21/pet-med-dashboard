@@ -213,7 +213,7 @@ body {
 .matrix {
   width: 100%;
   padding: 0;
-  padding-bottom: 92px;
+  padding-bottom: 56px;
   overflow: visible;
 }
 
@@ -243,23 +243,26 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
-  margin-bottom: 1px;
-  padding: 0;
-  border: 1px solid rgba(186, 211, 234, 0.25);
-  border-radius: 11px;
+  margin-bottom: 12px;
+  padding: 5px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 13px;
   overflow: hidden;
-  background: #dbe6f2;
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.22);
+  background: #4d6888;
+  box-shadow:
+  0 12px 26px rgba(0,0,0,.28),
+  inset 0 1px 0 rgba(255,255,255,.18),
+  inset 0 -1px 0 rgba(0,0,0,.12);
 }
 
 .grid-header > div {
-  min-height: 90px;
+  min-height: 70px;
   margin: 0;
-  padding: 10px 7px;
-  border-right: 1px solid rgba(75, 103, 134, 0.22);
+  padding: 8px 7px;
+  border-right: none;
   border-radius: 0;
-  background: linear-gradient(180deg, #edf4fb, #d6e2ee);
-  color: #111c2b;
+  background: linear-gradient(180deg, #6381a3, #4d6888);
+  color: #ffffff;
   text-align: center;
   cursor: pointer;
   user-select: none;
@@ -282,12 +285,67 @@ body {
 
 .grid-header .medication-header {
   grid-column: 1 / span 2;
-  align-items: flex-start;
-  padding-left: 18px;
+
+  height: 100%;
+  min-height: 70px;
+  padding: 2px 0;
+  align-self: stretch;
+
+  display: grid;
+  grid-template-columns:
+    var(--dog-column)
+    var(--med-column);
+  gap: var(--grid-gap);
+
+  align-items: stretch;
   text-align: left;
-  font-size: 19px;
+
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
+
+  font-size: 17px;
   font-weight: 900;
-  text-decoration: underline;
+  letter-spacing: 0.8px;
+
+  text-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.55),
+    0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.header-name,
+.header-care-item {
+  width: 100%;
+height: 100%;
+margin: 0;
+  padding: 0 18px;
+
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.13),
+      rgba(255, 255, 255, 0.06)
+    ),
+    #4d6888;
+
+  display: flex;
+  align-items: center;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.header-name {
+  justify-content: center;
+}
+
+.header-care-item {
+  justify-content: flex-start;
+  padding-left: 28px;
 }
 
 .medication-header .clipboard {
@@ -299,12 +357,16 @@ body {
 .day-btn .weekday {
   font-size: 19px;
   font-weight: 900;
+  text-shadow:
+  0 2px 3px rgba(0,0,0,.55),
+  0 0 1px rgba(255,255,255,.18);
 }
 
 .day-btn .day-date {
   margin-top: 7px;
   font-size: 19px;
   font-weight: 800;
+  text-shadow: 0 1px 2px rgba(0,0,0,.30);
 }
 
 .day-btn.today,
@@ -313,7 +375,7 @@ body {
   border: 4px solid white !important;
   border-radius: 11px !important;
   background:
-    linear-gradient(180deg,#eef4fb,#dde8f6) !important;
+  linear-gradient(180deg,#506783,#3b4f68) !important;
 
 box-shadow:
   0 0 0 3px rgba(74,222,128,.70),
@@ -329,7 +391,7 @@ box-shadow:
 
 .dog {
   position: relative;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   padding: 5px;
   border: 2px solid var(--dog-border);
   border-radius: 13px;
@@ -402,6 +464,8 @@ box-shadow:
 ========================================================= */
 
 .dog-info {
+  position: relative;
+  cursor: pointer;
   grid-column: 1;
   grid-row: 1 / span var(--row-count);
   min-height: 100%;
@@ -413,11 +477,25 @@ box-shadow:
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+ justify-content: flex-start;
 
   box-shadow:
     inset -1px 0 0 rgba(90, 95, 112, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.dog-info::after {
+  content: "▼";
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  color: rgba(36, 48, 68, 0.55);
+  font-size: 12px;
+  line-height: 1;
+}
+
+.dog.collapsed .dog-info::after {
+  content: "▶";
 }
 
 .dog-name-line {
@@ -428,14 +506,14 @@ box-shadow:
 }
 
 .dog-paw {
-  color: var(--dog-accent);
-  font-size: 33px;
+ color: #9333ea;
+  font-size: 27px;
   line-height: 1;
 }
 
 .dog-name {
   color: #243044;
-  font-size: 31px;
+  font-size: 25px;
   font-weight: 900;
   letter-spacing: -1px;
 }
@@ -468,12 +546,59 @@ box-shadow:
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 10px;
 
   box-shadow:
     inset 0 0 0 1px rgba(75, 94, 116, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.26);
+}
+
+.notify-btn {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  margin: 0;
+
+  background: rgba(35, 48, 68, 0.08);
+  color: #3d5068;
+
+  border: 1px solid rgba(35, 48, 68, 0.15);
+  border-radius: 50%;
+
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.notify-btn svg {
+  width: 16px;
+  height: 16px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  pointer-events: none;
+}
+
+.notify-btn:hover {
+  opacity: 1;
+  transform: scale(1.08);
+  background: rgba(35, 48, 68, 0.14);
+}
+
+.notify-btn.active {
+  opacity: 1;
+  color: #1f5f99;
+  background: rgba(71, 145, 209, 0.18);
+  border-color: rgba(71, 145, 209, 0.38);
 }
 
 .med-main {
@@ -537,6 +662,11 @@ box-shadow:
     transform 0.1s ease,
     filter 0.1s ease,
     background 0.15s ease;
+}
+
+.dog.aidan .med-name,
+.dog.aidan .cell {
+  align-self: center;
 }
 
 /* Empty cell display */
@@ -723,24 +853,25 @@ box-shadow:
 .bottom-bar {
   position: fixed;
   right: 22px;
-  bottom: 14px;
+  bottom: 0;
   left: 22px;
   z-index: 10000;
 
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 
   padding: 9px;
   border: 1px solid rgba(151, 185, 218, 0.22);
-  border-radius: 13px;
+  border-radius: 13px 13px 4px 4px;
   background: rgba(14, 29, 45, 0.94);
   backdrop-filter: blur(10px);
   box-shadow: 0 7px 22px rgba(0, 0, 0, 0.38);
 }
 
 .bottom-bar button {
-  min-width: 130px;
+  width: 100%;
+  min-width: 0;
   padding: 10px 15px;
   border: 1px solid rgba(151, 185, 218, 0.22);
   border-radius: 9px;
@@ -1466,6 +1597,542 @@ box-shadow:
   }
 }
 
+/* =========================
+   MEDICATION CARD MODAL
+========================= */
+
+.med-card-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: rgba(6, 16, 29, 0.72);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.med-card-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.med-card {
+  position: relative;
+
+  width: min(460px, 100%);
+  max-height: calc(100dvh - 80px);
+  overflow-y: auto;
+
+  padding: 24px;
+
+  color: #f5f8fc;
+  background: rgba(24, 43, 63, 0.97);
+
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  transform: translateY(12px) scale(0.98);
+
+  transition: transform 0.2s ease;
+}
+
+.med-card-overlay.open .med-card {
+  transform: translateY(0) scale(1);
+}
+
+.med-card-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.07);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+
+  font-size: 25px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.med-card-close:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.13);
+}
+
+.med-card-header {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  padding-right: 42px;
+  margin-bottom: 18px;
+}
+
+.med-card-paw {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 46px;
+
+  background: rgba(173, 139, 255, 0.16);
+  border: 1px solid rgba(196, 174, 255, 0.28);
+  border-radius: 14px;
+
+  font-size: 23px;
+}
+
+.med-card-eyebrow {
+  margin-bottom: 2px;
+
+  color: rgba(220, 209, 255, 0.78);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+#medCardTitle {
+  margin: 0;
+  font-size: 23px;
+  line-height: 1.15;
+}
+
+.med-card-medication {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  margin-bottom: 18px;
+  padding: 14px 16px;
+
+  background: rgba(137, 192, 238, 0.13);
+  border: 1px solid rgba(154, 208, 250, 0.2);
+  border-radius: 13px;
+}
+
+#medCardDog {
+  color: rgba(225, 237, 247, 0.72);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+#medCardMed {
+  font-size: 19px;
+}
+
+.med-card-menu {
+  display: grid;
+  gap: 10px;
+}
+
+.med-card-option {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  align-items: center;
+  gap: 11px;
+
+  padding: 13px 14px;
+
+  color: #f5f8fc;
+  text-align: left;
+
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 13px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.16s ease,
+    transform 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.med-card-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.17);
+  transform: translateY(-1px);
+}
+
+.med-card-option-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.075);
+  border-radius: 11px;
+
+  font-size: 19px;
+}
+
+.med-card-option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.med-card-option-text strong {
+  font-size: 15px;
+}
+
+.med-card-option-text small {
+  color: rgba(226, 235, 244, 0.63);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.med-card-arrow {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 28px;
+  line-height: 1;
+}
+
+/* =========================
+   MEDICATION CARD PAGES
+========================= */
+
+.med-card-page[hidden] {
+  display: none;
+}
+
+.med-card-page {
+  animation: medCardPageIn 0.18s ease;
+}
+
+@keyframes medCardPageIn {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+/* REMINDER PAGE */
+
+.med-card-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  margin: 0 0 14px;
+  padding: 8px 11px;
+
+  color: rgba(235, 241, 248, 0.8);
+  background: rgba(255, 255, 255, 0.055);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.med-card-back:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.reminder-settings {
+  display: grid;
+  gap: 12px;
+}
+
+.reminder-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 14px 15px;
+
+  background: rgba(173, 139, 255, 0.1);
+  border: 1px solid rgba(196, 174, 255, 0.2);
+  border-radius: 13px;
+}
+
+.reminder-toggle-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.reminder-toggle-text strong {
+  font-size: 15px;
+}
+
+.reminder-toggle-text small {
+  color: rgba(226, 235, 244, 0.63);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.reminder-switch {
+  position: relative;
+
+  width: 50px;
+  height: 28px;
+
+  flex: 0 0 50px;
+}
+
+.reminder-switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.reminder-switch-slider {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.reminder-switch-slider::before {
+  content: "";
+
+  position: absolute;
+  top: 3px;
+  left: 3px;
+
+  width: 20px;
+  height: 20px;
+
+  background: white;
+  border-radius: 50%;
+
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+
+  transition: transform 0.18s ease;
+}
+
+.reminder-switch input:checked + .reminder-switch-slider {
+  background: rgba(76, 143, 255, 0.72);
+  border-color: rgba(120, 175, 255, 0.82);
+}
+
+.reminder-switch input:checked + .reminder-switch-slider::before {
+  transform: translateX(22px);
+}
+
+.reminder-field {
+  display: grid;
+  gap: 6px;
+
+  padding: 12px 14px;
+
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+}
+
+.reminder-field label {
+  color: rgba(226, 235, 244, 0.75);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.35px;
+}
+
+.reminder-field input,
+.reminder-field select {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 10px 11px;
+
+  color: #f5f8fc;
+  background: rgba(8, 21, 35, 0.55);
+
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 9px;
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.reminder-field select option {
+  color: #111827;
+  background: white;
+}
+
+.reminder-field input:focus,
+.reminder-field select:focus {
+  outline: 2px solid rgba(120, 175, 255, 0.65);
+  outline-offset: 1px;
+}
+
+.reminder-fields-disabled {
+  opacity: 0.48;
+  pointer-events: none;
+}
+
+.reminder-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+
+  margin-top: 3px;
+}
+
+.reminder-action-btn {
+  padding: 11px 14px;
+
+  border-radius: 11px;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.reminder-cancel-btn {
+  color: rgba(239, 244, 249, 0.82);
+  background: rgba(255, 255, 255, 0.055);
+
+  border: 1px solid rgba(255, 255, 255, 0.11);
+}
+
+.reminder-save-btn {
+  color: white;
+  background: rgba(76, 143, 255, 0.78);
+
+  border: 1px solid rgba(128, 180, 255, 0.75);
+}
+
+.reminder-save-btn:hover {
+  background: rgba(76, 143, 255, 0.95);
+}
+
+.reminder-status {
+  min-height: 18px;
+  margin: 1px 0 0;
+
+  color: rgba(190, 224, 255, 0.9);
+  text-align: center;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.reminder-time-picker {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.15fr;
+  gap: 8px;
+}
+
+.reminder-time-picker select {
+  width: 100%;
+}
+
+/* =========================
+   MEDICATION MANAGE BUTTON
+========================= */
+
+.manage-btn {
+  flex: 0 0 auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  gap: 6px;
+
+  min-height: 34px;
+  padding: 6px 10px;
+
+  background: rgba(255, 255, 255, 0.42);
+  color: #31445d;
+
+  border: 1px solid rgba(49, 68, 93, 0.18);
+  border-radius: 9px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 1px 3px rgba(35, 48, 68, 0.12);
+}
+
+.manage-btn:hover {
+  background: rgba(255, 255, 255, 0.62);
+  border-color: rgba(49, 68, 93, 0.28);
+}
+
+.manage-btn:active {
+  transform: scale(0.97);
+}
+
+.manage-btn:focus-visible {
+  outline: 3px solid rgba(71, 145, 209, 0.38);
+  outline-offset: 2px;
+}
+
+.manage-btn span:first-child {
+  font-size: 15px;
+  line-height: 1;
+}
+
 </style>
 </head>
 
@@ -1509,7 +2176,7 @@ box-shadow:
       </div>
 
       <div class="header-subtitle">
-        Medication Tracker
+        Care Tracker
       </div>
 
     </div>
@@ -1572,8 +2239,9 @@ box-shadow:
       <div class="grid-header">
 
         <div class="medication-header">
-          MEDICATION 
-        </div>
+  <span class="header-name">NAME</span>
+  <span class="header-care-item">CARE ITEM</span>
+</div>
 
         <div class="day-btn" onclick="clearDay(0)">
           <span class="weekday">SUN</span>
@@ -1620,7 +2288,7 @@ box-shadow:
 
   <div class="dog-info">
     <div class="dog-name-line">
-      <span class="dog-paw">🐾</span>
+<span class="dog-paw">🐾</span>
       <span class="dog-name">Aidan</span>
     </div>
   </div>
@@ -1654,7 +2322,7 @@ box-shadow:
 
   <div class="dog-info">
     <div class="dog-name-line">
-      <span class="dog-paw">🐾</span>
+<span class="dog-paw">🐾</span>
       <span class="dog-name">Callie</span>
     </div>
   </div>
@@ -1730,7 +2398,7 @@ box-shadow:
 
   <div class="dog-info">
     <div class="dog-name-line">
-      <span class="dog-paw">🐾</span>
+<span class="dog-paw">🐾</span>
       <span class="dog-name">Logan</span>
     </div>
   </div>
@@ -1742,14 +2410,53 @@ box-shadow:
 <div class="grid-row med-loxicom" data-row-key="logan-loxicom">
 
   <div class="med-name" data-med="loganloxicom">
-    Loxicom
-  </div>
+
+  <span class="med-main">Loxicom</span>
+
+<!--
+  <button
+    class="manage-btn"
+    type="button"
+    title="Manage Loxicom"
+    aria-label="Manage Loxicom medication record"
+  >
+    <span aria-hidden="true">📋</span>
+    <span>Manage</span>
+  </button>
+-->
+
+
+</div>
 
   <div class="cell"></div><div class="cell"></div>
   <div class="cell"></div><div class="cell"></div>
   <div class="cell"></div><div class="cell"></div>
   <div class="cell"></div>
 
+</div>
+
+<div class="grid-row med-hydrocodone" data-row-key="logan-hydro1">
+  <div class="med-name" data-med="loganhydro1">Hydrocodone 1</div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div>
+</div>
+
+<div class="grid-row med-hydrocodone" data-row-key="logan-hydro2">
+  <div class="med-name" data-med="loganhydro2">Hydrocodone 2</div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div>
+</div>
+
+<div class="grid-row med-hydrocodone" data-row-key="logan-hydro3">
+  <div class="med-name" data-med="loganhydro3">Hydrocodone 3</div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div>
 </div>
 
     <div class="grid-row med-trazodone" data-row-key="logan-traz1">
@@ -1885,7 +2592,7 @@ box-shadow:
 
   <div class="dog-info">
     <div class="dog-name-line">
-      <span class="dog-paw">🐾</span>
+<span class="dog-paw">🐾</span>
       <span class="dog-name">Jasmine</span>
     </div>
   </div>
@@ -1929,7 +2636,7 @@ box-shadow:
 
   <div class="dog-info">
     <div class="dog-name-line">
-      <span class="dog-paw">🐾</span>
+<span class="dog-paw">🐾</span>
       <span class="dog-name">Theo</span>
     </div>
   </div>
@@ -1965,7 +2672,6 @@ box-shadow:
   </div>
 </section>
 
-
 <!-- =================================================
      ATE / FOOD
 ================================================== -->
@@ -1973,7 +2679,7 @@ box-shadow:
 
   <div class="dog-info">
     <div class="dog-name-line">
-      <span class="dog-paw">🐾</span>
+<span class="dog-paw">🐾</span>
       <span class="dog-name">Ate</span>
     </div>
 
@@ -2292,9 +2998,14 @@ openDoseCard(cell);
    COLLAPSE DOG SECTIONS
 ========================= */
 document.addEventListener("click", function (e) {
-  if (!e.target.classList.contains("dog-title")) return;
+  const dogInfo = e.target.closest(".dog-info");
 
-  const dog = e.target.parentElement;
+  if (!dogInfo) return;
+
+  const dog = dogInfo.closest(".dog");
+
+  if (!dog) return;
+
   dog.classList.toggle("collapsed");
 });
 
@@ -3132,7 +3843,7 @@ if ("serviceWorker" in navigator) {
         class="dose-save-btn"
         type="button"
       >
-        Save Dose
+        Save Entry
       </button>
 
     </div>
@@ -3221,7 +3932,329 @@ if ("serviceWorker" in navigator) {
   </div>
 
 </div>
-   
+
+<!-- =====================================================
+     MEDICATION CARD MODAL
+====================================================== -->
+<div id="medCardModal" class="med-card-overlay" aria-hidden="true">
+
+  <div
+    class="med-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="medCardTitle"
+  >
+
+    <button
+      id="closeMedCardBtn"
+      class="med-card-close"
+      type="button"
+      aria-label="Close medication record"
+    >
+      ×
+    </button>
+
+    <div class="med-card-header">
+
+      <div class="med-card-paw">🐾</div>
+
+      <div>
+        <div class="med-card-eyebrow">
+          PawHub
+        </div>
+
+        <h2 id="medCardTitle">
+          Medication Record
+        </h2>
+      </div>
+
+    </div>
+
+    <div class="med-card-medication">
+      <span id="medCardDog">Dog</span>
+      <strong id="medCardMed">Medication</strong>
+    </div>
+
+    <!-- MAIN MEDICATION PAGE -->
+    <div
+      id="medCardMainPage"
+      class="med-card-page"
+    >
+
+      <div class="med-card-menu">
+
+        <button
+          class="med-card-option"
+          type="button"
+          data-panel="prescription"
+        >
+          <span class="med-card-option-icon">💊</span>
+
+          <span class="med-card-option-text">
+            <strong>Item Details</strong>
+            <small>Store dosage and pharmacy information</small>
+          </span>
+
+          <span class="med-card-arrow">›</span>
+        </button>
+
+        <button
+          class="med-card-option"
+          type="button"
+          data-panel="reminders"
+        >
+          <span class="med-card-option-icon">🔔</span>
+
+          <span class="med-card-option-text">
+            <strong>Reminders</strong>
+            <small>Schedule alerts for this medication</small>
+          </span>
+
+          <span class="med-card-arrow">›</span>
+        </button>
+
+        <button
+          class="med-card-option"
+          type="button"
+          data-panel="history"
+        >
+          <span class="med-card-option-icon">📖</span>
+
+          <span class="med-card-option-text">
+            <strong>History</strong>
+            <small>Review when it was given</small>
+          </span>
+
+          <span class="med-card-arrow">›</span>
+        </button>
+
+        <button
+          class="med-card-option"
+          type="button"
+          data-panel="notes"
+        >
+          <span class="med-card-option-icon">📝</span>
+
+          <span class="med-card-option-text">
+            <strong>Notes</strong>
+            <small>Add medication or care notes</small>
+          </span>
+
+          <span class="med-card-arrow">›</span>
+        </button>
+
+        <button
+          class="med-card-option"
+          type="button"
+          data-panel="vet"
+        >
+          <span class="med-card-option-icon">🩺</span>
+
+          <span class="med-card-option-text">
+            <strong>Vet Instructions</strong>
+            <small>Keep important directions handy</small>
+          </span>
+
+          <span class="med-card-arrow">›</span>
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- REMINDER SETTINGS PAGE -->
+    <div
+      id="medCardReminderPage"
+      class="med-card-page"
+      hidden
+    >
+
+      <button
+        id="reminderBackBtn"
+        class="med-card-back"
+        type="button"
+      >
+        ← Back
+      </button>
+
+      <div class="reminder-settings">
+
+        <div class="reminder-toggle-row">
+
+          <div class="reminder-toggle-text">
+            <strong>Enable Reminder</strong>
+            <small>Turn alerts on for this medication</small>
+          </div>
+
+          <label class="reminder-switch">
+
+            <input
+              id="reminderEnabled"
+              type="checkbox"
+            >
+
+            <span class="reminder-switch-slider"></span>
+
+          </label>
+
+        </div>
+
+
+        <div id="reminderFields">
+
+          <div class="reminder-settings">
+
+            <div class="reminder-field">
+              <label for="reminderHour">
+                MEDICATION TIME
+              </label>
+
+              <div class="reminder-time-picker">
+
+  <select id="reminderHour" aria-label="Hour">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+  </select>
+
+  <select id="reminderMinute" aria-label="Minute">
+    <option value="00">00</option>
+    <option value="05">05</option>
+    <option value="10">10</option>
+    <option value="15">15</option>
+    <option value="20">20</option>
+    <option value="25">25</option>
+    <option value="30">30</option>
+    <option value="35">35</option>
+    <option value="40">40</option>
+    <option value="45">45</option>
+    <option value="50">50</option>
+    <option value="55">55</option>
+  </select>
+
+  <select id="reminderPeriod" aria-label="AM or PM">
+    <option value="AM">AM</option>
+    <option value="PM">PM</option>
+  </select>
+
+</div>
+            </div>
+
+
+            <div class="reminder-field">
+              <label for="remindBefore">
+                REMIND ME
+              </label>
+
+              <select id="remindBefore">
+                <option value="0">At medication time</option>
+                <option value="10">10 minutes before</option>
+                <option value="15">15 minutes before</option>
+                <option value="30">30 minutes before</option>
+                <option value="60">1 hour before</option>
+              </select>
+            </div>
+
+
+            <div class="reminder-field">
+              <label for="repeatEvery">
+                REPEAT IF MISSED
+              </label>
+
+              <select id="repeatEvery">
+                <option value="0">Do not repeat</option>
+                <option value="5">Every 5 minutes</option>
+                <option value="10">Every 10 minutes</option>
+                <option value="15">Every 15 minutes</option>
+                <option value="30">Every 30 minutes</option>
+                <option value="60">Every hour</option>
+              </select>
+            </div>
+
+
+            <div class="reminder-field">
+              <label for="stopAfter">
+                STOP AFTER
+              </label>
+
+              <select id="stopAfter">
+                <option value="30">30 minutes</option>
+                <option value="60">1 hour</option>
+                <option value="120">2 hours</option>
+                <option value="180">3 hours</option>
+                <option value="240">4 hours</option>
+              </select>
+            </div>
+
+
+            <div class="reminder-toggle-row">
+
+              <div class="reminder-toggle-text">
+                <strong>Sound</strong>
+                <small>Play a sound with the alert</small>
+              </div>
+
+              <label class="reminder-switch">
+
+                <input
+                  id="reminderSound"
+                  type="checkbox"
+                  checked
+                >
+
+                <span class="reminder-switch-slider"></span>
+
+              </label>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <p
+          id="reminderStatus"
+          class="reminder-status"
+          aria-live="polite"
+        ></p>
+
+        <div class="reminder-actions">
+
+          <button
+            id="cancelReminderBtn"
+            class="reminder-action-btn reminder-cancel-btn"
+            type="button"
+          >
+            Cancel
+          </button>
+
+          <button
+            id="saveReminderBtn"
+            class="reminder-action-btn reminder-save-btn"
+            type="button"
+          >
+            Save Reminder
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
    <script>
    /* =========================================================
    DOSE ENTRY CARD
@@ -3707,6 +4740,194 @@ clearDayModal.addEventListener(
     }
   }
 );
+
+/* =========================
+   MEDICATION RECORD
+========================= */
+
+const medCardModal =
+  document.getElementById("medCardModal");
+
+const closeMedCardBtn =
+  document.getElementById("closeMedCardBtn");
+
+const medCardTitle =
+  document.getElementById("medCardTitle");
+
+const medCardDog =
+  document.getElementById("medCardDog");
+
+const medCardMed =
+  document.getElementById("medCardMed");
+
+const medCardMainPage =
+  document.getElementById("medCardMainPage");
+
+const medCardReminderPage =
+  document.getElementById("medCardReminderPage");
+
+let activeMedicationRowKey = null;
+let activeMedicationButton = null;
+
+
+/* =========================
+   MEDICATION INFORMATION
+========================= */
+
+function getDogNameFromRow(row) {
+  const dogSection = row.closest(".dog");
+
+  if (!dogSection) {
+    return "Medication";
+  }
+
+  const dogNameElement =
+    dogSection.querySelector(".dog-name");
+
+  if (dogNameElement) {
+    return dogNameElement.textContent.trim();
+  }
+
+  const rowKey = row.dataset.rowKey || "";
+  const firstPart = rowKey.split("-")[0];
+
+  return firstPart
+    ? firstPart.charAt(0).toUpperCase() + firstPart.slice(1)
+    : "Medication";
+}
+
+
+function getMedicationNameFromRow(row) {
+  const nameBox = row.querySelector(".med-name");
+
+  if (!nameBox) {
+    return "Medication";
+  }
+
+  const label =
+    nameBox.querySelector(".med-main") ||
+    nameBox.querySelector("span");
+
+  if (label) {
+    return label.textContent.trim();
+  }
+
+  return nameBox.textContent.trim();
+}
+
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+function showMedicationMainPage() {
+  if (!medCardMainPage || !medCardReminderPage) {
+    return;
+  }
+
+  medCardReminderPage.hidden = true;
+  medCardMainPage.hidden = false;
+
+  medCardTitle.textContent =
+    "Medication Record";
+}
+
+
+/* =========================
+   OPEN AND CLOSE RECORD
+========================= */
+
+function openMedicationCard(button) {
+  const row = button.closest(".grid-row");
+
+  if (!row || !medCardModal) {
+    return;
+  }
+
+  activeMedicationRowKey =
+    row.dataset.rowKey || null;
+
+  activeMedicationButton = button;
+
+  medCardDog.textContent =
+    getDogNameFromRow(row);
+
+  medCardMed.textContent =
+    getMedicationNameFromRow(row);
+
+  showMedicationMainPage();
+
+  medCardModal.classList.add("open");
+
+  medCardModal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+  closeMedCardBtn?.focus();
+}
+
+
+function closeMedicationCard() {
+  if (!medCardModal) {
+    return;
+  }
+
+  medCardModal.classList.remove("open");
+
+  medCardModal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  showMedicationMainPage();
+
+  if (activeMedicationButton) {
+    activeMedicationButton.focus();
+  }
+
+  activeMedicationRowKey = null;
+  activeMedicationButton = null;
+}
+
+
+/* =========================
+   MEDICATION RECORD EVENTS
+========================= */
+
+document.addEventListener("click", function(event) {
+  const manageButton =
+    event.target.closest(".manage-btn");
+
+  if (manageButton) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    openMedicationCard(manageButton);
+    return;
+  }
+
+  if (event.target === medCardModal) {
+    closeMedicationCard();
+  }
+});
+
+
+closeMedCardBtn?.addEventListener(
+  "click",
+  closeMedicationCard
+);
+
+
+document.addEventListener("keydown", function(event) {
+  if (
+    event.key === "Escape" &&
+    medCardModal?.classList.contains("open")
+  ) {
+    closeMedicationCard();
+  }
+});
+
 </script>
    
 </body>
