@@ -605,14 +605,15 @@ box-shadow:
   display: block;
   font-size: 15px;
   font-weight: 800;
-  line-height: 1.15;
+  line-height: 1;
 }
 
 .med-note {
   display: block;
-  margin-top: 3px;
+  margin-top: 0px;      /* was 3px */
   font-size: 13px;
   font-weight: 600;
+  line-height: .5;     /* tighter line spacing */
   opacity: .78;
   letter-spacing: .2px;
 }
@@ -625,6 +626,16 @@ box-shadow:
 .med-wuffes {
   border-left: none;
   background: transparent;
+}
+
+/* =========================================
+   MEDICATION GROUP SPACING
+========================================= */
+
+/* Space after the final row in a medication group */
+.med-group-gap > .med-name,
+.med-group-gap > .cell {
+  margin-bottom: 10px;
 }
 
 /* =========================================================
@@ -664,6 +675,24 @@ box-shadow:
     background 0.15s ease;
 }
 
+.cell-entry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.1;
+}
+
+.cell-time {
+  display: block;
+}
+
+.cell-dose {
+  display: block;
+  margin-top: 1px;
+  font-size: 13px;
+}
+
 .dog.aidan .med-name,
 .dog.aidan .cell {
   align-self: center;
@@ -700,11 +729,13 @@ box-shadow:
 }
 
 .cell.active::before {
-  content: "✓\A";
+  content: "✓";
+  display: inline-block;
+  margin-right: 8px;
+
   color: #1b5e20;
   font-size: 20px;
   font-weight: 900;
-  white-space: pre;
 }
 
 .cell.active:empty::before {
@@ -2283,7 +2314,7 @@ box-shadow:
 
 <!-- =================================================
      AIDAN
-================================================== -->
+================================================== 
 <section class="dog aidan" style="--row-count:1;">
 
   <div class="dog-info">
@@ -2312,7 +2343,7 @@ box-shadow:
     </div>
 
   </div>
-</section>
+</section> -->
 
 
 <!-- =================================================
@@ -2394,7 +2425,7 @@ box-shadow:
 <!-- =================================================
      LOGAN
 ================================================== -->
-<section class="dog logan" style="--row-count:13;">
+<section class="dog logan" style="--row-count:17;">
 
   <div class="dog-info">
     <div class="dog-name-line">
@@ -2407,7 +2438,7 @@ box-shadow:
 
   <div class="dog-content">
 
-<div class="grid-row med-loxicom" data-row-key="logan-loxicom">
+<div class="grid-row med-loxicom med-group-gap" data-row-key="logan-loxicom">
 
   <div class="med-name" data-med="loganloxicom">
 
@@ -2451,7 +2482,7 @@ box-shadow:
   <div class="cell"></div>
 </div>
 
-<div class="grid-row med-hydrocodone" data-row-key="logan-hydro3">
+<div class="grid-row med-hydrocodone med-group-gap" data-row-key="logan-hydro3">
   <div class="med-name" data-med="loganhydro3">Hydrocodone 3</div>
   <div class="cell"></div><div class="cell"></div>
   <div class="cell"></div><div class="cell"></div>
@@ -2475,7 +2506,7 @@ box-shadow:
       <div class="cell"></div>
     </div>
 
-    <div class="grid-row med-trazodone" data-row-key="logan-traz3">
+    <div class="grid-row med-trazodone med-group-gap" data-row-key="logan-traz3">
       <div class="med-name" data-med="logantraz3">Traz 3</div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
@@ -2491,7 +2522,7 @@ box-shadow:
       <div class="cell"></div>
     </div>
 
-    <div class="grid-row med-gabapentin" data-row-key="logan-extra-gab">
+<div class="grid-row med-gabapentin med-group-gap" data-row-key="logan-extra-gab">
       <div class="med-name" data-med="loganextragab">
         Extra Gab <span class="med-note">(As Needed)</span>
       </div>
@@ -2580,6 +2611,25 @@ box-shadow:
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div>
     </div>
+
+<div
+  class="grid-row med-hydrocodone night-routine-row"
+  data-row-key="logan-bed-hydro">
+  <div class="med-name" data-med="bedhydro">
+    <span class="med-main">
+      Bed Hydro
+    </span>
+
+    <span class="med-note">
+      1/4 tablet as needed
+    </span>
+  </div>
+
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div>
+</div>
 
   </div>
 </section>
@@ -2674,7 +2724,7 @@ box-shadow:
 
 <!-- =================================================
      ATE / FOOD
-================================================== -->
+================================================== 
 <section class="dog ate" style="--row-count:10;">
 
   <div class="dog-info">
@@ -2773,7 +2823,7 @@ box-shadow:
     </div>
 
   </div>
-</section>
+</section> -->
     </div>
   </main>
 
@@ -3166,7 +3216,7 @@ function collectCellData() {
     if (!key) return;
 
     data[key] = {
-      text: cell.textContent || "",
+text: cell.dataset.time || cell.textContent || "",
       active: cell.classList.contains("active"),
       locked: cell.dataset.locked === "true"
     };
@@ -3191,8 +3241,11 @@ function applyCellData(rawData) {
 
     if (!saved) return;
 
-    cell.textContent = saved.text || "";
-    cell.dataset.time = saved.text || "";
+cell.dataset.time = saved.text || "";
+
+if (saved.text) {
+  renderCellEntry(cell, saved.text);
+}
 
     if (saved.active) {
       cell.classList.add("active");
@@ -4543,6 +4596,52 @@ doseModal.addEventListener("click", event => {
   }
 });
 
+function renderCellEntry(cell, display) {
+  cell.innerHTML = "";
+
+  const entry = document.createElement("span");
+  entry.className = "cell-entry";
+
+  const cleanDisplay = String(display || "").trim();
+
+  /*
+    Handles both saved formats:
+
+    7:31 PM
+    (50 mg)
+
+    and older entries saved as:
+
+    7:31 PM (50 mg)
+  */
+  const match = cleanDisplay.match(
+    /^(.*?\b(?:AM|PM))\s*(\([^)]*\))?$/i
+  );
+
+  const timeText = match
+    ? match[1].trim()
+    : cleanDisplay;
+
+  const doseText = match && match[2]
+    ? match[2].trim()
+    : "";
+
+  const time = document.createElement("span");
+  time.className = "cell-time";
+  time.textContent = timeText;
+
+  entry.appendChild(time);
+
+  if (doseText) {
+    const dose = document.createElement("span");
+    dose.className = "cell-dose";
+    dose.textContent = doseText;
+
+    entry.appendChild(dose);
+  }
+
+  cell.appendChild(entry);
+}
 
 /* Save the time and optional dose */
 
@@ -4560,11 +4659,11 @@ if (
   medicationUsesDose(medName) &&
   selectedDoseValue
 ) {
-  display += " (" + selectedDoseValue + ")";
+display += "\n(" + selectedDoseValue + ")";
 }
 
   activeDoseCell.dataset.time = display;
-  activeDoseCell.textContent = display;
+renderCellEntry(activeDoseCell, display);
 
   activeDoseCell.classList.add("active");
   activeDoseCell.dataset.locked = "true";
