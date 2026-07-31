@@ -1097,6 +1097,115 @@ box-shadow:
   align-items: flex-start;
 }
 
+/* =========================
+   LOGAN MEDICATION SECTIONS
+========================= */
+
+.care-period-title {
+  grid-column: 2 / -1;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  min-height: 38px;
+  padding: 7px 14px;
+  margin-top: 6px;
+
+  color: #233044;
+  font-size: 15px;
+  font-weight: 900;
+
+  background: rgba(15, 23, 42, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 7px;
+}
+
+/* Morning header with care reminders */
+.care-period-title-with-note {
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.care-period-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.care-period-reminders {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+
+  min-width: 0;
+
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.care-period-reminders span {
+  white-space: nowrap;
+}
+
+.care-period-reminders .cold-reminder {
+  color: #1769aa;
+}/* Morning header with care reminders */
+.care-period-title-with-note {
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.care-period-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.care-period-reminders {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 18px;
+
+  min-width: 0;
+
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.care-period-reminders span {
+  white-space: nowrap;
+}
+
+.care-period-reminders .cold-reminder {
+  color: #1769aa;
+}
+
+/* Medication rows containing a name and a smaller note */
+.med-detail-row .med-name {
+  grid-column: 2;
+
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+/* Keep the note close to the medication name */
+.med-detail-row .med-note {
+  margin-top: 1px;
+  line-height: 1;
+}
+
 /* =========================================================
    DOSE ENTRY CARD
 ========================================================= */
@@ -2451,11 +2560,11 @@ box-shadow:
 <!-- =================================================
      LOGAN
 ================================================== -->
-<section class="dog logan" style="--row-count:17;">
+<section class="dog logan" style="--row-count:22;">
 
   <div class="dog-info">
     <div class="dog-name-line">
-<span class="dog-paw">🐾</span>
+      <span class="dog-paw">🐾</span>
       <span class="dog-name">Logan</span>
     </div>
   </div>
@@ -2464,113 +2573,280 @@ box-shadow:
 
   <div class="dog-content">
 
-<div class="grid-row med-loxicom med-group-gap" data-row-key="logan-loxicom">
+    <!-- =========================
+         MORNING
+    ========================== -->
 
-  <div class="med-name" data-med="loganloxicom">
+<div class="care-period-title care-period-title-with-note">
 
-  <span class="med-main">Loxicom</span>
-  <span class="med-note">
-  Give After Food
-</span>
+  <div class="care-period-heading">
+    <span>☀️</span>
+    <span>Morning</span>
+  </div>
 
-<!--
-  <button
-    class="manage-btn"
-    type="button"
-    title="Manage Loxicom"
-    aria-label="Manage Loxicom medication record"
-  >
-    <span aria-hidden="true">📋</span>
-    <span>Manage</span>
-  </button>
--->
-
+  <div class="care-period-reminders">
+    <span>🍽 After meal</span>
+    <span class="cold-reminder">
+      💧 Keep LIQUID Refrigerated
+    </span>
+  </div>
 
 </div>
 
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div>
-
-</div>
-
-<div class="grid-row med-hydrocodone" data-row-key="logan-hydro1">
-  <div class="med-name" data-med="loganhydro1">Hydrocodone 1</div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div>
-</div>
-
-<div class="grid-row med-hydrocodone" data-row-key="logan-hydro2">
-  <div class="med-name" data-med="loganhydro2">Hydrocodone 2</div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div>
-</div>
-
-<div class="grid-row med-hydrocodone med-group-gap" data-row-key="logan-hydro3">
-  <div class="med-name" data-med="loganhydro3">Hydrocodone 3</div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div>
-</div>
-
-    <div class="grid-row med-trazodone" data-row-key="logan-traz1">
-      <div class="med-name" data-med="logantraz1">Traz 1</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row med-trazodone" data-row-key="logan-traz2">
-      <div class="med-name" data-med="logantraz2">Traz 2</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row med-trazodone med-group-gap" data-row-key="logan-traz3">
-      <div class="med-name" data-med="logantraz3">Traz 3</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row med-gabapentin" data-row-key="logan-gab1">
-      <div class="med-name" data-med="logangab1">Gab 1</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-<div class="grid-row med-gabapentin med-group-gap" data-row-key="logan-extra-gab">
-      <div class="med-name" data-med="loganextragab">
-        Extra Gab <span class="med-note">(As Needed)</span>
+    <div
+      class="grid-row med-loxicom med-detail-row"
+      data-row-key="logan-loxicom"
+    >
+      <div class="med-name" data-med="loganloxicom">
+<span class="med-main">Loxicom 🍽</span>
+        <span class="med-note">Give after a meal</span>
       </div>
+
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div>
     </div>
 
-    <div class="grid-row" data-row-key="logan-dentastix">
-      <div class="med-name" data-med="logandentastix">Dentastix</div>
+    <div
+      class="grid-row med-gabapentin med-detail-row"
+      data-row-key="logan-gab1"
+    >
+      <div class="med-name" data-med="logan-am-gab">
+<span class="med-main">
+  AM Gabapentin 💧
+</span>
+        <span class="med-note">Recommended: 100 mg</span>
+      </div>
+
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div>
+    </div>
+
+    <div
+      class="grid-row med-hydrocodone med-detail-row"
+      data-row-key="logan-hydro1"
+    >
+      <div class="med-name" data-med="logan-am-hydro">
+        <span class="med-main">AM Hydrocodone</span>
+        <span class="med-note">Recommended: ½ tablet</span>
+      </div>
+
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div
+      class="grid-row med-trazodone med-detail-row"
+      data-row-key="logan-traz1"
+    >
+      <div class="med-name" data-med="logan-am-traz">
+        <span class="med-main">AM Trazodone</span>
+        <span class="med-note">If needed</span>
+      </div>
+
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+
+    <!-- =========================
+         NOON
+    ========================== -->
+
+    <div class="care-period-title">
+      <span>🕛</span>
+      <span>Noon</span>
+    </div>
+
+    <div
+      class="grid-row med-gabapentin med-detail-row"
+      data-row-key="logan-extra-gab"
+    >
+      <div class="med-name" data-med="logan-noon-gab">
+<span class="med-main">Noon Gabapentin 💧
+</span>
+        <span class="med-note">Recommended: 100 mg</span>
+      </div>
+
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div
+      class="grid-row med-hydrocodone med-detail-row"
+      data-row-key="logan-hydro2"
+    >
+      <div class="med-name" data-med="logan-noon-hydro">
+        <span class="med-main">Noon Hydrocodone</span>
+        <span class="med-note">Recommended: ½ tablet</span>
+      </div>
+
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+
+    <!-- =========================
+         EVENING
+    ========================== -->
+
+    <div class="care-period-title">
+    <span>⭐</span>
+      <span>Evening</span>
+    </div>
+
+    <div
+      class="grid-row med-gabapentin med-detail-row"
+      data-row-key="logan-bed-gab2"
+    >
+      <div class="med-name" data-med="logan-pm-gab">
+<span class="med-main">PM Gabapentin 💧
+</span>
+        <span class="med-note">Recommended: 150 mg</span>
+      </div>
+
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div
+      class="grid-row med-hydrocodone med-detail-row"
+      data-row-key="logan-hydro3"
+    >
+      <div class="med-name" data-med="logan-pm-hydro">
+        <span class="med-main">PM Hydrocodone</span>
+        <span class="med-note">Recommended: ½ tablet</span>
+      </div>
+
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div
+      class="grid-row med-detail-row"
+      data-row-key="logan-pm-acepromazine"
+    >
+      <div class="med-name" data-med="logan-pm-ace">
+        <span class="med-main">Acepromazine</span>
+        <span class="med-note">½ tablet</span>
+      </div>
+
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+
+    <!-- =========================
+         OVERNIGHT
+    ========================== -->
+
+    <div class="care-period-title">
+      <span>🌙</span>
+      <span>Overnight</span>
+    </div>
+
+    <div
+      class="grid-row med-hydrocodone med-detail-row"
+      data-row-key="logan-bed-hydro"
+    >
+      <div class="med-name" data-med="logan-overnight-hydro">
+        <span class="med-main">Overnight Hydrocodone</span>
+        <span class="med-note">½ tablet • If needed</span>
+      </div>
+
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+
+    <!-- =========================
+         AS NEEDED
+    ========================== -->
+
+    <div class="care-period-title">
+      <span>➕</span>
+      <span>As Needed</span>
+    </div>
+
+    <div
+      class="grid-row med-trazodone med-detail-row"
+      data-row-key="logan-traz2"
+    >
+      <div class="med-name" data-med="logan-prn-traz1">
+        <span class="med-main">PRN Trazodone 1</span>
+        <span class="med-note">If needed</span>
+      </div>
+
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div
+      class="grid-row med-trazodone med-detail-row"
+      data-row-key="logan-traz3"
+    >
+      <div class="med-name" data-med="logan-prn-traz2">
+        <span class="med-main">PRN Trazodone 2</span>
+        <span class="med-note">If needed</span>
+      </div>
+
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+    <div
+      class="grid-row med-trazodone med-detail-row"
+      data-row-key="logan-bed-traz"
+    >
+      <div class="med-name" data-med="logan-prn-traz3">
+        <span class="med-main">PRN Trazodone 3</span>
+        <span class="med-note">If needed</span>
+      </div>
+
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+
+
+    <!-- =========================
+         DAILY CARE
+    ========================== -->
+
+    <div class="care-period-title">
+      <span>🐾</span>
+      <span>Daily Care</span>
     </div>
 
     <div class="grid-row" data-row-key="logan-welactin">
-      <div class="med-name" data-med="loganwelactin">Welactin</div>
+      <div class="med-name" data-med="loganwelactin">
+        Welactin
+      </div>
+
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
@@ -2578,91 +2854,29 @@ box-shadow:
     </div>
 
     <div class="grid-row" data-row-key="logan-cosequin">
-      <div class="med-name" data-med="logancosequin">Cosequin</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="night-routine-title">
-      <span>🌙</span>
-      <span>Night Routine</span>
-    </div>
-
-    <div class="grid-row med-gabapentin night-routine-row"
-         data-row-key="logan-bed-gab1">
-      <div class="med-name" data-med="bedgab1">
-        <span class="med-main">
-  Bed Gab 1
-</span>
-
-<span class="med-note">
-  50 mg • 7:30 PM
-</span>
+      <div class="med-name" data-med="logancosequin">
+        Cosequin
       </div>
+
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div>
     </div>
 
-    <div class="grid-row med-gabapentin night-routine-row"
-         data-row-key="logan-bed-gab2">
-      <div class="med-name" data-med="bedgab2">
-<span class="med-main">
-  Bed Gab 2
-</span>
-
-<span class="med-note">
-  100 mg • 10:00 PM
-</span>
+    <div class="grid-row" data-row-key="logan-dentastix">
+      <div class="med-name" data-med="logandentastix">
+        Dentastix
       </div>
+
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div>
     </div>
-
-    <div class="grid-row med-trazodone night-routine-row"
-         data-row-key="logan-bed-traz">
-      <div class="med-name" data-med="bedtraz">
-<span class="med-main">
-  Bed Traz
-</span>
-
-<span class="med-note">
-  50 mg • 10:00 PM
-</span>
-      </div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-<div
-  class="grid-row med-hydrocodone night-routine-row"
-  data-row-key="logan-bed-hydro">
-  <div class="med-name" data-med="bedhydro">
-    <span class="med-main">
-      Bed Hydro
-    </span>
-
-    <span class="med-note">
-      1/4 tablet as needed
-    </span>
-  </div>
-
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div>
-</div>
 
   </div>
 </section>
-
 
 <!-- =================================================
      JASMINE
@@ -4446,38 +4660,100 @@ function getCellMedicationName(cell) {
 
 /* Check whether this medication uses dose choices */
 
-function medicationUsesDose(medName) {
-  const name = medName.toLowerCase();
+function getDoseChoicesForCell(cell) {
+  const rowKey =
+    cell.closest(".grid-row")?.dataset.rowKey || "";
 
-  return (
-    name.includes("gab") ||
-    name.includes("traz") ||
-    name.includes("hydro")
-  );
+  const doseChoicesByRow = {
+    /* Gabapentin */
+    "logan-gab1": [
+      "50 mg pill",
+      "100 mg pill",
+      "150 mg pills",
+      "1.5 mL liquid",
+      "2 mL liquid"
+    ],
+
+    "logan-extra-gab": [
+      "50 mg pill",
+      "100 mg pill",
+      "150 mg pills",
+      "1.5 mL liquid",
+      "2 mL liquid"
+    ],
+
+    "logan-bed-gab2": [
+      "50 mg pill",
+      "100 mg pill",
+      "150 mg pills",
+      "1.5 mL liquid",
+      "2 mL liquid"
+    ],
+
+    /* Hydrocodone */
+    "logan-hydro1": [
+      "¼ tablet",
+      "½ tablet"
+    ],
+
+    "logan-hydro2": [
+      "¼ tablet",
+      "½ tablet"
+    ],
+
+    "logan-hydro3": [
+      "¼ tablet",
+      "½ tablet"
+    ],
+
+    "logan-bed-hydro": [
+      "¼ tablet",
+      "½ tablet"
+    ],
+
+    /* Trazodone */
+    "logan-traz1": [
+      "25 mg (¼ tablet)",
+      "50 mg (½ tablet)"
+    ],
+
+    "logan-traz2": [
+      "25 mg (¼ tablet)",
+      "50 mg (½ tablet)"
+    ],
+
+    "logan-traz3": [
+      "25 mg (¼ tablet)",
+      "50 mg (½ tablet)"
+    ],
+
+    "logan-bed-traz": [
+      "25 mg (¼ tablet)",
+      "50 mg (½ tablet)"
+    ]
+  };
+
+  return doseChoicesByRow[rowKey] || [];
+}
+
+
+function getAutomaticDoseForCell(cell) {
+  const rowKey =
+    cell.closest(".grid-row")?.dataset.rowKey || "";
+
+  const automaticDoseByRow = {
+    "logan-pm-acepromazine": "½ tablet"
+  };
+
+  return automaticDoseByRow[rowKey] || "";
 }
 
 
 /* Load the correct dose choices */
 
-function loadDoseChoices(medName) {
-  const name = medName.toLowerCase();
-
+function loadDoseChoices(choices) {
   selectedDoseValue = "";
   doseChoices.innerHTML = "";
-
-  let choices = [];
-
-  if (name.includes("gab")) {
-    choices = ["50 mg", "100 mg"];
-  }
-
-  if (name.includes("traz")) {
-choices = ["25 mg", "50 mg", "100 mg"];
-  }
-  
-    if (name.includes("hydro")) {
-choices = ["1/4 tab", "1/2 tab"];
-  }
 
   choices.forEach(choice => {
     const button = document.createElement("button");
@@ -4557,26 +4833,24 @@ const dogKey = getCellDogKey(cell);
   
   setDosePickerTime(new Date());
 
-  selectedDoseValue = "";
+selectedDoseValue = "";
 doseChoices.innerHTML = "";
 
-const autoDoseMap = {
-  "Bed Gab 1": "50 mg",
-  "Bed Gab 2": "100 mg",
-  "Bed Traz": "50 mg"
-};
+const automaticDose =
+  getAutomaticDoseForCell(cell);
 
-const autoDose = autoDoseMap[medName];
+const availableChoices =
+  getDoseChoicesForCell(cell);
 
-if (autoDose) {
-  selectedDoseValue = autoDose;
+if (automaticDose) {
+  selectedDoseValue = automaticDose;
 
   doseAmountSection.classList.add(
     "dose-section-hidden"
   );
 }
-else if (medicationUsesDose(medName)) {
-  loadDoseChoices(medName);
+else if (availableChoices.length > 0) {
+  loadDoseChoices(availableChoices);
 
   doseAmountSection.classList.remove(
     "dose-section-hidden"
@@ -4686,14 +4960,8 @@ doseSaveBtn.addEventListener("click", () => {
 
   let display = getDoseTimeText();
 
-  const medName =
-    getCellMedicationName(activeDoseCell);
-
-if (
-  medicationUsesDose(medName) &&
-  selectedDoseValue
-) {
-display += "\n(" + selectedDoseValue + ")";
+if (selectedDoseValue) {
+  display += "\n(" + selectedDoseValue + ")";
 }
 
   activeDoseCell.dataset.time = display;
