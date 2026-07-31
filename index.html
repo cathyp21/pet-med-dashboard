@@ -4422,7 +4422,8 @@ function medicationUsesDose(medName) {
 
   return (
     name.includes("gab") ||
-    name.includes("traz")
+    name.includes("traz") ||
+    name.includes("hydro")
   );
 }
 
@@ -4443,6 +4444,10 @@ function loadDoseChoices(medName) {
 
   if (name.includes("traz")) {
 choices = ["25 mg", "50 mg", "100 mg"];
+  }
+  
+    if (name.includes("hydro")) {
+choices = ["1/4 tab", "1/2 tab"];
   }
 
   choices.forEach(choice => {
