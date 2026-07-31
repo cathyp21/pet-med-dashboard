@@ -742,6 +742,32 @@ box-shadow:
   content: "✓";
 }
 
+/* Needed so the dimming layer stays inside each cell */
+.cell.active {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dim only the green background on completed non-today cells */
+.cell.active:not(.today-col)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: rgba(30, 45, 30, 0.38);
+
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+/* Keep the checkmark, time and dose above the dimming layer */
+.cell.active::before,
+.cell.active .cell-entry {
+  position: relative;
+  z-index: 2;
+}
+
 /* Current-day column border */
 
 .cell.today-col {
@@ -2443,6 +2469,9 @@ box-shadow:
   <div class="med-name" data-med="loganloxicom">
 
   <span class="med-main">Loxicom</span>
+  <span class="med-note">
+  Give After Food
+</span>
 
 <!--
   <button
