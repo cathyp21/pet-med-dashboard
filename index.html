@@ -645,7 +645,7 @@ box-shadow:
 .cell {
   position: relative;
   width: auto;
-  height: 45px;
+  height: 52px;
   min-width: 0;
   padding: 5px;
   border: 2px solid rgba(75, 96, 120, 0.74);
@@ -676,21 +676,27 @@ box-shadow:
 }
 
 .cell-entry {
+  width: 100%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  line-height: 1.1;
+
+  line-height: 1;
 }
 
 .cell-time {
   display: block;
+  white-space: nowrap;
 }
 
 .cell-dose {
   display: block;
-  margin-top: 1px;
-  font-size: 13px;
+  margin-top: 3px;
+  font-size: 12px;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .dog.aidan .med-name,
@@ -1106,10 +1112,12 @@ box-shadow:
   width: 100%;
 
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
 
-  min-height: 38px;
+  min-height: 46px;
   padding: 7px 14px;
   margin-top: 6px;
 
@@ -1122,70 +1130,19 @@ box-shadow:
   border-radius: 7px;
 }
 
-/* Morning header with care reminders */
-.care-period-title-with-note {
-  justify-content: space-between;
-  gap: 18px;
-}
-
 .care-period-heading {
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-shrink: 0;
 }
 
-.care-period-reminders {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 16px;
+.care-period-note {
+  margin-left: 24px;
 
-  min-width: 0;
-
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.care-period-reminders span {
-  white-space: nowrap;
-}
-
-.care-period-reminders .cold-reminder {
-  color: #1769aa;
-}/* Morning header with care reminders */
-.care-period-title-with-note {
-  justify-content: space-between;
-  gap: 18px;
-}
-
-.care-period-heading {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.care-period-reminders {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 18px;
-
-  min-width: 0;
-
-  font-size: 16px;
+  color: rgba(36,48,68,.9)
+  font-size: 13px;
   font-weight: 800;
-  line-height: 1.2;
-}
-
-.care-period-reminders span {
-  white-space: nowrap;
-}
-
-.care-period-reminders .cold-reminder {
-  color: #1769aa;
+  line-height: 1.1;
 }
 
 /* Medication rows containing a name and a smaller note */
@@ -2577,20 +2534,15 @@ box-shadow:
          MORNING
     ========================== -->
 
-<div class="care-period-title care-period-title-with-note">
-
+<div class="care-period-title">
   <div class="care-period-heading">
     <span>☀️</span>
     <span>Morning</span>
   </div>
 
-  <div class="care-period-reminders">
-    <span>🍽 After meal</span>
-    <span class="cold-reminder">
-      💧 Keep LIQUID Refrigerated
-    </span>
-  </div>
-
+  <span class="care-period-note">
+    🍽 After a meal  • 💧 Keep LIQUID Refrigerated
+  </span>
 </div>
 
     <div
@@ -2660,10 +2612,16 @@ box-shadow:
          NOON
     ========================== -->
 
-    <div class="care-period-title">
-      <span>🕛</span>
-      <span>Noon</span>
-    </div>
+<div class="care-period-title">
+  <div class="care-period-heading">
+    <span>🌤️</span>
+    <span>Noon</span>
+  </div>
+
+  <span class="care-period-note">
+    🕛 Midday medications
+  </span>
+</div>
 
     <div
       class="grid-row med-gabapentin med-detail-row"
@@ -2701,10 +2659,16 @@ box-shadow:
          EVENING
     ========================== -->
 
-    <div class="care-period-title">
+<div class="care-period-title">
+  <div class="care-period-heading">
     <span>⭐</span>
-      <span>Evening</span>
-    </div>
+    <span>Evening</span>
+  </div>
+
+  <span class="care-period-note">
+    🛏️ 1 hour before bedtime
+  </span>
+</div>
 
     <div
       class="grid-row med-gabapentin med-detail-row"
@@ -2757,10 +2721,16 @@ box-shadow:
          OVERNIGHT
     ========================== -->
 
-    <div class="care-period-title">
-      <span>🌙</span>
-      <span>Overnight</span>
-    </div>
+<div class="care-period-title">
+  <div class="care-period-heading">
+    <span>🌙</span>
+    <span>Overnight</span>
+  </div>
+
+  <span class="care-period-note">
+    ⚠️ Only if needed
+  </span>
+</div>
 
     <div
       class="grid-row med-hydrocodone med-detail-row"
@@ -2782,17 +2752,23 @@ box-shadow:
          AS NEEDED
     ========================== -->
 
-    <div class="care-period-title">
-      <span>➕</span>
-      <span>As Needed</span>
-    </div>
+<div class="care-period-title">
+  <div class="care-period-heading">
+    <span>➕</span>
+    <span>As Needed</span>
+  </div>
+
+  <span class="care-period-note">
+    ⚠️ Only if needed
+  </span>
+</div>
 
     <div
       class="grid-row med-trazodone med-detail-row"
       data-row-key="logan-traz2"
     >
       <div class="med-name" data-med="logan-prn-traz1">
-        <span class="med-main">PRN Trazodone 1</span>
+        <span class="med-main">Trazodone 1</span>
         <span class="med-note">If needed</span>
       </div>
 
@@ -2807,7 +2783,7 @@ box-shadow:
       data-row-key="logan-traz3"
     >
       <div class="med-name" data-med="logan-prn-traz2">
-        <span class="med-main">PRN Trazodone 2</span>
+        <span class="med-main">Trazodone 2</span>
         <span class="med-note">If needed</span>
       </div>
 
@@ -2822,7 +2798,7 @@ box-shadow:
       data-row-key="logan-bed-traz"
     >
       <div class="med-name" data-med="logan-prn-traz3">
-        <span class="med-main">PRN Trazodone 3</span>
+        <span class="med-main">Trazodone 3</span>
         <span class="med-note">If needed</span>
       </div>
 
@@ -2837,10 +2813,16 @@ box-shadow:
          DAILY CARE
     ========================== -->
 
-    <div class="care-period-title">
-      <span>🐾</span>
-      <span>Daily Care</span>
-    </div>
+<div class="care-period-title">
+  <div class="care-period-heading">
+    <span>🐾</span>
+    <span>Daily Care</span>
+  </div>
+
+  <span class="care-period-note">
+    💜 Daily routine supplements
+  </span>
+</div>
 
     <div class="grid-row" data-row-key="logan-welactin">
       <div class="med-name" data-med="loganwelactin">
@@ -4665,6 +4647,31 @@ function getDoseChoicesForCell(cell) {
     cell.closest(".grid-row")?.dataset.rowKey || "";
 
   const doseChoicesByRow = {
+  
+  /* Callie — Gabapentin */
+"callie-gab1": [
+  "50 mg",
+  "100 mg"
+],
+
+"callie-gab2": [
+  "50 mg",
+  "100 mg"
+],
+
+/* Callie — Trazodone */
+"callie-traz1": [
+  "25 mg (¼ tab)",
+  "50 mg (½ tab)",
+  "100 mg (1 tab)"
+],
+
+"callie-traz2": [
+  "25 mg (¼ tab)",
+  "50 mg (½ tab)",
+  "100 mg (1 tab)"
+],
+
     /* Gabapentin */
     "logan-gab1": [
       "50 mg pill",
@@ -4692,44 +4699,44 @@ function getDoseChoicesForCell(cell) {
 
     /* Hydrocodone */
     "logan-hydro1": [
-      "¼ tablet",
-      "½ tablet"
+      "¼ tab",
+      "½ tab"
     ],
 
     "logan-hydro2": [
-      "¼ tablet",
-      "½ tablet"
+      "¼ tab",
+      "½ tab"
     ],
 
     "logan-hydro3": [
-      "¼ tablet",
-      "½ tablet"
+      "¼ tab",
+      "½ tab"
     ],
 
     "logan-bed-hydro": [
-      "¼ tablet",
-      "½ tablet"
+      "¼ tab",
+      "½ tab"
     ],
 
     /* Trazodone */
     "logan-traz1": [
-      "25 mg (¼ tablet)",
-      "50 mg (½ tablet)"
+      "25 mg (¼ tab)",
+      "50 mg (½ tab)"
     ],
 
     "logan-traz2": [
-      "25 mg (¼ tablet)",
-      "50 mg (½ tablet)"
+      "25 mg (¼ tab)",
+      "50 mg (½ tab)"
     ],
 
     "logan-traz3": [
-      "25 mg (¼ tablet)",
-      "50 mg (½ tablet)"
+      "25 mg (¼ tab)",
+      "50 mg (½ tab)"
     ],
 
     "logan-bed-traz": [
-      "25 mg (¼ tablet)",
-      "50 mg (½ tablet)"
+      "25 mg (¼ tab)",
+      "50 mg (½ tab)"
     ]
   };
 
@@ -4922,17 +4929,24 @@ function renderCellEntry(cell, display) {
 
     7:31 PM (50 mg)
   */
-  const match = cleanDisplay.match(
-    /^(.*?\b(?:AM|PM))\s*(\([^)]*\))?$/i
-  );
+const match = cleanDisplay.match(
+  /^(.*?\b(?:AM|PM))\s*([\s\S]*)$/i
+);
 
-  const timeText = match
-    ? match[1].trim()
-    : cleanDisplay;
+const timeText = match
+  ? match[1].trim()
+  : cleanDisplay;
 
-  const doseText = match && match[2]
-    ? match[2].trim()
-    : "";
+let doseText = match
+  ? match[2].trim()
+  : "";
+
+/* Shorten only what appears inside the green cell */
+doseText = doseText
+  .replace(/\s*\((¼|½|¾)\s*(?:tablet|tab)\)/gi, "")
+  .replace(/\btablet\b/gi, "tab")
+  .replace(/\s+/g, " ")
+  .trim();
 
   const time = document.createElement("span");
   time.className = "cell-time";
