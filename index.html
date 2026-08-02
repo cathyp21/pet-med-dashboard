@@ -1668,6 +1668,20 @@ box-shadow:
     box-shadow 0.15s ease;
 }
 
+.dose-choice-heading {
+  grid-column: 1 / -1;
+
+  margin-top: 8px;
+  margin-bottom: 4px;
+
+  color: #4a5a72;
+
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
 .dose-choice-btn:active {
   transform: scale(0.97);
 }
@@ -2407,6 +2421,228 @@ box-shadow:
     0 0 0 3px rgba(74, 222, 128, 0.70),
     0 0 26px rgba(74, 222, 128, 0.90),
     0 0 38px rgba(74, 222, 128, 0.55) !important;
+}
+
+/* =========================================
+   COMPACT DOSE ENTRY CARD
+   Keep at the end of the CSS
+========================================= */
+
+#doseModal .dose-card {
+  width: min(430px, 94vw);
+  max-height: 94vh;
+}
+
+#doseModal .dose-card-header {
+  padding: 16px 18px 13px;
+}
+
+#doseModal .dose-dog-name {
+  font-size: 17px;
+}
+
+#doseModal .dose-med-name {
+  margin-top: 4px;
+  font-size: 23px;
+}
+
+#doseModal .dose-card-body {
+  padding: 15px 18px;
+}
+
+#doseModal .dose-field {
+  margin-bottom: 14px;
+}
+
+#doseModal .dose-field-label {
+  margin-bottom: 6px;
+}
+
+#doseModal .dose-time-row {
+  gap: 7px;
+}
+
+#doseModal .dose-time-row select {
+  min-height: 46px;
+  padding: 7px 9px;
+  font-size: 16px;
+}
+
+#doseModal .dose-now-btn {
+  min-height: 42px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+#doseModal .dose-choice-buttons {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+#doseModal .dose-choice-btn {
+  min-height: 48px;
+  padding: 8px 6px;
+  font-size: 16px;
+}
+
+#doseModal .dose-skip-btn {
+  min-height: 42px;
+  margin-top: 2px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+#doseModal .dose-card-footer {
+  gap: 9px;
+  padding: 12px 18px 16px;
+}
+
+#doseModal .dose-card-footer button {
+  min-height: 45px;
+  padding: 8px 12px;
+  font-size: 15px;
+}
+
+/* =========================================
+   FINAL DOSE CARD POLISH
+   Keep at the very end of the CSS
+========================================= */
+
+#doseModal .dose-card {
+  width: min(400px, 92vw);
+}
+
+#doseModal .dose-card-header {
+  padding: 13px 16px 11px;
+}
+
+#doseModal .dose-dog-name {
+  font-size: 15px;
+}
+
+#doseModal .dose-med-name {
+  margin-top: 2px;
+  font-size: 21px;
+}
+
+#doseModal .dose-close-btn {
+  top: 10px;
+  right: 11px;
+  width: 34px;
+  height: 34px;
+  font-size: 21px;
+}
+
+#doseModal .dose-card-body {
+  padding: 12px 16px;
+}
+
+#doseModal .dose-field {
+  margin-bottom: 10px;
+}
+
+#doseModal .dose-field-label {
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+#doseModal .dose-time-row select {
+  min-height: 42px;
+  padding: 6px 8px;
+  font-size: 15px;
+}
+
+#doseModal .dose-now-btn {
+  min-height: 38px;
+  margin-top: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+#doseModal .dose-choice-heading {
+  margin-top: 2px;
+  margin-bottom: 0;
+
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+}
+
+#doseModal .dose-choice-buttons {
+  gap: 6px;
+}
+
+#doseModal .dose-choice-btn {
+  min-height: 42px;
+  padding: 6px 5px;
+  font-size: 15px;
+}
+
+#doseModal .dose-skip-btn {
+  min-height: 38px;
+  margin-top: 0;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+#doseModal .dose-card-footer {
+  gap: 8px;
+  padding: 10px 16px 13px;
+}
+
+#doseModal .dose-card-footer button {
+  min-height: 41px;
+  padding: 7px 10px;
+  font-size: 14px;
+}
+
+/* =========================================
+   FINAL GABAPENTIN CARD POLISH
+   Keep at the end of the CSS
+========================================= */
+
+/* Softer form labels */
+#doseModal .dose-choice-heading {
+  margin-top: 1px;
+  margin-bottom: -1px;
+
+  color: rgba(220, 235, 248, 0.72);
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: none;
+}
+
+/* Slightly tighter grouping */
+#doseModal .dose-choice-buttons {
+  row-gap: 5px;
+}
+
+/* Subtle teal tint for liquid choices */
+#doseModal .dose-choice-btn[data-value*="mL"] {
+  border-color: rgba(86, 197, 205, 0.55);
+
+  background:
+    linear-gradient(
+      180deg,
+      #174257,
+      #0d2d3d
+    );
+}
+
+/* Keep selected liquid choices green like everything else */
+#doseModal .dose-choice-btn[data-value*="mL"].selected {
+  border-color: #78d890;
+
+  background:
+    linear-gradient(
+      180deg,
+      #43a962,
+      #287a40
+    );
 }
 
 </style>
@@ -4282,7 +4518,7 @@ if ("serviceWorker" in navigator) {
         class="dose-skip-btn"
         type="button"
       >
-        ↷ Skip Dose
+        ↷Mark as Skipped
       </button>
 
     </div>
@@ -4858,30 +5094,30 @@ function getDoseChoicesForCell(cell) {
 
     /* Gabapentin */
     "logan-gab1": [
-      "50 mg pill",
-      "100 mg pill",
-      "150 mg pills",
-      "1 mL liquid",
-      "1.5 mL liquid",
-      "2 mL liquid"
+  "50 mg",
+  "100 mg",
+  "150 mg",
+  "1 mL",
+  "1.5 mL",
+  "2 mL"
     ],
 
     "logan-extra-gab": [
-      "50 mg pill",
-      "100 mg pill",
-      "150 mg pills",
-      "1 mL liquid",
-      "1.5 mL liquid",
-      "2 mL liquid"
+  "50 mg",
+  "100 mg",
+  "150 mg",
+  "1 mL",
+  "1.5 mL",
+  "2 mL"
     ],
 
     "logan-bed-gab2": [
-      "50 mg pill",
-      "100 mg pill",
-      "150 mg pills",
-      "1 mL liquid",
-      "1.5 mL liquid",
-      "2 mL liquid"
+  "50 mg",
+  "100 mg",
+  "150 mg",
+  "1 mL",
+  "1.5 mL",
+  "2 mL"
     ],
 
     /* Hydrocodone */
@@ -4949,28 +5185,56 @@ function loadDoseChoices(choices) {
   selectedDoseValue = "";
   doseChoices.innerHTML = "";
 
-  choices.forEach(choice => {
-    const button = document.createElement("button");
+  // Split Gabapentin into Capsules and Liquid
+  const capsuleChoices = choices.filter(c => c.includes("mg"));
+  const liquidChoices = choices.filter(c => c.includes("mL"));
 
-    button.type = "button";
-    button.className = "dose-choice-btn";
-    button.textContent = choice;
-    button.dataset.value = choice;
+  function addHeading(text) {
+    const heading = document.createElement("div");
+    heading.className = "dose-choice-heading";
+    heading.textContent = text;
+    doseChoices.appendChild(heading);
+  }
 
-    button.addEventListener("click", () => {
-      selectedDoseValue = choice;
+  function addButtons(list) {
+    list.forEach(choice => {
+      const button = document.createElement("button");
 
-      doseChoices
-        .querySelectorAll(".dose-choice-btn")
-        .forEach(otherButton => {
-          otherButton.classList.remove("selected");
-        });
+      button.type = "button";
+      button.className = "dose-choice-btn";
+      button.textContent = choice;
+      button.dataset.value = choice;
 
-      button.classList.add("selected");
+      button.addEventListener("click", () => {
+        selectedDoseValue = choice;
+
+        doseChoices
+          .querySelectorAll(".dose-choice-btn")
+          .forEach(otherButton => {
+            otherButton.classList.remove("selected");
+          });
+
+        button.classList.add("selected");
+      });
+
+      doseChoices.appendChild(button);
     });
+  }
 
-    doseChoices.appendChild(button);
-  });
+  // Only create headings if BOTH capsule and liquid choices exist
+  if (capsuleChoices.length && liquidChoices.length) {
+
+    addHeading("CAPSULES");
+    addButtons(capsuleChoices);
+
+    addHeading("LIQUID");
+    addButtons(liquidChoices);
+
+  } else {
+
+    addButtons(choices);
+
+  }
 }
 
 /* Get the dog name */
@@ -5022,7 +5286,10 @@ const dogName = getCellDogName(cell);
 const dogKey = getCellDogKey(cell);
 
   doseDogName.textContent = dogName;
-  doseMedName.textContent = medName;
+doseMedName.textContent = medName
+  .replace(/💧/g, "")
+  .replace(/\s+/g, " ")
+  .trim();
   doseModal.dataset.dog = dogKey;
   
   setDosePickerTime(new Date());
