@@ -5402,7 +5402,18 @@ let doseText = match
 
 /* Shorten only what appears inside the green cell */
 doseText = doseText
-  .replace(/\s*\((¼|½|¾)\s*(?:tablet|tab)\)/gi, "")
+  /*
+    Shorten Trazodone entries such as:
+    (25 mg (¼ tab)) → (25 mg)
+
+    But keep Hydrocodone/Acepromazine entries such as:
+    (¼ tab)
+    (½ tab)
+  */
+  .replace(
+    /(\d+(?:\.\d+)?\s*mg)\s*\((¼|½|¾)\s*(?:tablet|tab)\)/gi,
+    "$1"
+  )
   .replace(/\btablet\b/gi, "tab")
   .replace(/\s+/g, " ")
   .trim();
