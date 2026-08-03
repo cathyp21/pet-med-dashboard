@@ -5141,6 +5141,12 @@ function getDoseChoicesForCell(cell) {
       "½ tab"
     ],
 
+/* Acepromazine */
+"logan-pm-acepromazine": [
+  "¼ tab",
+  "½ tab"
+],
+
     /* Trazodone */
     "logan-traz1": [
       "25 mg (¼ tab)",
@@ -5172,7 +5178,6 @@ function getAutomaticDoseForCell(cell) {
     cell.closest(".grid-row")?.dataset.rowKey || "";
 
   const automaticDoseByRow = {
-    "logan-pm-acepromazine": "½ tablet"
   };
 
   return automaticDoseByRow[rowKey] || "";
