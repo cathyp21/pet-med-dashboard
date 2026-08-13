@@ -2645,6 +2645,482 @@ box-shadow:
     );
 }
 
+/* =========================================
+   PAWHUB PAGE TABS
+========================================= */
+
+.pawhub-page-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+  margin: 6px 0 14px;
+}
+
+.pawhub-page-tab {
+  min-width: 180px;
+  min-height: 44px;
+
+  padding: 9px 16px;
+
+  border: 1px solid rgba(151, 190, 225, 0.28);
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #263d55,
+      #1b2f43
+    );
+
+  color: #dbeafe;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 3px 8px rgba(0, 0, 0, 0.18);
+}
+
+.pawhub-page-tab.active {
+  border-color: rgba(200, 167, 255, 0.75);
+
+  background:
+    linear-gradient(
+      180deg,
+      #7651ad,
+      #553789
+    );
+
+  color: white;
+
+  box-shadow:
+    0 0 0 2px rgba(200, 167, 255, 0.16),
+    0 5px 14px rgba(74, 44, 117, 0.28);
+}
+
+.pawhub-page-tab:active {
+  transform: translateY(1px);
+}
+
+/* =========================================
+   NIGHT CHECKLIST PAGE
+========================================= */
+
+.night-checklist-page {
+  padding: 6px 20px 90px;
+}
+
+.night-checklist-header {
+  position: relative;
+  max-width: 900px;
+  margin: 12px auto 22px;
+  padding: 22px 24px;
+
+  text-align: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(70, 47, 108, 0.55),
+      rgba(25, 48, 70, 0.85)
+    );
+
+  border: 1px solid rgba(196, 168, 255, 0.32);
+  border-radius: 18px;
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.night-checklist-title {
+  font-size: 25px;
+  font-weight: 900;
+  color: #ffffff;
+
+  text-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+.night-checklist-subtitle {
+  margin-top: 5px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #c9d8e7;
+}
+
+.night-back-button {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  padding: 9px 14px;
+
+  border: 1px solid rgba(151, 190, 225, 0.35);
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #29445f,
+      #1c3247
+    );
+
+  color: #e5f0fa;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 3px 9px rgba(0, 0, 0, 0.2);
+}
+
+.night-back-button:active {
+  transform: translateY(-48%);
+}
+
+#nightChecklistContent {
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+}
+
+/* =========================================
+   NIGHT CHECKLIST WEEKLY GRID
+========================================= */
+
+.night-grid {
+  display: grid;
+grid-template-columns:
+  minmax(420px, 2.8fr)
+  repeat(7, minmax(90px, 1fr));
+
+  gap: 5px;
+
+  width: 100%;
+  min-width: 1180px;
+
+  padding: 6px;
+
+  border: 1px solid rgba(174, 202, 231, 0.16);
+  border-radius: 14px;
+
+  background: rgba(12, 27, 44, 0.65);
+}
+
+/* Top row */
+
+.night-grid-header {
+  min-height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px;
+
+  border-radius: 8px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #6381a3,
+      #4d6888
+    );
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: 900;
+
+  text-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.4);
+}
+
+.night-task-header {
+  justify-content: flex-start;
+  padding-left: 16px;
+}
+
+
+/* Section dividers */
+
+.night-section-title {
+  grid-column: 1 / -1;
+
+  margin-top: 5px;
+  padding: 9px 14px;
+
+  border-radius: 8px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(115, 79, 170, 0.68),
+      rgba(52, 77, 105, 0.66)
+    );
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+}
+
+
+/* Task descriptions */
+
+.night-task {
+  min-height: 58px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 8px 12px;
+
+  border-radius: 8px;
+
+  background: rgba(203, 220, 238, 0.9);
+
+  color: #233044;
+}
+
+.night-task strong {
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.night-task span {
+  margin-top: 4px;
+
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.2;
+
+  opacity: 0.76;
+}
+
+
+/* Checklist cells */
+
+.night-check,
+.night-time {
+  min-height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid rgba(75, 96, 120, 0.74);
+  border-radius: 9px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #101a27 0%,
+      #080f18 100%
+    );
+
+  color: white;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.05),
+    0 2px 4px rgba(0, 0, 0, 0.24);
+}
+
+
+/* Empty check indicator */
+
+.night-check::before {
+  content: "○";
+
+  color: rgba(215, 229, 242, 0.55);
+
+  font-size: 22px;
+  font-weight: 700;
+}
+
+
+/* Time rows */
+
+.night-time::before {
+  content: "--:--";
+
+  color: rgba(215, 229, 242, 0.62);
+
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+
+/* Today's column */
+
+.night-today {
+  position: relative;
+
+  border: 4px solid white !important;
+
+  box-shadow:
+    0 0 0 3px rgba(74, 222, 128, 0.7),
+    0 0 22px rgba(74, 222, 128, 0.72);
+
+  z-index: 2;
+}
+
+
+/* Completed checkbox */
+
+.night-check.complete {
+  background:
+    linear-gradient(
+      180deg,
+      #b9f8b0,
+      #97ea8f 55%,
+      #7edb76
+    );
+
+  border-color: #5abf5a;
+
+  color: #143814;
+}
+
+.night-check.complete::before {
+  content: "✓";
+
+  color: #1b5e20;
+
+  font-size: 22px;
+  font-weight: 900;
+}
+
+
+/* Completed time */
+
+.night-time.complete {
+  background:
+    linear-gradient(
+      180deg,
+      #b9f8b0,
+      #97ea8f 55%,
+      #7edb76
+    );
+
+  border-color: #5abf5a;
+
+  color: #143814;
+}
+
+.night-time.complete::before {
+  content: none;
+}
+
+/* Move Back to PawHub button above Night Checklist header */
+
+.night-checklist-header {
+  position: relative;
+  margin-top: 70px;
+}
+
+.night-back-button {
+  position: absolute;
+  top: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* =========================================
+   MATCH PAGE SWITCH BUTTON SIZES
+========================================= */
+
+#nightChecklistTab,
+#backToPawHub {
+  width: 220px;
+  height: 52px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* =========================================
+   NIGHT CHECKLIST — DIM COMPLETED OFF-DAYS
+========================================= */
+
+.night-check.complete:not(.night-today),
+.night-time.complete:not(.night-today) {
+  position: relative;
+  overflow: hidden;
+}
+
+.night-check.complete:not(.night-today)::after,
+.night-time.complete:not(.night-today)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+background: rgba(18, 25, 22, 0.58);
+
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+/* Keep the checkmark/time above the dimming layer */
+.night-check.complete::before,
+.night-time.complete {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================
+   ATE — DOG SUBSECTIONS
+========================================= */
+
+.ate-dog-title {
+  grid-column: 2 / -1;
+
+  min-height: 38px;
+  padding: 7px 14px;
+  margin-top: 4px;
+
+  display: flex;
+  align-items: center;
+
+  border: 1px solid rgba(116, 76, 163, 0.18);
+  border-radius: 7px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(116, 68, 167, 0.22),
+      rgba(255, 255, 255, 0.16)
+    );
+
+  color: #633590;
+
+  font-size: 16px;
+  font-weight: 900;
+}
+
 </style>
 </head>
 
@@ -2698,6 +3174,153 @@ box-shadow:
 
   </header>
 
+<!-- =====================================================
+     PAWHUB PAGE SWITCHER
+====================================================== -->
+
+<div class="pawhub-page-tabs">
+
+  <button
+    id="nightChecklistTab"
+    class="pawhub-page-tab"
+    type="button"
+  >
+    🌙 Night Checklist
+  </button>
+
+</div>
+
+<!-- =====================================================
+     NIGHT CHECKLIST PAGE
+====================================================== -->
+
+<section id="nightChecklistPage" class="night-checklist-page" style="display:none;">
+
+  <div class="night-checklist-header">
+  
+  <button
+  id="backToPawHub"
+  class="night-back-button"
+  type="button"
+>
+  ← Back to PawHub
+</button>
+
+    <div class="night-checklist-title">🌙 Night Checklist</div>
+    <div class="night-checklist-subtitle">
+      Everything ready for bedtime
+    </div>
+  </div>
+
+<div id="nightChecklistContent">
+
+  <div class="night-grid">
+
+    <div class="night-grid-header night-task-header">TASK</div>
+    <div class="night-grid-header">SUN</div>
+    <div class="night-grid-header">MON</div>
+    <div class="night-grid-header">TUE</div>
+    <div class="night-grid-header">WED</div>
+    <div class="night-grid-header">THU</div>
+    <div class="night-grid-header">FRI</div>
+    <div class="night-grid-header">SAT</div>
+
+
+    <!-- DOG CARE -->
+
+    <div class="night-section-title">
+      🐾 DOG CARE
+    </div>
+
+    <div class="night-task">
+      <strong>💧 Refresh water — when home</strong>
+      <span>Check and freshen all dog water bowls</span>
+    </div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div>
+
+
+    <div class="night-task">
+      <strong>🍽️ Early evening feeding check</strong>
+      <span>Try feeding, especially Callie & Logan • Record eating in PawHub</span>
+    </div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div>
+
+
+    <div class="night-task">
+      <strong>👀 Check dog cues / meds</strong>
+      <span>If restless, uncomfortable, pacing or whining, check PawHub and/or ask Cathy</span>
+    </div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div>
+
+
+    <div class="night-task">
+      <strong>💧 Refresh water — before bed</strong>
+      <span>Make sure everyone has fresh water for the night</span>
+    </div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div>
+
+
+    <div class="night-task">
+      <strong>🐾 Let dogs out before bed</strong>
+      <span>Record the time</span>
+    </div>
+    <div class="night-time"></div><div class="night-time"></div>
+    <div class="night-time"></div><div class="night-time"></div>
+    <div class="night-time"></div><div class="night-time"></div>
+    <div class="night-time"></div>
+
+
+    <div class="night-task">
+      <strong>🚧 Living room gate</strong>
+      <span>Make sure the gate is up if needed</span>
+    </div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div>
+
+
+    <!-- HOUSE -->
+
+    <div class="night-section-title">
+      🏠 HOUSE
+    </div>
+
+    <div class="night-task">
+      <strong>🪟 Close curtains</strong>
+    </div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div>
+
+
+    <div class="night-task">
+      <strong>🍽️ Put away food before bed</strong>
+      <span>Put away any food, leftovers or ingredients left out</span>
+    </div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div><div class="night-check"></div>
+    <div class="night-check"></div>
+
+  </div>
+
+</div>
+
+</section>
 
   <!-- Hidden import input -->
   <input
@@ -2830,7 +3453,7 @@ box-shadow:
 <!-- =================================================
      CALLIE
 ================================================== -->
-<section class="dog callie" style="--row-count:7;">
+<section class="dog callie" style="--row-count:8;">
 
   <div class="dog-info">
     <div class="dog-name-line">
@@ -2858,6 +3481,15 @@ box-shadow:
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div>
     </div>
+
+<div class="grid-row" data-row-key="callie-gab3">
+  <div class="med-name" data-med="calliegab3">Gab 3</div>
+
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div><div class="cell"></div>
+  <div class="cell"></div>
+</div>
 
     <div class="grid-row" data-row-key="callie-traz1">
       <div class="med-name" data-med="callietraz1">Traz 1</div>
@@ -3338,12 +3970,12 @@ box-shadow:
 
 <!-- =================================================
      ATE / FOOD
-================================================== 
-<section class="dog ate" style="--row-count:10;">
+================================================== -->
+<section class="dog ate" style="--row-count:12;">
 
   <div class="dog-info">
     <div class="dog-name-line">
-<span class="dog-paw">🐾</span>
+      <span class="dog-paw">🐾</span>
       <span class="dog-name">Ate</span>
     </div>
 
@@ -3356,24 +3988,13 @@ box-shadow:
 
   <div class="dog-content">
 
-    <div class="grid-row" data-row-key="ate-aidan1">
-      <div class="med-name">Aidan 1</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="ate-aidan2">
-      <div class="med-name">Aidan 2</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
+    <!-- CALLIE -->
+    <div class="ate-dog-title">
+      🐾 Callie
     </div>
 
     <div class="grid-row" data-row-key="ate-callie1">
-      <div class="med-name">Callie 1</div>
+      <div class="med-name">Meal 1</div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
@@ -3381,15 +4002,21 @@ box-shadow:
     </div>
 
     <div class="grid-row" data-row-key="ate-callie2">
-      <div class="med-name">Callie 2</div>
+      <div class="med-name">Meal 2</div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div>
     </div>
 
+
+    <!-- LOGAN -->
+    <div class="ate-dog-title">
+      🐾 Logan
+    </div>
+
     <div class="grid-row" data-row-key="ate-logan1">
-      <div class="med-name">Logan 1</div>
+      <div class="med-name">Meal 1</div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
@@ -3397,15 +4024,21 @@ box-shadow:
     </div>
 
     <div class="grid-row" data-row-key="ate-logan2">
-      <div class="med-name">Logan 2</div>
+      <div class="med-name">Meal 2</div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div>
     </div>
 
+
+    <!-- JASMINE -->
+    <div class="ate-dog-title">
+      🐾 Jasmine
+    </div>
+
     <div class="grid-row" data-row-key="ate-jasmine1">
-      <div class="med-name">Jasmine 1</div>
+      <div class="med-name">Meal 1</div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
@@ -3413,15 +4046,21 @@ box-shadow:
     </div>
 
     <div class="grid-row" data-row-key="ate-jasmine2">
-      <div class="med-name">Jasmine 2</div>
+      <div class="med-name">Meal 2</div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div>
     </div>
 
+
+    <!-- THEO -->
+    <div class="ate-dog-title">
+      🐾 Theo
+    </div>
+
     <div class="grid-row" data-row-key="ate-theo1">
-      <div class="med-name">Theo 1</div>
+      <div class="med-name">Meal 1</div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
@@ -3429,7 +4068,7 @@ box-shadow:
     </div>
 
     <div class="grid-row" data-row-key="ate-theo2">
-      <div class="med-name">Theo 2</div>
+      <div class="med-name">Meal 2</div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
@@ -3437,7 +4076,7 @@ box-shadow:
     </div>
 
   </div>
-</section> -->
+</section> 
     </div>
   </main>
 
@@ -5079,6 +5718,11 @@ function getDoseChoicesForCell(cell) {
   "100 mg"
 ],
 
+"callie-gab3": [
+  "50 mg",
+  "100 mg"
+],
+
 /* Callie — Trazodone */
 "callie-traz1": [
   "25 mg (¼ tab)",
@@ -5871,6 +6515,214 @@ document.addEventListener("keydown", function(event) {
     closeMedicationCard();
   }
 });
+
+/* =========================================
+   NIGHT CHECKLIST OPEN / CLOSE
+========================================= */
+
+const nightChecklistTab = document.getElementById("nightChecklistTab");
+const nightChecklistPage = document.getElementById("nightChecklistPage");
+const backToPawHub = document.getElementById("backToPawHub");
+
+const mainTracker = document.querySelector(".matrix");
+
+nightChecklistTab.addEventListener("click", function () {
+  mainTracker.style.display = "none";
+  nightChecklistPage.style.display = "block";
+
+  // Show Back to PawHub, hide Night Checklist
+  nightChecklistTab.style.display = "none";
+  backToPawHub.style.display = "inline-flex";
+});
+
+backToPawHub.addEventListener("click", function () {
+  nightChecklistPage.style.display = "none";
+  mainTracker.style.display = "block";
+
+  // Show Night Checklist, hide Back to PawHub
+  nightChecklistTab.style.display = "";
+});
+
+/* =========================================
+   NIGHT CHECKLIST — CHECK / UNCHECK + SAVE
+========================================= */
+
+const nightCheckCells = document.querySelectorAll(".night-check");
+
+function saveNightChecklist() {
+  const savedChecks = [];
+
+  nightCheckCells.forEach(function (cell, index) {
+    if (cell.classList.contains("complete")) {
+      savedChecks.push(index);
+    }
+  });
+
+  localStorage.setItem(
+    "pawhubNightChecklist",
+    JSON.stringify(savedChecks)
+  );
+}
+
+function loadNightChecklist() {
+  const saved =
+    JSON.parse(localStorage.getItem("pawhubNightChecklist")) || [];
+
+  nightCheckCells.forEach(function (cell, index) {
+    if (saved.includes(index)) {
+      cell.classList.add("complete");
+    }
+  });
+}
+
+nightCheckCells.forEach(function (cell) {
+  cell.addEventListener("click", function () {
+    cell.classList.toggle("complete");
+    saveNightChecklist();
+  });
+});
+
+/* =========================================
+   NIGHT CHECKLIST — WEEKLY RESET
+========================================= */
+
+function getNightChecklistWeekKey() {
+  const today = new Date();
+
+  const sunday = new Date(today);
+  sunday.setDate(today.getDate() - today.getDay());
+
+  return (
+    sunday.getFullYear() +
+    "-" +
+    String(sunday.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(sunday.getDate()).padStart(2, "0")
+  );
+}
+
+function resetNightChecklistForNewWeek() {
+  const currentWeekKey = getNightChecklistWeekKey();
+
+  const savedWeekKey = localStorage.getItem(
+    "pawhubNightChecklistWeek"
+  );
+
+  if (savedWeekKey !== currentWeekKey) {
+    nightCheckCells.forEach(function(cell) {
+      cell.classList.remove("complete");
+    });
+
+localStorage.removeItem("pawhubNightChecklist");
+localStorage.removeItem("pawhubNightTimes");
+
+    localStorage.setItem(
+      "pawhubNightChecklistWeek",
+      currentWeekKey
+    );
+  }
+}
+
+resetNightChecklistForNewWeek();
+loadNightChecklist();
+
+/* =========================================
+   NIGHT CHECKLIST — TIME CELLS
+========================================= */
+
+const nightTimeCells = document.querySelectorAll(".night-time");
+
+function getNightTimeText() {
+  return new Date().toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true
+  });
+}
+
+function saveNightTimes() {
+  const savedTimes = {};
+
+  nightTimeCells.forEach(function(cell, index) {
+    if (cell.classList.contains("complete")) {
+      savedTimes[index] = cell.textContent.trim();
+    }
+  });
+
+  localStorage.setItem(
+    "pawhubNightTimes",
+    JSON.stringify(savedTimes)
+  );
+}
+
+function loadNightTimes() {
+  const savedTimes =
+    JSON.parse(localStorage.getItem("pawhubNightTimes")) || {};
+
+  nightTimeCells.forEach(function(cell, index) {
+    const savedTime = savedTimes[index];
+
+    if (savedTime) {
+      cell.textContent = savedTime;
+      cell.classList.add("complete");
+    }
+  });
+}
+
+nightTimeCells.forEach(function(cell) {
+  cell.addEventListener("click", function() {
+
+    if (cell.classList.contains("complete")) {
+      cell.classList.remove("complete");
+      cell.textContent = "";
+    } else {
+      cell.textContent = getNightTimeText();
+      cell.classList.add("complete");
+    }
+
+    saveNightTimes();
+  });
+});
+
+loadNightTimes();
+
+/* =========================================
+   NIGHT CHECKLIST — TODAY HIGHLIGHT
+========================================= */
+
+function highlightNightChecklistToday() {
+  const today = new Date().getDay(); // Sun = 0 ... Sat = 6
+  const grid = document.querySelector(".night-grid");
+
+  if (!grid) return;
+
+  // Remove any old highlight
+  grid.querySelectorAll(".night-today").forEach(function(item) {
+    item.classList.remove("night-today");
+  });
+
+  // Highlight today's header
+  const headers = grid.querySelectorAll(".night-grid-header");
+
+  if (headers[today + 1]) {
+    headers[today + 1].classList.add("night-today");
+  }
+
+  // Every task is followed by its 7 day cells
+  grid.querySelectorAll(".night-task").forEach(function(task) {
+    let cell = task.nextElementSibling;
+
+    for (let day = 0; day < 7 && cell; day++) {
+      if (day === today) {
+        cell.classList.add("night-today");
+      }
+
+      cell = cell.nextElementSibling;
+    }
+  });
+}
+
+highlightNightChecklistToday();
 
 </script>
    
