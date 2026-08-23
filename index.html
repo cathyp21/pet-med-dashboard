@@ -3121,6 +3121,43 @@ background: rgba(18, 25, 22, 0.58);
   font-weight: 900;
 }
 
+/* =========================================
+   LOGAN GAB — LIQUID DOSE DROPDOWN
+========================================= */
+
+.gab-liquid-select {
+  grid-column: 1 / -1;
+
+  width: 100%;
+  min-height: 46px;
+
+  padding: 8px 12px;
+
+  border: 2px solid rgba(86, 197, 205, 0.55);
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #174257,
+      #0d2d3d
+    );
+
+  color: white;
+
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+
+  cursor: pointer;
+  outline: none;
+}
+
+.gab-liquid-select option {
+  background: #0d1c2c;
+  color: white;
+}
+
 </style>
 </head>
 
@@ -5736,33 +5773,72 @@ function getDoseChoicesForCell(cell) {
   "100 mg (1 tab)"
 ],
 
-    /* Gabapentin */
-    "logan-gab1": [
+/* Gabapentin */
+"logan-gab1": [
   "50 mg",
   "100 mg",
   "150 mg",
-  "1 mL",
+  "0.5 mL",
+  "0.6 mL",
+  "0.7 mL",
+  "0.8 mL",
+  "0.9 mL",
+  "1.0 mL",
+  "1.1 mL",
+  "1.2 mL",
+  "1.3 mL",
+  "1.4 mL",
   "1.5 mL",
-  "2 mL"
-    ],
+  "1.6 mL",
+  "1.7 mL",
+  "1.8 mL",
+  "1.9 mL",
+  "2.0 mL"
+],
 
-    "logan-extra-gab": [
+"logan-extra-gab": [
   "50 mg",
   "100 mg",
   "150 mg",
-  "1 mL",
+  "0.5 mL",
+  "0.6 mL",
+  "0.7 mL",
+  "0.8 mL",
+  "0.9 mL",
+  "1.0 mL",
+  "1.1 mL",
+  "1.2 mL",
+  "1.3 mL",
+  "1.4 mL",
   "1.5 mL",
-  "2 mL"
-    ],
+  "1.6 mL",
+  "1.7 mL",
+  "1.8 mL",
+  "1.9 mL",
+  "2.0 mL"
+],
 
-    "logan-bed-gab2": [
+"logan-bed-gab2": [
   "50 mg",
   "100 mg",
   "150 mg",
-  "1 mL",
+  "0.5 mL",
+  "0.6 mL",
+  "0.7 mL",
+  "0.8 mL",
+  "0.9 mL",
+  "1.0 mL",
+  "1.1 mL",
+  "1.2 mL",
+  "1.3 mL",
+  "1.4 mL",
   "1.5 mL",
-  "2 mL"
-    ],
+  "1.6 mL",
+  "1.7 mL",
+  "1.8 mL",
+  "1.9 mL",
+  "2.0 mL"
+],
 
     /* Hydrocodone */
     "logan-hydro1": [
@@ -5834,18 +5910,33 @@ function loadDoseChoices(choices) {
   selectedDoseValue = "";
   doseChoices.innerHTML = "";
 
-  // Split Gabapentin into Capsules and Liquid
-  const capsuleChoices = choices.filter(c => c.includes("mg"));
-  const liquidChoices = choices.filter(c => c.includes("mL"));
+  const capsuleChoices =
+    choices.filter(choice => choice.includes("mg"));
+
+  const liquidChoices =
+    choices.filter(choice => choice.includes("mL"));
+
 
   function addHeading(text) {
     const heading = document.createElement("div");
+
     heading.className = "dose-choice-heading";
     heading.textContent = text;
+
     doseChoices.appendChild(heading);
   }
 
-  function addButtons(list) {
+
+  function clearCapsuleSelection() {
+    doseChoices
+      .querySelectorAll(".dose-choice-btn")
+      .forEach(button => {
+        button.classList.remove("selected");
+      });
+  }
+
+
+  function addCapsuleButtons(list) {
     list.forEach(choice => {
       const button = document.createElement("button");
 
@@ -5855,33 +5946,121 @@ function loadDoseChoices(choices) {
       button.dataset.value = choice;
 
       button.addEventListener("click", () => {
+
         selectedDoseValue = choice;
 
-        doseChoices
-          .querySelectorAll(".dose-choice-btn")
-          .forEach(otherButton => {
-            otherButton.classList.remove("selected");
-          });
+        clearCapsuleSelection();
 
         button.classList.add("selected");
+
+        const liquidSelect =
+          doseChoices.querySelector(".gab-liquid-select");
+
+        if (liquidSelect) {
+          liquidSelect.value = "";
+        }
       });
 
       doseChoices.appendChild(button);
     });
   }
 
-  // Only create headings if BOTH capsule and liquid choices exist
-  if (capsuleChoices.length && liquidChoices.length) {
 
-    addHeading("CAPSULES");
-    addButtons(capsuleChoices);
+  /* Gabapentin with capsule AND liquid choices */
 
-    addHeading("LIQUID");
-    addButtons(liquidChoices);
+  if (
+    capsuleChoices.length > 0 &&
+    liquidChoices.length > 0
+  ) {
 
-  } else {
+    addHeading("Capsules");
+    addCapsuleButtons(capsuleChoices);
 
-    addButtons(choices);
+    addHeading("Liquid");
+
+    const liquidSelect =
+      document.createElement("select");
+
+    liquidSelect.className =
+      "gab-liquid-select";
+
+    const placeholder =
+      document.createElement("option");
+
+    placeholder.value = "";
+    placeholder.textContent =
+      "Choose liquid dose";
+
+    liquidSelect.appendChild(placeholder);
+
+
+    liquidChoices.forEach(choice => {
+      const option =
+        document.createElement("option");
+
+      option.value = choice;
+      option.textContent = choice;
+
+      liquidSelect.appendChild(option);
+    });
+
+
+    liquidSelect.addEventListener(
+      "change",
+      () => {
+
+        selectedDoseValue =
+          liquidSelect.value;
+
+        if (liquidSelect.value) {
+          clearCapsuleSelection();
+        }
+      }
+    );
+
+    doseChoices.appendChild(liquidSelect);
+
+  }
+
+  /* All other medications stay as buttons */
+
+  else {
+
+    choices.forEach(choice => {
+      const button =
+        document.createElement("button");
+
+      button.type = "button";
+      button.className =
+        "dose-choice-btn";
+
+      button.textContent = choice;
+      button.dataset.value = choice;
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          selectedDoseValue = choice;
+
+          doseChoices
+            .querySelectorAll(
+              ".dose-choice-btn"
+            )
+            .forEach(otherButton => {
+              otherButton.classList.remove(
+                "selected"
+              );
+            });
+
+          button.classList.add(
+            "selected"
+          );
+        }
+      );
+
+      doseChoices.appendChild(button);
+    });
 
   }
 }
