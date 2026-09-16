@@ -3490,11 +3490,11 @@ background: rgba(18, 25, 22, 0.58);
 <!-- =================================================
      CALLIE
 ================================================== -->
-<section class="dog callie" style="--row-count:8;">
+<section class="dog callie" style="--row-count:7;">
 
   <div class="dog-info">
     <div class="dog-name-line">
-<span class="dog-paw">🐾</span>
+      <span class="dog-paw">🐾</span>
       <span class="dog-name">Callie</span>
     </div>
   </div>
@@ -3502,6 +3502,14 @@ background: rgba(18, 25, 22, 0.58);
   <div class="dog-title">Callie</div>
 
   <div class="dog-content">
+
+    <div class="grid-row" data-row-key="callie-anipryl">
+      <div class="med-name" data-med="callieanipryl">Anipryl</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"></div>
+    </div>
 
     <div class="grid-row" data-row-key="callie-gab1">
       <div class="med-name" data-med="calliegab1">Gab 1</div>
@@ -3519,25 +3527,8 @@ background: rgba(18, 25, 22, 0.58);
       <div class="cell"></div>
     </div>
 
-<div class="grid-row" data-row-key="callie-gab3">
-  <div class="med-name" data-med="calliegab3">Gab 3</div>
-
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div>
-</div>
-
-    <div class="grid-row" data-row-key="callie-traz1">
-      <div class="med-name" data-med="callietraz1">Traz 1</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="callie-traz2">
-      <div class="med-name" data-med="callietraz2">Traz 2</div>
+    <div class="grid-row" data-row-key="callie-gab3">
+      <div class="med-name" data-med="calliegab3">Gab 3</div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
       <div class="cell"></div><div class="cell"></div>
@@ -5778,19 +5769,6 @@ function getDoseChoicesForCell(cell) {
   "100 mg"
 ],
 
-/* Callie — Trazodone */
-"callie-traz1": [
-  "25 mg (¼ tab)",
-  "50 mg (½ tab)",
-  "100 mg (1 tab)"
-],
-
-"callie-traz2": [
-  "25 mg (¼ tab)",
-  "50 mg (½ tab)",
-  "100 mg (1 tab)"
-],
-
 /* Gabapentin */
 "logan-gab1": [
   "50 mg",
@@ -5886,25 +5864,29 @@ function getDoseChoicesForCell(cell) {
 ],
 
     /* Trazodone */
-    "logan-traz1": [
-      "25 mg (¼ tab)",
-      "50 mg (½ tab)"
-    ],
+"logan-traz1": [
+  "12.5 mg (⅛ tab)",
+  "25 mg (¼ tab)",
+  "50 mg (½ tab)"
+],
 
-    "logan-traz2": [
-      "25 mg (¼ tab)",
-      "50 mg (½ tab)"
-    ],
+"logan-traz2": [
+  "12.5 mg (⅛ tab)",
+  "25 mg (¼ tab)",
+  "50 mg (½ tab)"
+],
 
-    "logan-traz3": [
-      "25 mg (¼ tab)",
-      "50 mg (½ tab)"
-    ],
+"logan-traz3": [
+  "12.5 mg (⅛ tab)",
+  "25 mg (¼ tab)",
+  "50 mg (½ tab)"
+],
 
-    "logan-bed-traz": [
-      "25 mg (¼ tab)",
-      "50 mg (½ tab)"
-    ]
+"logan-bed-traz": [
+  "12.5 mg (⅛ tab)",
+  "25 mg (¼ tab)",
+  "50 mg (½ tab)"
+]
   };
 
   return doseChoicesByRow[rowKey] || [];
