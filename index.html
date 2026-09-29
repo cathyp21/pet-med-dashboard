@@ -1,11 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Pet Med Kiosk</title>
-<link rel="manifest" href="manifest.json">
-
+<link href="manifest.json" rel="manifest"/>
 <style>
 
 /* =========================================================
@@ -3166,303 +3166,313 @@ background: rgba(18, 25, 22, 0.58);
   letter-spacing: -0.2px;
 }
 
+
+
+/* =========================================================
+   LOGAN'S FOOD MENU — isolated from medication tracker
+========================================================= */
+.logan-menu-page { display:none; padding: 4px 0 78px; }
+.logan-menu-shell { max-width: 1180px; margin: 0 auto; }
+.logan-menu-header { position:relative; text-align:center; padding:18px 16px; margin-bottom:14px; border:1px solid rgba(121,184,243,.35); border-radius:16px; background:linear-gradient(180deg,#173654,#10273d); box-shadow:0 10px 28px rgba(0,0,0,.25); }
+.logan-menu-header h2 { margin:0; font-size:32px; color:#fff; }
+.logan-menu-header p { margin:7px 0 0; color:#c9def3; font-weight:700; }
+.logan-menu-back { position:absolute; left:14px; top:14px; min-height:46px; padding:9px 14px; border:1px solid rgba(255,255,255,.2); border-radius:10px; background:#294158; color:#fff; font-weight:900; cursor:pointer; }
+.logan-menu-notes { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
+.logan-menu-note { padding:12px 14px; border-radius:12px; background:#203a54; border:1px solid rgba(255,255,255,.12); color:#eef6ff; line-height:1.35; }
+.logan-menu-note.warning { background:#513829; border-color:#9a704e; }
+.logan-food-category { margin:14px 0; padding:14px; border-radius:15px; background:#132a40; border:1px solid rgba(151,190,225,.18); }
+.logan-food-category h3 { margin:0 0 11px; color:#c8a7ff; font-size:21px; }
+.logan-food-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.logan-food-card { padding:12px; border-radius:13px; background:#1d3852; border:1px solid rgba(151,190,225,.22); }
+.logan-food-name { color:#fff; font-size:17px; font-weight:900; margin-bottom:8px; }
+.logan-food-status { min-height:19px; color:#bcd5ec; font-size:13px; font-weight:700; margin-bottom:9px; }
+.logan-food-actions { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+.logan-food-btn { min-height:43px; padding:7px 4px; border-radius:9px; border:1px solid rgba(255,255,255,.15); color:#fff; background:#294b69; font-size:13px; font-weight:900; cursor:pointer; }
+.logan-food-btn[data-rating="ate"] { background:#28643b; }
+.logan-food-btn[data-rating="little"] { background:#8a681d; }
+.logan-food-btn[data-rating="nope"] { background:#783838; }
+.logan-food-btn.selected { outline:3px solid #fff; box-shadow:0 0 0 2px rgba(74,222,128,.55); }
+
+.logan-favorites { margin:14px 0 18px; padding:14px; border-radius:15px; background:linear-gradient(180deg,#352451,#221a39); border:1px solid rgba(200,167,255,.38); }
+.logan-favorites h3 { margin:0 0 9px; color:#eadcff; font-size:22px; }
+.logan-favorites-list { display:flex; flex-wrap:wrap; gap:8px; }
+.logan-favorite-chip { padding:8px 11px; border-radius:999px; background:#513a75; color:#fff; font-weight:800; font-size:13px; border:1px solid rgba(255,255,255,.15); }
+.logan-favorites-empty { color:#c9badd; font-weight:700; font-size:14px; }
+.logan-food-summary { display:flex; flex-wrap:wrap; gap:7px; margin:0 0 7px; font-size:12px; font-weight:900; }
+.logan-count { padding:4px 7px; border-radius:999px; background:rgba(255,255,255,.08); }
+.logan-count.ate { color:#8ff0a8; } .logan-count.little { color:#ffd86a; } .logan-count.nope { color:#ff9b9b; }
+.logan-food-success { color:#d7e8f8; font-size:12px; font-weight:800; margin-bottom:8px; }
+.logan-food-actions { grid-template-columns:repeat(3,1fr); }
+.logan-food-btn[data-rating="ate"] { background:#188342; border-color:#43c66e; }
+.logan-food-btn[data-rating="little"] { background:#a87500; border-color:#e2b337; }
+.logan-food-btn[data-rating="nope"] { background:#a52f35; border-color:#e05d63; }
+.logan-food-tools { display:flex; gap:7px; margin-top:8px; }
+.logan-history-btn,.logan-undo-btn { flex:1; min-height:36px; border-radius:8px; border:1px solid rgba(255,255,255,.16); background:#294158; color:#fff; font-weight:800; cursor:pointer; }
+.logan-undo-btn:disabled { opacity:.38; cursor:default; }
+.logan-history-panel { display:none; margin-top:9px; padding:9px; border-radius:9px; background:#10273d; border:1px solid rgba(255,255,255,.1); }
+.logan-history-panel.open { display:block; }
+.logan-history-row { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:7px 10px; align-items:center; padding:8px 2px; border-bottom:1px solid rgba(255,255,255,.08); color:#e9f4ff; font-size:12px; font-weight:700; }
+.logan-history-actions { grid-column:1 / -1; display:flex; gap:6px; justify-content:flex-end; }
+.logan-history-edit,.logan-history-delete,.logan-history-choice { min-height:30px; border-radius:7px; border:1px solid rgba(255,255,255,.16); color:#fff; font-size:11px; font-weight:900; cursor:pointer; padding:4px 8px; }
+.logan-history-edit { background:#315878; } .logan-history-delete { background:#8b3035; }
+.logan-delete-modal{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(4px)}.logan-delete-modal.open{display:flex}.logan-delete-card{width:min(92vw,460px);border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.18);background:linear-gradient(180deg,#173454,#0b1f35);box-shadow:0 24px 70px rgba(0,0,0,.6);color:#fff}.logan-delete-head{position:relative;padding:20px 52px 16px;text-align:center;background:linear-gradient(180deg,#8e2b2b,#5e1c24);border-bottom:1px solid rgba(255,255,255,.14)}.logan-delete-head .paw{font-size:30px;display:block;margin-bottom:5px}.logan-delete-head h3{margin:0;font-size:22px}.logan-delete-x{position:absolute;right:14px;top:12px;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.22);color:#fff;font-size:25px;cursor:pointer}.logan-delete-body{padding:22px;text-align:center;font-size:17px;line-height:1.45}.logan-delete-entry{margin:14px auto 0;padding:12px;border-radius:12px;background:rgba(255,255,255,.07);font-weight:800}.logan-delete-actions{display:flex;gap:12px;padding:0 20px 20px}.logan-delete-actions button{flex:1;min-height:48px;border-radius:12px;color:#fff;font-weight:900;font-size:15px;cursor:pointer}#loganDeleteCancel{background:#315878;border:1px solid #5684aa}#loganExerciseCancel{background:#315878;border:1px solid #5684aa;color:#fff}#loganDeleteConfirm{background:linear-gradient(180deg,#d34b4b,#9f2626);border:1px solid rgba(255,120,120,.55)}
+
+.logan-history-editor { grid-column:1 / -1; display:flex; flex-wrap:wrap; gap:5px; padding-top:2px; }
+.logan-history-choice[data-rating="ate"] { background:#188342; } .logan-history-choice[data-rating="little"] { background:#a87500; } .logan-history-choice[data-rating="nope"] { background:#a52f35; }
+.logan-history-cancel { background:#405266; }
+.logan-history-row:last-child { border-bottom:0; }
+.logan-history-empty { color:#9fb6ca; font-size:12px; font-weight:700; }
+
+@media (max-width:700px) { .logan-menu-notes,.logan-food-grid{grid-template-columns:1fr;} .logan-menu-header{padding-top:70px;} .logan-menu-back{right:14px;} }
+
+
+/* LOGAN FOOD NOTES */
+.logan-food-notes{margin:18px 0 8px;padding:15px;border-radius:15px;background:#132a40;border:1px solid rgba(151,190,225,.22)}
+.logan-food-notes-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.logan-food-notes-head h3{margin:0;color:#c8a7ff;font-size:22px}.logan-food-notes-head p{margin:5px 0 0;color:#bcd5ec;font-weight:700;font-size:13px}.logan-food-notes-head button{min-height:44px;padding:9px 14px;border-radius:10px;border:1px solid #6e9cc3;background:#315878;color:#fff;font-weight:900;cursor:pointer;white-space:nowrap}.logan-notes-list{display:grid;gap:8px}.logan-note-item{padding:11px 12px;border-radius:11px;background:#1d3852;border:1px solid rgba(255,255,255,.1)}.logan-note-meta{color:#9fc4e4;font-size:12px;font-weight:900;margin-bottom:5px}.logan-note-text{color:#fff;line-height:1.4;white-space:pre-wrap}.logan-note-actions{display:flex;gap:7px;justify-content:flex-end;margin-top:9px}.logan-note-actions button{min-height:32px;border-radius:7px;border:1px solid rgba(255,255,255,.16);color:#fff;font-weight:900;cursor:pointer}.logan-note-edit{background:#315878}.logan-note-delete{background:#8b3035}.logan-notes-empty{color:#9fb6ca;font-weight:700}.logan-note-head{background:linear-gradient(180deg,#513a75,#352451)}.logan-note-body{padding:20px}.logan-note-body>label{display:block;color:#d9eaff;font-weight:900;margin-bottom:7px}.logan-note-body textarea{box-sizing:border-box;width:100%;resize:vertical;min-height:115px;border-radius:11px;border:1px solid #557a9b;background:#0f263b;color:#fff;padding:12px;font:inherit;line-height:1.4}.logan-note-date-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.logan-note-date-row label{color:#c9def3;font-size:13px;font-weight:900}.logan-note-date-row input{box-sizing:border-box;width:100%;margin-top:5px;min-height:42px;border-radius:9px;border:1px solid #557a9b;background:#0f263b;color:#fff;padding:7px}.logan-note-save{background:#28643b!important;border:1px solid #43c66e!important}#loganNoteCancel,#loganNoteDeleteCancel{background:#315878;border:1px solid #5684aa}#loganNoteDeleteConfirm{background:linear-gradient(180deg,#d34b4b,#9f2626);border:1px solid rgba(255,120,120,.55)}@media(max-width:700px){.logan-food-notes-head{align-items:stretch;flex-direction:column}.logan-note-date-row{grid-template-columns:1fr}}
+
+/* LOGAN EXERCISE & PT CENTER */
+.logan-exercise-page{display:none;padding:4px 0 78px}.logan-exercise-shell{max-width:1180px;margin:0 auto}.logan-exercise-header{text-align:center;padding:16px 12px}.logan-exercise-header h2{margin:6px 0;color:#d8c4ff;font-size:30px}.logan-exercise-header p{margin:0;color:#bcd5ec;font-weight:700}.logan-exercise-back{float:left;min-height:42px;padding:8px 13px;border-radius:10px;border:1px solid #638cb0;background:#294d6b;color:#fff;font-weight:900;cursor:pointer}.logan-exercise-alert{clear:both;margin:10px 8px 16px;padding:13px 15px;border-radius:13px;background:#3c2528;border:1px solid #a65359;color:#ffe6e6;line-height:1.45}.logan-exercise-intro{margin:10px 8px;padding:13px 15px;border-radius:13px;background:#17354d;border:1px solid #4f7899;color:#dceeff;line-height:1.45}.logan-exercise-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;padding:8px}.logan-exercise-card{background:#132a40;border:1px solid rgba(151,190,225,.25);border-radius:16px;overflow:hidden}.logan-exercise-card-head{padding:13px 15px;background:linear-gradient(180deg,#315878,#23445f);color:#fff}.logan-exercise-card-head h3{margin:0;font-size:20px}.logan-exercise-card-head .dose{margin-top:5px;color:#cbe5fa;font-size:13px;font-weight:800}.logan-exercise-body{padding:14px;color:#e7f3ff}.logan-exercise-body ol{margin:8px 0 10px;padding-left:21px;line-height:1.5}.logan-exercise-tip{padding:9px 10px;border-radius:9px;background:#203d55;color:#d4eaff;font-size:13px;line-height:1.4}.logan-daily-check{margin-top:11px;padding:10px;border-radius:10px;background:#0f263b;border:1px solid #466b8a}.logan-daily-check-title{font-size:12px;font-weight:900;color:#a9cbe7;margin-bottom:7px}.logan-daily-check-buttons{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}.logan-daily-btn{min-height:42px;border-radius:9px;border:1px solid #557a9b;background:#1d3852;color:#fff;font-weight:900;cursor:pointer}.logan-daily-btn.on{background:#28643b;border-color:#43c66e}.logan-daily-btn.rest.on{background:#674b8d;border-color:#b590e6}.logan-daily-status{margin-top:7px;color:#9fc4e4;font-size:11px;font-weight:800;text-align:center}.logan-diagram{height:150px;margin:0 0 12px;border-radius:12px;background:#eaf4fb;display:flex;align-items:center;justify-content:center;overflow:hidden}.logan-diagram svg{width:100%;height:100%}.logan-exercise-log{margin:18px 8px 8px;padding:15px;border-radius:15px;background:#132a40;border:1px solid rgba(151,190,225,.22)}.logan-exercise-log-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.logan-exercise-log h3{margin:0;color:#c8a7ff}.logan-exercise-log p{margin:5px 0 0;color:#bcd5ec;font-weight:700;font-size:13px}.logan-exercise-log-head button{min-height:44px;padding:9px 14px;border-radius:10px;border:1px solid #6e9cc3;background:#315878;color:#fff;font-weight:900;cursor:pointer}.logan-ex-session{margin-top:9px;padding:11px 12px;border-radius:11px;background:#1d3852;border:1px solid rgba(255,255,255,.1)}.logan-ex-session-meta{color:#9fc4e4;font-size:12px;font-weight:900}.logan-ex-session-title{color:#fff;font-weight:900;margin:4px 0}.logan-ex-session-note{color:#dcecff;white-space:pre-wrap}.logan-ex-session-actions{display:flex;gap:7px;justify-content:flex-end;margin-top:8px}.logan-ex-session-actions button{min-height:32px;border-radius:7px;border:1px solid rgba(255,255,255,.16);color:#fff;font-weight:900;cursor:pointer}.logan-ex-empty{color:#9fb6ca;font-weight:700;margin-top:10px}.logan-ex-form label{display:block;color:#d9eaff;font-weight:900;margin:10px 0 5px}.logan-ex-form select,.logan-ex-form textarea,.logan-ex-form input{box-sizing:border-box;width:100%;border-radius:9px;border:1px solid #557a9b;background:#0f263b;color:#fff;padding:9px;font:inherit}.logan-ex-form textarea{min-height:80px;resize:vertical}.logan-ex-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.logan-ex-save{background:#28643b!important;border:1px solid #43c66e!important}@media(max-width:760px){.logan-exercise-grid{grid-template-columns:1fr}.logan-exercise-back{float:none;display:block;margin-bottom:10px}.logan-exercise-log-head{align-items:stretch;flex-direction:column}.logan-ex-row{grid-template-columns:1fr}}
 </style>
-
-
 </head>
-
 <body>
-
 <div class="pawhub-app">
-
-  <!-- ====================================================
+<!-- ====================================================
        TOP DASHBOARD
   ====================================================== -->
-  <header class="top">
-
-    <div class="top-dashboard">
-
-      <div class="header-lock-area">
-        <button id="lockModeBtn" onclick="toggleLockMode()">
-          <span class="lock-symbol">🔒</span>
-          <span id="lockModeText">LOCKED</span>
+<header class="top">
+<div class="top-dashboard">
+<div class="header-lock-area">
+<button id="lockModeBtn" onclick="toggleLockMode()">
+<span class="lock-symbol">🔒</span>
+<span id="lockModeText">LOCKED</span>
+</button>
+</div>
+<div class="brand">
+<span class="brand-paw">🐾</span>
+<span class="brand-name">PawHub</span>
+</div>
+<div class="header-actions">
+<button class="header-action" onclick="exportBackup()">
+          ☁️   BACKUP
         </button>
-      </div>
-
-      <div class="brand">
-        <span class="brand-paw">🐾</span>
-        <span class="brand-name">PawHub</span>
-      </div>
-
-      <div class="header-actions">
-
-        <button class="header-action" onclick="exportBackup()">
-          ☁️ &nbsp; BACKUP
+<button class="header-action" onclick="toggleSettingsPanel()">
+          ⚙️   SETTINGS
         </button>
-
-        <button class="header-action" onclick="toggleSettingsPanel()">
-          ⚙️ &nbsp; SETTINGS
-        </button>
-
-      </div>
-
-      <div class="header-date" id="currentDateTime">
+</div>
+<div class="header-date" id="currentDateTime">
         Loading date and time...
       </div>
-
-      <div class="header-subtitle">
+<div class="header-subtitle">
         Care Tracker
       </div>
-
-    </div>
-
-    <div id="backupInfo"></div>
-    <div id="syncInfo">🟡 Waiting for sync...</div>
-
-  </header>
-
+</div>
+<div id="backupInfo"></div>
+<div id="syncInfo">🟡 Waiting for sync...</div>
+</header>
 <!-- =====================================================
      PAWHUB PAGE SWITCHER
 ====================================================== -->
-
 <div class="pawhub-page-tabs">
-
-  <button
-    id="nightChecklistTab"
-    class="pawhub-page-tab"
-    type="button"
-  >
+<button class="pawhub-page-tab" id="nightChecklistTab" type="button">
     🌙 Night Checklist
   </button>
-
+<button class="pawhub-page-tab" id="loganMenuTab" type="button">
+    🍽️ Logan’s Menu
+  </button>
+<button class="pawhub-page-tab" id="loganExerciseTab" type="button">
+    🏋️ Logan’s Exercise
+  </button>
 </div>
-
 <!-- =====================================================
      NIGHT CHECKLIST PAGE
 ====================================================== -->
-
-<section id="nightChecklistPage" class="night-checklist-page" style="display:none;">
-
-  <div class="night-checklist-header">
-  
-  <button
-  id="backToPawHub"
-  class="night-back-button"
-  type="button"
->
+<section class="night-checklist-page" id="nightChecklistPage" style="display:none;">
+<div class="night-checklist-header">
+<button class="night-back-button" id="backToPawHub" type="button">
   ← Back to PawHub
 </button>
-
-    <div class="night-checklist-title">🌙 Night Checklist</div>
-    <div class="night-checklist-subtitle">
+<div class="night-checklist-title">🌙 Night Checklist</div>
+<div class="night-checklist-subtitle">
       Everything ready for bedtime
     </div>
-  </div>
-
+</div>
 <div id="nightChecklistContent">
-
-  <div class="night-grid">
-
-    <div class="night-grid-header night-task-header">TASK</div>
-    <div class="night-grid-header">SUN</div>
-    <div class="night-grid-header">MON</div>
-    <div class="night-grid-header">TUE</div>
-    <div class="night-grid-header">WED</div>
-    <div class="night-grid-header">THU</div>
-    <div class="night-grid-header">FRI</div>
-    <div class="night-grid-header">SAT</div>
-
-
-    <!-- DOG CARE -->
-
-    <div class="night-section-title">
+<div class="night-grid">
+<div class="night-grid-header night-task-header">TASK</div>
+<div class="night-grid-header">SUN</div>
+<div class="night-grid-header">MON</div>
+<div class="night-grid-header">TUE</div>
+<div class="night-grid-header">WED</div>
+<div class="night-grid-header">THU</div>
+<div class="night-grid-header">FRI</div>
+<div class="night-grid-header">SAT</div>
+<!-- DOG CARE -->
+<div class="night-section-title">
       🐾 DOG CARE
     </div>
-
-    <div class="night-task">
-      <strong>💧 Refresh water — when home</strong>
-      <span>Check and freshen all dog water bowls</span>
-    </div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div>
-
-
-    <div class="night-task">
-      <strong>🍽️ Early evening feeding check</strong>
-      <span>Try feeding, especially Callie & Logan • Record eating in PawHub</span>
-    </div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div>
-
-
-    <div class="night-task">
-      <strong>👀 Check dog cues / meds</strong>
-      <span>If restless, uncomfortable, pacing or whining, check PawHub and/or ask Cathy</span>
-    </div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div>
-
-
-    <div class="night-task">
-      <strong>💧 Refresh water — before bed</strong>
-      <span>Make sure everyone has fresh water for the night</span>
-    </div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div>
-
-
-    <div class="night-task">
-      <strong>🐾 Let dogs out before bed</strong>
-      <span>Record the time</span>
-    </div>
-    <div class="night-time"></div><div class="night-time"></div>
-    <div class="night-time"></div><div class="night-time"></div>
-    <div class="night-time"></div><div class="night-time"></div>
-    <div class="night-time"></div>
-
-
-    <div class="night-task">
-      <strong>🚧 Living room gate</strong>
-      <span>Make sure the gate is up if needed</span>
-    </div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div>
-
-
-    <!-- HOUSE -->
-
-    <div class="night-section-title">
+<div class="night-task">
+<strong>💧 Refresh water — when home</strong>
+<span>Check and freshen all dog water bowls</span>
+</div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div>
+<div class="night-task">
+<strong>🍽️ Early evening feeding check</strong>
+<span>Try feeding, especially Callie &amp; Logan • Record eating in PawHub</span>
+</div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div>
+<div class="night-task">
+<strong>👀 Check dog cues / meds</strong>
+<span>If restless, uncomfortable, pacing or whining, check PawHub and/or ask Cathy</span>
+</div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div>
+<div class="night-task">
+<strong>💧 Refresh water — before bed</strong>
+<span>Make sure everyone has fresh water for the night</span>
+</div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div>
+<div class="night-task">
+<strong>🐾 Let dogs out before bed</strong>
+<span>Record the time</span>
+</div>
+<div class="night-time"></div><div class="night-time"></div>
+<div class="night-time"></div><div class="night-time"></div>
+<div class="night-time"></div><div class="night-time"></div>
+<div class="night-time"></div>
+<div class="night-task">
+<strong>🚧 Living room gate</strong>
+<span>Make sure the gate is up if needed</span>
+</div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div>
+<!-- HOUSE -->
+<div class="night-section-title">
       🏠 HOUSE
     </div>
-
-    <div class="night-task">
-      <strong>🪟 Close curtains</strong>
-    </div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div>
-
-
-    <div class="night-task">
-      <strong>🍽️ Put away food before bed</strong>
-      <span>Put away any food, leftovers or ingredients left out</span>
-    </div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div><div class="night-check"></div>
-    <div class="night-check"></div>
-
-  </div>
-
+<div class="night-task">
+<strong>🪟 Close curtains</strong>
 </div>
-
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div>
+<div class="night-task">
+<strong>🍽️ Put away food before bed</strong>
+<span>Put away any food, leftovers or ingredients left out</span>
+</div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div><div class="night-check"></div>
+<div class="night-check"></div>
+</div>
+</div>
 </section>
-
-  <!-- Hidden import input -->
-  <input
-    type="file"
-    id="importFile"
-    accept=".json"
-    onchange="importBackup(event)"
-    style="display:none;"
-  >
-
-
-  <!-- =====================================================
+<!-- Hidden import input -->
+<input accept=".json" id="importFile" onchange="importBackup(event)" style="display:none;" type="file"/>
+<!-- =====================================================
        SETTINGS PANEL
   ====================================================== -->
-  <div class="settings-panel" id="settingsPanel">
-
-    <button onclick="goFullScreen(); closeSettingsPanel();">
+<div class="settings-panel" id="settingsPanel">
+<button onclick="goFullScreen(); closeSettingsPanel();">
       ⛶ Full Screen
     </button>
-
-    <button onclick="exportBackup(); closeSettingsPanel();">
+<button onclick="exportBackup(); closeSettingsPanel();">
       Export Backup
     </button>
-
-    <button onclick="restoreBackup(); closeSettingsPanel();">
+<button onclick="restoreBackup(); closeSettingsPanel();">
       Restore Backup
     </button>
-
-    <button onclick="document.getElementById('importFile').click();">
+<button onclick="document.getElementById('importFile').click();">
       Import Backup
     </button>
+</div>
+<!-- Phone-only view controls -->
+<div class="view-toggle">
+<button onclick="showTodayView()">📅 Today</button>
+<button onclick="showWeekView()">📆 Week</button>
+</div>
+<section class="logan-menu-page" id="loganMenuPage">
+<div class="logan-menu-shell">
+<div class="logan-menu-header">
+<button class="logan-menu-back" id="backFromLoganMenu" type="button">← Back to PawHub</button>
+<h2>🍽️ Logan’s Food Menu</h2>
+<p>His Majesty’s ever-changing restaurant reviews</p>
+</div>
+<div class="logan-menu-notes">
+<div class="logan-menu-note"><strong>💙 Stage 3 kidney disease:</strong> calories, hydration and comfort matter. When two foods are equally appealing, choose the less salty/processed option and follow his vet’s guidance.</div>
+<div class="logan-menu-note warning"><strong>🚫 Never offer:</strong> grapes/raisins, chocolate, xylitol/birch sugar, alcohol, caffeine, macadamia nuts, cooked bones, or foods with meaningful onion/garlic.</div>
+</div>
+<div class="logan-favorites" id="loganFavorites">
+<h3>👑 Logan’s Favorites</h3>
+<div class="logan-favorites-list" id="loganFavoritesList"><span class="logan-favorites-empty">His Majesty needs a few reviews first. 😂</span></div>
+</div><div class="logan-food-category"><h3>🥩 Meat, Fish &amp; Eggs</h3><div class="logan-food-grid"><div class="logan-food-card" data-food-id="food-1" data-food-name="Plain cooked chicken"><div class="logan-food-name">Plain cooked chicken</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-2" data-food-name="Chicken nuggets / tenders"><div class="logan-food-name">Chicken nuggets / tenders</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-3" data-food-name="Rotisserie chicken (inner meat, no bones)"><div class="logan-food-name">Rotisserie chicken (inner meat, no bones)</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-4" data-food-name="Turkey / deli turkey"><div class="logan-food-name">Turkey / deli turkey</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-5" data-food-name="Ham / deli ham"><div class="logan-food-name">Ham / deli ham</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-6" data-food-name="Roast beef"><div class="logan-food-name">Roast beef</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-7" data-food-name="Hamburger / cheeseburger"><div class="logan-food-name">Hamburger / cheeseburger</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-8" data-food-name="Ground beef"><div class="logan-food-name">Ground beef</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-9" data-food-name="Steak"><div class="logan-food-name">Steak</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-10" data-food-name="Boneless pork / pork tenderloin"><div class="logan-food-name">Boneless pork / pork tenderloin</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-11" data-food-name="Breakfast sausage (small amount)"><div class="logan-food-name">Breakfast sausage (small amount)</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-12" data-food-name="Hot dog"><div class="logan-food-name">Hot dog</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-13" data-food-name="Bacon (small amount)"><div class="logan-food-name">Bacon (small amount)</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-14" data-food-name="Meatballs (no onion/garlic)"><div class="logan-food-name">Meatballs (no onion/garlic)</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-15" data-food-name="Scrambled eggs"><div class="logan-food-name">Scrambled eggs</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-16" data-food-name="Hard-boiled egg"><div class="logan-food-name">Hard-boiled egg</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-17" data-food-name="Tuna"><div class="logan-food-name">Tuna</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-18" data-food-name="Salmon"><div class="logan-food-name">Salmon</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-19" data-food-name="White fish"><div class="logan-food-name">White fish</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-20" data-food-name="Fish sticks"><div class="logan-food-name">Fish sticks</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-21" data-food-name="Crab"><div class="logan-food-name">Crab</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-22" data-food-name="Shrimp"><div class="logan-food-name">Shrimp</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-67" data-food-name="Canned chicken"><div class="logan-food-name">Canned chicken</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-68" data-food-name="Tuna in water"><div class="logan-food-name">Tuna in water</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-69" data-food-name="Canned salmon"><div class="logan-food-name">Canned salmon</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div></div></div><div class="logan-food-category"><h3>🍝 Comfort Foods</h3><div class="logan-food-grid"><div class="logan-food-card" data-food-id="food-23" data-food-name="Spaghetti"><div class="logan-food-name">Spaghetti</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-24" data-food-name="Spaghetti &amp; meatballs"><div class="logan-food-name">Spaghetti &amp; meatballs</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-25" data-food-name="Mac &amp; cheese"><div class="logan-food-name">Mac &amp; cheese</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-26" data-food-name="Buttered noodles"><div class="logan-food-name">Buttered noodles</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-27" data-food-name="Pasta with cheese"><div class="logan-food-name">Pasta with cheese</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-28" data-food-name="Ravioli"><div class="logan-food-name">Ravioli</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-29" data-food-name="Pierogies"><div class="logan-food-name">Pierogies</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-30" data-food-name="Mashed potatoes"><div class="logan-food-name">Mashed potatoes</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-31" data-food-name="Baked potato inside"><div class="logan-food-name">Baked potato inside</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-32" data-food-name="Rice"><div class="logan-food-name">Rice</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-33" data-food-name="Rice + chicken or hamburger"><div class="logan-food-name">Rice + chicken or hamburger</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-34" data-food-name="Stuffing (no onion)"><div class="logan-food-name">Stuffing (no onion)</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-35" data-food-name="Sweet potato"><div class="logan-food-name">Sweet potato</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div></div></div><div class="logan-food-category"><h3>🥞 Breakfast</h3><div class="logan-food-grid"><div class="logan-food-card" data-food-id="food-36" data-food-name="Pancakes"><div class="logan-food-name">Pancakes</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-37" data-food-name="Waffles"><div class="logan-food-name">Waffles</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-38" data-food-name="French toast"><div class="logan-food-name">French toast</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-39" data-food-name="Toast with butter"><div class="logan-food-name">Toast with butter</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-40" data-food-name="Peanut butter toast (xylitol-free)"><div class="logan-food-name">Peanut butter toast (xylitol-free)</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-41" data-food-name="Egg &amp; cheese"><div class="logan-food-name">Egg &amp; cheese</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-42" data-food-name="Egg sandwich"><div class="logan-food-name">Egg sandwich</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-43" data-food-name="Breakfast sandwich pieces"><div class="logan-food-name">Breakfast sandwich pieces</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-44" data-food-name="Oatmeal"><div class="logan-food-name">Oatmeal</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-45" data-food-name="Cream of Wheat"><div class="logan-food-name">Cream of Wheat</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div></div></div><div class="logan-food-category"><h3>🧀 Dairy &amp; Toppers</h3><div class="logan-food-grid"><div class="logan-food-card" data-food-id="food-46" data-food-name="Cheese"><div class="logan-food-name">Cheese</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-47" data-food-name="String cheese"><div class="logan-food-name">String cheese</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-48" data-food-name="American cheese"><div class="logan-food-name">American cheese</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-49" data-food-name="Cottage cheese"><div class="logan-food-name">Cottage cheese</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-50" data-food-name="Plain yogurt / Greek yogurt"><div class="logan-food-name">Plain yogurt / Greek yogurt</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-51" data-food-name="Cream cheese (a little)"><div class="logan-food-name">Cream cheese (a little)</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-52" data-food-name="Parmesan"><div class="logan-food-name">Parmesan</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-54" data-food-name="Tiny bacon pieces"><div class="logan-food-name">Tiny bacon pieces</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-55" data-food-name="No-onion/no-garlic broth"><div class="logan-food-name">No-onion/no-garlic broth</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-56" data-food-name="Canned-food gravy"><div class="logan-food-name">Canned-food gravy</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-59" data-food-name="Tuna juice"><div class="logan-food-name">Tuna juice</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-60" data-food-name="Xylitol-free peanut butter"><div class="logan-food-name">Xylitol-free peanut butter</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div></div></div><div class="logan-food-category"><h3>🐶 Dog Food &amp; Treats</h3><div class="logan-food-grid"><div class="logan-food-card" data-food-id="food-53" data-food-name="Crushed favorite dog treats"><div class="logan-food-name">Crushed favorite dog treats</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-70" data-food-name="Meat baby food (no onion/garlic)"><div class="logan-food-name">Meat baby food (no onion/garlic)</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-71" data-food-name="Canned dog food pâté / stew"><div class="logan-food-name">Canned dog food pâté / stew</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-72" data-food-name="Refrigerated fresh dog food"><div class="logan-food-name">Refrigerated fresh dog food</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-73" data-food-name="Veterinary recovery food"><div class="logan-food-name">Veterinary recovery food</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-75" data-food-name="Dry kibble"><div class="logan-food-name">Dry kibble</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-76" data-food-name="Soft dog treats"><div class="logan-food-name">Soft dog treats</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-77" data-food-name="Crunchy dog treats"><div class="logan-food-name">Crunchy dog treats</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-78" data-food-name="Mixed torn-up dog treats"><div class="logan-food-name">Mixed torn-up dog treats</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-79" data-food-name="Dental chew / treat"><div class="logan-food-name">Dental chew / treat</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div></div></div><div class="logan-food-category"><h3>🍕 Just Please Eat Something</h3><div class="logan-food-grid"><div class="logan-food-card" data-food-id="food-61" data-food-name="Grilled cheese"><div class="logan-food-name">Grilled cheese</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-62" data-food-name="Chicken sandwich"><div class="logan-food-name">Chicken sandwich</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-63" data-food-name="Pizza crust with cheese"><div class="logan-food-name">Pizza crust with cheese</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-64" data-food-name="Small pizza piece (no onion/garlic)"><div class="logan-food-name">Small pizza piece (no onion/garlic)</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-65" data-food-name="Sandwich meat &amp; cheese"><div class="logan-food-name">Sandwich meat &amp; cheese</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div><div class="logan-food-card" data-food-id="food-66" data-food-name="Safe leftovers"><div class="logan-food-name">Safe leftovers</div><div class="logan-food-status">Not tried yet</div><div class="logan-food-actions"><button class="logan-food-btn" data-rating="ate" type="button">❤️ Ate It</button><button class="logan-food-btn" data-rating="little" type="button">🤷 A Little</button><button class="logan-food-btn" data-rating="nope" type="button">❌ Nope</button></div></div></div></div><div class="logan-food-notes" id="loganFoodNotes"><div class="logan-food-notes-head"><div><h3>📝 Logan’s Food Notes</h3><p>Quick notes for snacks, combinations, amounts, or anything else His Majesty ate.</p></div><button id="loganAddNote" type="button">＋ Add Note</button></div><div class="logan-notes-list" id="loganNotesList"><div class="logan-notes-empty">No food notes yet.</div></div></div></div></section>
 
-  </div>
-
-
-  <!-- Phone-only view controls -->
-  <div class="view-toggle">
-    <button onclick="showTodayView()">📅 Today</button>
-    <button onclick="showWeekView()">📆 Week</button>
-  </div>
-
-
-  <!-- =====================================================
+<section class="logan-exercise-page" id="loganExercisePage">
+<div class="logan-exercise-shell">
+<div class="logan-exercise-header"><button class="logan-exercise-back" id="backFromLoganExercise" type="button">← Back to PawHub</button><h2>🏋️ Logan’s Exercise &amp; PT Center</h2><p>Gentle movement for His Majesty — comfort first, always. 👑🐾</p></div>
+<div class="logan-exercise-alert"><strong>🛑 Stop the session</strong> if Logan cries out, pants unusually, trembles, resists, suddenly weakens, repeatedly knuckles/drags the foot, or seems more painful afterward. These are gentle home activities, not a substitute for a veterinary rehabilitation plan. On a rough day, rest wins.</div>
+<div class="logan-exercise-intro"><strong>💙 Logan rule:</strong> Use a non-slip surface and his support harness whenever he needs it. Start tiny. The goal is comfortable, controlled movement — not tiring him out. His RIGHT REAR leg gets extra attention, but never force it or pull on the leg.</div>
+<div class="logan-exercise-grid">
+<div class="logan-exercise-card" data-exercise="standing"><div class="logan-exercise-card-head"><h3>🧍 Supported Standing</h3><div class="dose">Start: about 10–20 seconds × 2–3 comfortable tries</div></div><div class="logan-exercise-body"><div class="logan-diagram"><svg viewBox="0 0 420 180" aria-label="Side-view dog with actual right rear leg highlighted at the rump end"><ellipse cx="215" cy="82" rx="92" ry="38" fill="#9b6b43"/><circle cx="322" cy="64" r="30" fill="#9b6b43"/><path d="M306 43l-11-24-10 30M335 43l18-24 8 32" fill="#75472d"/><path d="M292 78q19 10 36 2" fill="none" stroke="#75472d" stroke-width="4" stroke-linecap="round"/><circle cx="334" cy="59" r="3" fill="#162b3d"/><path d="M139 72q-30-23-42-2" fill="none" stroke="#75472d" stroke-width="8" stroke-linecap="round"/><path d="M166 108l-8 48" stroke="#4169e1" stroke-width="12" stroke-linecap="round"/><path d="M196 111l-2 45M258 109l3 47M286 105l12 50" stroke="#75472d" stroke-width="12" stroke-linecap="round"/><path d="M153 116q39 20 72 1" fill="none" stroke="#5b7690" stroke-width="8"/><path d="M165 124q0 25-20 31M211 123q0 25 20 31" fill="none" stroke="#5b7690" stroke-width="7"/><text x="18" y="31" font-size="18" font-weight="bold" fill="#24435c">Support rear gently</text><path d="M132 36q38 5 63 31" fill="none" stroke="#24435c" stroke-width="3" marker-end="url(#rearArrow1)"/><defs><marker id="rearArrow1" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#24435c"/></marker></defs><text x="105" y="174" font-size="12" font-weight="bold" fill="#4169e1">RIGHT REAR</text></svg></div><div style="margin:-7px 0 9px;text-align:center;color:#ffcf70;font-size:12px;font-weight:900">🎯 RIGHT REAR LEG</div><ol><li>Place him on a non-slip surface.</li><li>Use the harness to take only enough weight off his rear to keep him steady.</li><li>Let all four paws contact the floor as comfortably as possible.</li><li>Finish before his legs fatigue or buckle.</li></ol><div class="logan-exercise-tip">💡 Think “help him balance,” not “hold him up completely.” If he can safely bear a little weight, that is the exercise.</div><div class="logan-daily-check" data-daily="standing"><div class="logan-daily-check-title">TODAY · <span class="logan-daily-date"></span></div><div class="logan-daily-check-buttons"><button type="button" class="logan-daily-btn" data-slot="am">☀️ AM</button><button type="button" class="logan-daily-btn" data-slot="pm">🌙 PM</button><button type="button" class="logan-daily-btn rest" data-slot="rest">💤 Rest Day</button></div><div class="logan-daily-status">Check only what Logan comfortably did today.</div></div></div></div>
+<div class="logan-exercise-card" data-exercise="shifts"><div class="logan-exercise-card-head"><h3>↔️ Gentle Weight Shifts</h3><div class="dose">Start: 3–5 tiny shifts each direction</div></div><div class="logan-exercise-body"><div class="logan-diagram"><svg viewBox="0 0 420 180" aria-label="Side-view dog with actual right rear leg highlighted at the rump end"><ellipse cx="210" cy="82" rx="90" ry="39" fill="#9b6b43"/><circle cx="315" cy="62" r="30" fill="#9b6b43"/><path d="M300 42l-11-23-10 29M329 42l18-23 8 31" fill="#75472d"/><circle cx="327" cy="57" r="3" fill="#162b3d"/><path d="M135 72q-28-22-41-1" fill="none" stroke="#75472d" stroke-width="8" stroke-linecap="round"/><path d="M158 108l-8 48" stroke="#4169e1" stroke-width="12" stroke-linecap="round"/><path d="M191 111l-2 45M252 110l5 46M283 104l13 50" stroke="#75472d" stroke-width="12" stroke-linecap="round"/><path d="M120 158h205" stroke="#7391a7" stroke-width="3"/><path d="M145 35h125" stroke="#6a3fb3" stroke-width="7"/><path d="M145 35l18-12v24zM270 35l-18-12v24z" fill="#6a3fb3"/><text x="145" y="21" font-size="16" font-weight="bold" fill="#4d2e85">tiny shifts only</text><text x="105" y="174" font-size="12" font-weight="bold" fill="#4169e1">RIGHT REAR</text></svg></div><div style="margin:-7px 0 9px;text-align:center;color:#ffcf70;font-size:12px;font-weight:900">🎯 RIGHT REAR LEG</div><ol><li>Begin in a comfortable supported stand.</li><li>With one hand at his trunk/hips and the harness ready, gently encourage his body a tiny amount left, then right.</li><li>Move only far enough that he adjusts his balance — never shove or make him stumble.</li></ol><div class="logan-exercise-tip">💡 His right side is weak, so keep the movement especially small when shifting weight toward that leg.</div><div class="logan-daily-check" data-daily="shifts"><div class="logan-daily-check-title">TODAY · <span class="logan-daily-date"></span></div><div class="logan-daily-check-buttons"><button type="button" class="logan-daily-btn" data-slot="am">☀️ AM</button><button type="button" class="logan-daily-btn" data-slot="pm">🌙 PM</button><button type="button" class="logan-daily-btn rest" data-slot="rest">💤 Rest Day</button></div><div class="logan-daily-status">Check only what Logan comfortably did today.</div></div></div></div>
+<div class="logan-exercise-card" data-exercise="walking"><div class="logan-exercise-card-head"><h3>🐾 Harness-Assisted Walking</h3><div class="dose">Start: a very short, slow walk — quality over distance</div></div><div class="logan-exercise-body"><div class="logan-diagram"><svg viewBox="0 0 420 180" aria-label="Side-view dog walking with actual right rear leg highlighted at the rump end"><ellipse cx="205" cy="82" rx="90" ry="38" fill="#9b6b43"/><circle cx="310" cy="62" r="29" fill="#9b6b43"/><path d="M295 42l-11-23-10 29M324 42l18-23 8 31" fill="#75472d"/><circle cx="322" cy="57" r="3" fill="#162b3d"/><path d="M130 72q-29-22-42-1" fill="none" stroke="#75472d" stroke-width="8" stroke-linecap="round"/><path d="M154 107l-17 44" stroke="#4169e1" stroke-width="11" stroke-linecap="round"/><path d="M190 111l8 43M250 109l-10 45M282 104l19 43" stroke="#75472d" stroke-width="11" stroke-linecap="round"/><path d="M165 116q36 18 67 0" fill="none" stroke="#5b7690" stroke-width="8"/><path d="M178 122q-4-35 25-61" fill="none" stroke="#5b7690" stroke-width="6"/><path d="M40 158h330" stroke="#7391a7" stroke-width="3"/><path d="M75 42h75" stroke="#6a3fb3" stroke-width="6"/><path d="M150 42l-17-11v22z" fill="#6a3fb3"/><text x="55" y="27" font-size="16" font-weight="bold" fill="#4d2e85">slow + supported</text><text x="105" y="174" font-size="12" font-weight="bold" fill="#4169e1">RIGHT REAR</text></svg></div><div style="margin:-7px 0 9px;text-align:center;color:#ffcf70;font-size:12px;font-weight:900">🎯 RIGHT REAR LEG</div><ol><li>Fit his rear-support harness comfortably.</li><li>Walk on a flat, non-slip route at Logan’s pace.</li><li>Support enough to prevent falling, while allowing him to place and use the hind feet when he can.</li><li>Turn around before he looks tired.</li></ol><div class="logan-exercise-tip">💡 Several tiny walks can be kinder than one long walk. Avoid stairs, slick floors, sharp turns and “pushing through” fatigue.</div><div class="logan-daily-check" data-daily="walking"><div class="logan-daily-check-title">TODAY · <span class="logan-daily-date"></span></div><div class="logan-daily-check-buttons"><button type="button" class="logan-daily-btn" data-slot="am">☀️ AM</button><button type="button" class="logan-daily-btn" data-slot="pm">🌙 PM</button><button type="button" class="logan-daily-btn rest" data-slot="rest">💤 Rest Day</button></div><div class="logan-daily-status">Check only what Logan comfortably did today.</div></div></div></div>
+<div class="logan-exercise-card" data-exercise="rom"><div class="logan-exercise-card-head"><h3>🛌 Gentle RIGHT REAR-Leg Range of Motion</h3><div class="dose">Only when relaxed: 3–5 slow, comfortable cycles</div></div><div class="logan-exercise-body"><div class="logan-diagram"><svg viewBox="0 0 420 180" aria-label="Side-view resting dog with actual right rear leg highlighted at the rump end"><ellipse cx="210" cy="90" rx="100" ry="39" fill="#9b6b43" transform="rotate(5 210 90)"/><circle cx="322" cy="84" r="29" fill="#9b6b43"/><path d="M307 64l-11-23-10 29M336 64l18-23 8 31" fill="#75472d"/><circle cx="334" cy="79" r="3" fill="#162b3d"/><path d="M126 83q-28-18-40 3" fill="none" stroke="#75472d" stroke-width="8" stroke-linecap="round"/><path d="M155 113q-25 18-43 39q18 8 40-1" fill="none" stroke="#4169e1" stroke-width="11" stroke-linecap="round"/><path d="M190 119q-11 23-28 38M254 113q18 17 38 33M282 113q17 18 36 30" fill="none" stroke="#75472d" stroke-width="11" stroke-linecap="round"/><path d="M114 142q25-31 52-8" fill="none" stroke="#6a3fb3" stroke-width="4"/><path d="M166 134l-12-1 7 10z" fill="#6a3fb3"/><text x="34" y="31" font-size="16" font-weight="bold" fill="#4d2e85">slow bend → straighten</text><text x="98" y="174" font-size="12" font-weight="bold" fill="#4169e1">RIGHT REAR</text></svg></div><div style="margin:-7px 0 9px;text-align:center;color:#ffcf70;font-size:12px;font-weight:900">🎯 RIGHT REAR LEG</div><ol><li>Let Logan lie comfortably on his side.</li><li>Support his RIGHT REAR leg with one hand above and one below the joint area.</li><li>Slowly bend the leg into a comfortable tucked position, then gently return it toward straight.</li><li>Stay completely within his easy range; never stretch against resistance.</li></ol><div class="logan-exercise-tip">💡 This is gentle motion, not a stretch contest. Skip it if handling the hip/leg bothers him or if his vet has told you to restrict joint movement.</div><div class="logan-daily-check" data-daily="rom"><div class="logan-daily-check-title">TODAY · <span class="logan-daily-date"></span></div><div class="logan-daily-check-buttons"><button type="button" class="logan-daily-btn" data-slot="am">☀️ AM</button><button type="button" class="logan-daily-btn" data-slot="pm">🌙 PM</button><button type="button" class="logan-daily-btn rest" data-slot="rest">💤 Rest Day</button></div><div class="logan-daily-status">Check only what Logan comfortably did today.</div></div></div></div>
+</div>
+<div class="logan-exercise-log"><div class="logan-exercise-log-head"><div><h3>📋 Exercise Sessions</h3><p>Track what you tried and, most importantly, how Logan handled it.</p></div><button id="loganAddExercise" type="button">＋ Log Session</button></div><div id="loganExerciseList"><div class="logan-ex-empty">No exercise sessions logged yet.</div></div></div>
+</div></section>
+<!-- =====================================================
        MAIN TRACKER
   ====================================================== -->
-  <main class="matrix">
-
-    <div class="matrix-inner">
-
-      <!-- DAYS HEADER -->
-      <div class="grid-header">
-
-        <div class="medication-header">
-  <span class="header-name">NAME</span>
-  <span class="header-care-item">CARE ITEM</span>
+<main class="matrix">
+<div class="matrix-inner">
+<!-- DAYS HEADER -->
+<div class="grid-header">
+<div class="medication-header">
+<span class="header-name">NAME</span>
+<span class="header-care-item">CARE ITEM</span>
 </div>
-
-        <div class="day-btn" onclick="clearDay(0)">
-          <span class="weekday">SUN</span>
-          <span class="day-date" id="date-0"></span>
-        </div>
-
-        <div class="day-btn" onclick="clearDay(1)">
-          <span class="weekday">MON</span>
-          <span class="day-date" id="date-1"></span>
-        </div>
-
-        <div class="day-btn" onclick="clearDay(2)">
-          <span class="weekday">TUE</span>
-          <span class="day-date" id="date-2"></span>
-        </div>
-
-        <div class="day-btn" onclick="clearDay(3)">
-          <span class="weekday">WED</span>
-          <span class="day-date" id="date-3"></span>
-        </div>
-
-        <div class="day-btn" onclick="clearDay(4)">
-          <span class="weekday">THU</span>
-          <span class="day-date" id="date-4"></span>
-        </div>
-
-        <div class="day-btn" onclick="clearDay(5)">
-          <span class="weekday">FRI</span>
-          <span class="day-date" id="date-5"></span>
-        </div>
-
-        <div class="day-btn" onclick="clearDay(6)">
-          <span class="weekday">SAT</span>
-          <span class="day-date" id="date-6"></span>
-        </div>
-
-      </div>
-
-
+<div class="day-btn" onclick="clearDay(0)">
+<span class="weekday">SUN</span>
+<span class="day-date" id="date-0"></span>
+</div>
+<div class="day-btn" onclick="clearDay(1)">
+<span class="weekday">MON</span>
+<span class="day-date" id="date-1"></span>
+</div>
+<div class="day-btn" onclick="clearDay(2)">
+<span class="weekday">TUE</span>
+<span class="day-date" id="date-2"></span>
+</div>
+<div class="day-btn" onclick="clearDay(3)">
+<span class="weekday">WED</span>
+<span class="day-date" id="date-3"></span>
+</div>
+<div class="day-btn" onclick="clearDay(4)">
+<span class="weekday">THU</span>
+<span class="day-date" id="date-4"></span>
+</div>
+<div class="day-btn" onclick="clearDay(5)">
+<span class="weekday">FRI</span>
+<span class="day-date" id="date-5"></span>
+</div>
+<div class="day-btn" onclick="clearDay(6)">
+<span class="weekday">SAT</span>
+<span class="day-date" id="date-6"></span>
+</div>
+</div>
 <!-- =================================================
      AIDAN
 ================================================== 
@@ -3495,684 +3505,513 @@ background: rgba(18, 25, 22, 0.58);
 
   </div>
 </section> -->
-
-
 <!-- =================================================
      CALLIE
 ================================================== -->
 <section class="dog callie" style="--row-count:7;">
-
-  <div class="dog-info">
-    <div class="dog-name-line">
-      <span class="dog-paw">🐾</span>
-      <span class="dog-name">Callie</span>
-    </div>
-  </div>
-
-  <div class="dog-title">Callie</div>
-
-  <div class="dog-content">
-
-    <div class="grid-row" data-row-key="callie-anipryl">
-      <div class="med-name" data-med="callieanipryl">Anipryl</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="callie-gab1">
-      <div class="med-name" data-med="calliegab1">Gab 1</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="callie-gab2">
-      <div class="med-name" data-med="calliegab2">Gab 2</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="callie-gab3">
-      <div class="med-name" data-med="calliegab3">Gab 3</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="callie-dentastix">
-      <div class="med-name" data-med="calliedentastix">Dentastix</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="callie-welactin">
-      <div class="med-name" data-med="calliewelactin">Welactin</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="callie-cosequin">
-      <div class="med-name" data-med="calliecosequin">Cosequin</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-  </div>
+<div class="dog-info">
+<div class="dog-name-line">
+<span class="dog-paw">🐾</span>
+<span class="dog-name">Callie</span>
+</div>
+</div>
+<div class="dog-title">Callie</div>
+<div class="dog-content">
+<div class="grid-row" data-row-key="callie-anipryl">
+<div class="med-name" data-med="callieanipryl">Anipryl</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="callie-gab1">
+<div class="med-name" data-med="calliegab1">Gab 1</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="callie-gab2">
+<div class="med-name" data-med="calliegab2">Gab 2</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="callie-gab3">
+<div class="med-name" data-med="calliegab3">Gab 3</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="callie-dentastix">
+<div class="med-name" data-med="calliedentastix">Dentastix</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="callie-welactin">
+<div class="med-name" data-med="calliewelactin">Welactin</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="callie-cosequin">
+<div class="med-name" data-med="calliecosequin">Cosequin</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+</div>
 </section>
-
-
 <!-- =================================================
      LOGAN
 ================================================== -->
 <section class="dog logan" style="--row-count:24;">
-
-  <div class="dog-info">
-    <div class="dog-name-line">
-      <span class="dog-paw">🐾</span>
-      <span class="dog-name">Logan</span>
-    </div>
-  </div>
-
-  <div class="dog-title">Logan</div>
-
-  <div class="dog-content">
-
-    <!-- =========================
+<div class="dog-info">
+<div class="dog-name-line">
+<span class="dog-paw">🐾</span>
+<span class="dog-name">Logan</span>
+</div>
+</div>
+<div class="dog-title">Logan</div>
+<div class="dog-content">
+<!-- =========================
          MORNING
     ========================== -->
-
 <div class="care-period-title">
-  <div class="care-period-heading">
-    <span>☀️</span>
-    <span>MORNING</span>
-  </div>
-
-  <span class="care-period-note">
+<div class="care-period-heading">
+<span>☀️</span>
+<span>MORNING</span>
+</div>
+<span class="care-period-note">
     🍽 After a meal  • 💧 Keep LIQUID Refrigerated
   </span>
 </div>
-
-<div
-  class="grid-row med-detail-row"
-  data-row-key="logan-clindamycin-am"
->
-  <div class="med-name" data-med="logan-clindamycin-am">
-    <span class="med-main">AM Clindamycin 🍽</span>
-    <span class="med-note">Every 12 hours</span>
-  </div>
-
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div>
+<div class="grid-row med-detail-row" data-row-key="logan-clindamycin-am">
+<div class="med-name" data-med="logan-clindamycin-am">
+<span class="med-main">AM Clindamycin 🍽</span>
+<span class="med-note">Every 12 hours</span>
 </div>
-
-<div
-  class="grid-row med-detail-row"
-  data-row-key="logan-maropitant-citrate"
->
-  <div class="med-name" data-med="logan-maropitant-citrate">
-    <span class="med-main">Maropitant Citrate</span>
-    <span class="med-note">½ tab/24 hrs as needed</span>
-  </div>
-
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
 </div>
-
-    <div
-      class="grid-row med-gabapentin med-detail-row"
-      data-row-key="logan-gab1"
-    >
-      <div class="med-name" data-med="logan-am-gab">
+<div class="grid-row med-detail-row" data-row-key="logan-maropitant-citrate">
+<div class="med-name" data-med="logan-maropitant-citrate">
+<span class="med-main">Maropitant Citrate</span>
+<span class="med-note">½ tab/24 hrs as needed</span>
+</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row med-gabapentin med-detail-row" data-row-key="logan-gab1">
+<div class="med-name" data-med="logan-am-gab">
 <span class="med-main">
   AM Gabapentin 💧
 </span>
-        <span class="med-note">Recommended: 100 mg</span>
-      </div>
-
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div
-      class="grid-row med-hydrocodone med-detail-row"
-      data-row-key="logan-hydro1"
-    >
-      <div class="med-name" data-med="logan-am-hydro">
-        <span class="med-main">AM Hydrocodone</span>
-        <span class="med-note">Recommended: ¼ tab</span>
-      </div>
-
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div
-      class="grid-row med-trazodone med-detail-row"
-      data-row-key="logan-traz1"
-    >
-      <div class="med-name" data-med="logan-am-traz">
-        <span class="med-main">AM Trazodone</span>
-        <span class="med-note">If needed</span>
-      </div>
-
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-
-    <!-- =========================
+<span class="med-note">Recommended: 100 mg</span>
+</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row med-hydrocodone med-detail-row" data-row-key="logan-hydro1">
+<div class="med-name" data-med="logan-am-hydro">
+<span class="med-main">AM Hydrocodone</span>
+<span class="med-note">Recommended: ¼ tab</span>
+</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row med-trazodone med-detail-row" data-row-key="logan-traz1">
+<div class="med-name" data-med="logan-am-traz">
+<span class="med-main">AM Trazodone</span>
+<span class="med-note">If needed</span>
+</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<!-- =========================
          NOON
     ========================== -->
-
 <div class="care-period-title">
-  <div class="care-period-heading">
-    <span>🌤️</span>
-    <span>NOON to EARLY EVENING</span>
-  </div>
-
-  <span class="care-period-note">
+<div class="care-period-heading">
+<span>🌤️</span>
+<span>NOON to EARLY EVENING</span>
+</div>
+<span class="care-period-note">
     🕛 Midday medications
   </span>
 </div>
-
-    <div
-      class="grid-row med-gabapentin med-detail-row"
-      data-row-key="logan-extra-gab"
-    >
-      <div class="med-name" data-med="logan-noon-gab">
+<div class="grid-row med-gabapentin med-detail-row" data-row-key="logan-extra-gab">
+<div class="med-name" data-med="logan-noon-gab">
 <span class="med-main">Noon Gabapentin 💧
 </span>
-        <span class="med-note">Recommended: 100 mg</span>
-      </div>
-
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div
-      class="grid-row med-hydrocodone med-detail-row"
-      data-row-key="logan-hydro2"
-    >
-      <div class="med-name" data-med="logan-noon-hydro">
-        <span class="med-main">Noon Hydrocodone</span>
-        <span class="med-note">Recommended: ¼ tab</span>
-      </div>
-
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-
-    <!-- =========================
+<span class="med-note">Recommended: 100 mg</span>
+</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row med-hydrocodone med-detail-row" data-row-key="logan-hydro2">
+<div class="med-name" data-med="logan-noon-hydro">
+<span class="med-main">Noon Hydrocodone</span>
+<span class="med-note">Recommended: ¼ tab</span>
+</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<!-- =========================
          EVENING
     ========================== -->
-
 <div class="care-period-title">
-  <div class="care-period-heading">
-    <span>⭐</span>
-    <span>LATE EVENING/BEDTIME</span>
-  </div>
-
-  <span class="care-period-note">
+<div class="care-period-heading">
+<span>⭐</span>
+<span>LATE EVENING/BEDTIME</span>
+</div>
+<span class="care-period-note">
     🛏️ 1 hour or less before bedtime
   </span>
 </div>
-
-<div
-  class="grid-row med-detail-row"
-  data-row-key="logan-clindamycin-pm"
->
-  <div class="med-name" data-med="logan-clindamycin-pm">
-    <span class="med-main">PM Clindamycin</span>
-    <span class="med-note">Every 12 hours</span>
-  </div>
-
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div><div class="cell"></div>
-  <div class="cell"></div>
+<div class="grid-row med-detail-row" data-row-key="logan-clindamycin-pm">
+<div class="med-name" data-med="logan-clindamycin-pm">
+<span class="med-main">PM Clindamycin</span>
+<span class="med-note">Every 12 hours</span>
 </div>
-
-    <div
-      class="grid-row med-gabapentin med-detail-row"
-      data-row-key="logan-bed-gab2"
-    >
-      <div class="med-name" data-med="logan-pm-gab">
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row med-gabapentin med-detail-row" data-row-key="logan-bed-gab2">
+<div class="med-name" data-med="logan-pm-gab">
 <span class="med-main">PM Gabapentin 💧
 </span>
-        <span class="med-note">Recommended: 150 mg</span>
-      </div>
-
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div
-      class="grid-row med-hydrocodone med-detail-row"
-      data-row-key="logan-hydro3"
-    >
-      <div class="med-name" data-med="logan-pm-hydro">
-        <span class="med-main">PM Hydrocodone</span>
-        <span class="med-note">Recommended: ¼ tab</span>
-      </div>
-
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div
-      class="grid-row med-detail-row"
-      data-row-key="logan-pm-acepromazine"
-    >
-      <div class="med-name" data-med="logan-pm-ace">
-        <span class="med-main">Acepromazine</span>
-        <span class="med-note">Recommended: ¼ tab</span>
-      </div>
-
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-
-    <!-- =========================
+<span class="med-note">Recommended: 150 mg</span>
+</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row med-hydrocodone med-detail-row" data-row-key="logan-hydro3">
+<div class="med-name" data-med="logan-pm-hydro">
+<span class="med-main">PM Hydrocodone</span>
+<span class="med-note">Recommended: ¼ tab</span>
+</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row med-detail-row" data-row-key="logan-pm-acepromazine">
+<div class="med-name" data-med="logan-pm-ace">
+<span class="med-main">Acepromazine</span>
+<span class="med-note">Recommended: ¼ tab</span>
+</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<!-- =========================
          OVERNIGHT
     ========================== -->
-
 <div class="care-period-title">
-  <div class="care-period-heading">
-    <span>🌙</span>
-    <span>OVERNIGHT</span>
-  </div>
-
-  <span class="care-period-note">
+<div class="care-period-heading">
+<span>🌙</span>
+<span>OVERNIGHT</span>
+</div>
+<span class="care-period-note">
     ⚠️ Only if needed
   </span>
 </div>
-
-    <div
-      class="grid-row med-hydrocodone med-detail-row"
-      data-row-key="logan-bed-hydro"
-    >
-      <div class="med-name" data-med="logan-overnight-hydro">
-        <span class="med-main">Overnight Hydrocodone</span>
-        <span class="med-note"> tablet • If needed</span>
-      </div>
-
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-
-    <!-- =========================
+<div class="grid-row med-hydrocodone med-detail-row" data-row-key="logan-bed-hydro">
+<div class="med-name" data-med="logan-overnight-hydro">
+<span class="med-main">Overnight Hydrocodone</span>
+<span class="med-note"> tablet • If needed</span>
+</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<!-- =========================
          AS NEEDED
     ========================== -->
-
 <div class="care-period-title">
-  <div class="care-period-heading">
-    <span>➕</span>
-    <span>AS NEEDED</span>
-  </div>
-
-  <span class="care-period-note">
+<div class="care-period-heading">
+<span>➕</span>
+<span>AS NEEDED</span>
+</div>
+<span class="care-period-note">
     ⚠️ Only if needed anytime during the day
   </span>
 </div>
-
-    <div
-      class="grid-row med-trazodone med-detail-row"
-      data-row-key="logan-traz2"
-    >
-      <div class="med-name" data-med="logan-prn-traz1">
-        <span class="med-main">Trazodone 1</span>
-        <span class="med-note">If needed</span>
-      </div>
-
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div
-      class="grid-row med-trazodone med-detail-row"
-      data-row-key="logan-traz3"
-    >
-      <div class="med-name" data-med="logan-prn-traz2">
-        <span class="med-main">Trazodone 2</span>
-        <span class="med-note">If needed</span>
-      </div>
-
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div
-      class="grid-row med-trazodone med-detail-row"
-      data-row-key="logan-bed-traz"
-    >
-      <div class="med-name" data-med="logan-prn-traz3">
-        <span class="med-main">Trazodone 3</span>
-        <span class="med-note">If needed</span>
-      </div>
-
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-
-    <!-- =========================
+<div class="grid-row med-trazodone med-detail-row" data-row-key="logan-traz2">
+<div class="med-name" data-med="logan-prn-traz1">
+<span class="med-main">Trazodone 1</span>
+<span class="med-note">If needed</span>
+</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row med-trazodone med-detail-row" data-row-key="logan-traz3">
+<div class="med-name" data-med="logan-prn-traz2">
+<span class="med-main">Trazodone 2</span>
+<span class="med-note">If needed</span>
+</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row med-trazodone med-detail-row" data-row-key="logan-bed-traz">
+<div class="med-name" data-med="logan-prn-traz3">
+<span class="med-main">Trazodone 3</span>
+<span class="med-note">If needed</span>
+</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<!-- =========================
          DAILY CARE
     ========================== -->
-
 <div class="care-period-title">
-  <div class="care-period-heading">
-    <span>🐾</span>
-    <span>DAILY CARE</span>
-  </div>
-
-  <span class="care-period-note">
+<div class="care-period-heading">
+<span>🐾</span>
+<span>DAILY CARE</span>
+</div>
+<span class="care-period-note">
     💜 Daily routine supplements
   </span>
 </div>
-
-    <div class="grid-row" data-row-key="logan-welactin">
-      <div class="med-name" data-med="loganwelactin">
+<div class="grid-row" data-row-key="logan-welactin">
+<div class="med-name" data-med="loganwelactin">
         Welactin
       </div>
-
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="logan-cosequin">
-      <div class="med-name" data-med="logancosequin">
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="logan-cosequin">
+<div class="med-name" data-med="logancosequin">
         Cosequin
       </div>
-
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="logan-dentastix">
-      <div class="med-name" data-med="logandentastix">
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="logan-dentastix">
+<div class="med-name" data-med="logandentastix">
         Dentastix
       </div>
-
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-  </div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+</div>
 </section>
-
 <!-- =================================================
      JASMINE
 ================================================== -->
 <section class="dog jasmine" style="--row-count:3;">
-
-  <div class="dog-info">
-    <div class="dog-name-line">
+<div class="dog-info">
+<div class="dog-name-line">
 <span class="dog-paw">🐾</span>
-      <span class="dog-name">Jasmine</span>
-    </div>
-  </div>
-
-  <div class="dog-title">Jasmine</div>
-
-  <div class="dog-content">
-
-    <div class="grid-row" data-row-key="jasmine-dentastix">
-      <div class="med-name" data-med="jasminedentastix">Dentastix</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="jasmine-welactin">
-      <div class="med-name" data-med="jasminewelactin">Welactin</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="jasmine-cosequin">
-      <div class="med-name" data-med="jasminecosequin">Cosequin</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-  </div>
+<span class="dog-name">Jasmine</span>
+</div>
+</div>
+<div class="dog-title">Jasmine</div>
+<div class="dog-content">
+<div class="grid-row" data-row-key="jasmine-dentastix">
+<div class="med-name" data-med="jasminedentastix">Dentastix</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="jasmine-welactin">
+<div class="med-name" data-med="jasminewelactin">Welactin</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="jasmine-cosequin">
+<div class="med-name" data-med="jasminecosequin">Cosequin</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+</div>
 </section>
-
-
 <!-- =================================================
      THEO
 ================================================== -->
 <section class="dog theo" style="--row-count:3;">
-
-  <div class="dog-info">
-    <div class="dog-name-line">
+<div class="dog-info">
+<div class="dog-name-line">
 <span class="dog-paw">🐾</span>
-      <span class="dog-name">Theo</span>
-    </div>
-  </div>
-
-  <div class="dog-title">Theo</div>
-
-  <div class="dog-content">
-
-    <div class="grid-row" data-row-key="theo-dentastix">
-      <div class="med-name" data-med="theodentastix">Dentastix</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="theo-welactin">
-      <div class="med-name" data-med="theowelactin">Welactin</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="theo-cosequin">
-      <div class="med-name" data-med="theocosequin">Cosequin</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-  </div>
+<span class="dog-name">Theo</span>
+</div>
+</div>
+<div class="dog-title">Theo</div>
+<div class="dog-content">
+<div class="grid-row" data-row-key="theo-dentastix">
+<div class="med-name" data-med="theodentastix">Dentastix</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="theo-welactin">
+<div class="med-name" data-med="theowelactin">Welactin</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="theo-cosequin">
+<div class="med-name" data-med="theocosequin">Cosequin</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+</div>
 </section>
-
 <!-- =================================================
      ATE / FOOD
 ================================================== -->
 <section class="dog ate" style="--row-count:12;">
-
-  <div class="dog-info">
-    <div class="dog-name-line">
-      <span class="dog-paw">🐾</span>
-      <span class="dog-name">Ate</span>
-    </div>
-
-    <div class="dog-detail">
+<div class="dog-info">
+<div class="dog-name-line">
+<span class="dog-paw">🐾</span>
+<span class="dog-name">Ate</span>
+</div>
+<div class="dog-detail">
       Meals &amp; feeding
     </div>
-  </div>
-
-  <div class="dog-title">Ate</div>
-
-  <div class="dog-content">
-
-    <!-- CALLIE -->
-    <div class="ate-dog-title">
+</div>
+<div class="dog-title">Ate</div>
+<div class="dog-content">
+<!-- CALLIE -->
+<div class="ate-dog-title">
       🐾 Callie
     </div>
-
-    <div class="grid-row" data-row-key="ate-callie1">
-      <div class="med-name">Meal 1</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="ate-callie2">
-      <div class="med-name">Meal 2</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-
-    <!-- LOGAN -->
-    <div class="ate-dog-title">
+<div class="grid-row" data-row-key="ate-callie1">
+<div class="med-name">Meal 1</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="ate-callie2">
+<div class="med-name">Meal 2</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<!-- LOGAN -->
+<div class="ate-dog-title">
       🐾 Logan
     </div>
-
-    <div class="grid-row" data-row-key="ate-logan1">
-      <div class="med-name">Meal 1</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="ate-logan2">
-      <div class="med-name">Meal 2</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-
-    <!-- JASMINE -->
-    <div class="ate-dog-title">
+<div class="grid-row" data-row-key="ate-logan1">
+<div class="med-name">Meal 1</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="ate-logan2">
+<div class="med-name">Meal 2</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<!-- JASMINE -->
+<div class="ate-dog-title">
       🐾 Jasmine
     </div>
-
-    <div class="grid-row" data-row-key="ate-jasmine1">
-      <div class="med-name">Meal 1</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="ate-jasmine2">
-      <div class="med-name">Meal 2</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-
-    <!-- THEO -->
-    <div class="ate-dog-title">
+<div class="grid-row" data-row-key="ate-jasmine1">
+<div class="med-name">Meal 1</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="ate-jasmine2">
+<div class="med-name">Meal 2</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<!-- THEO -->
+<div class="ate-dog-title">
       🐾 Theo
     </div>
-
-    <div class="grid-row" data-row-key="ate-theo1">
-      <div class="med-name">Meal 1</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <div class="grid-row" data-row-key="ate-theo2">
-      <div class="med-name">Meal 2</div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div><div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-  </div>
-</section> 
-    </div>
-  </main>
-
-
-  <!-- =====================================================
+<div class="grid-row" data-row-key="ate-theo1">
+<div class="med-name">Meal 1</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<div class="grid-row" data-row-key="ate-theo2">
+<div class="med-name">Meal 2</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- =====================================================
        BOTTOM APP BAR
   ====================================================== -->
-  <div class="bottom-bar">
-
-    <button onclick="openApp('calendar')">
+<div class="bottom-bar">
+<button onclick="openApp('calendar')">
       📅 Calendar
     </button>
-
-    <button onclick="openApp('notes')">
+<button onclick="openApp('notes')">
       📝 Notes
     </button>
-
-    <button onclick="openApp('grocery')">
+<button onclick="openApp('grocery')">
       🛒 Grocery
     </button>
-
-  </div>
-
-  <div id="backupDot"></div>
-
 </div>
-
-
+<div id="backupDot"></div>
+</div>
 <!-- =====================================================
      NEW DISPLAY HELPERS
      Keep this before your existing main script.
@@ -4280,7 +4119,6 @@ highlightPawHubTodayColumn();
 setInterval(updatePawHubClock, 30000);
 
 </script>
-
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
@@ -4312,8 +4150,6 @@ window.firebaseReady = true;
 console.log("Firebase connected and db ready");
 
 </script>
-
-
 <script>
 
 let lockMode = true;
@@ -5023,7 +4859,6 @@ function startRealtimeSync() {
 }
 window.addEventListener("load", startRealtimeSync);
 </script>
-
 <script>
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js")
@@ -5031,271 +4866,115 @@ if ("serviceWorker" in navigator) {
     .catch(error => console.log("Service Worker error:", error));
 }
 </script>
-
 <!-- =========================================================
      REMOVE ENTRY CARD
 ========================================================= -->
-
-<div
-  id="removeModal"
-  class="dose-modal"
-  aria-hidden="true"
->
-
-  <div
-    class="dose-card"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="removeEntryTitle"
-  >
-
-    <div class="dose-card-header">
-
-      <button
-        id="removeCloseBtn"
-        class="dose-close-btn"
-        type="button"
-        aria-label="Close remove entry card"
-      >
+<div aria-hidden="true" class="dose-modal" id="removeModal">
+<div aria-labelledby="removeEntryTitle" aria-modal="true" class="dose-card" role="dialog">
+<div class="dose-card-header">
+<button aria-label="Close remove entry card" class="dose-close-btn" id="removeCloseBtn" type="button">
         ×
       </button>
-
-      <div
-        id="removeDogName"
-        class="dose-dog-name"
-      >
+<div class="dose-dog-name" id="removeDogName">
         Medication
       </div>
-
-      <div
-        id="removeEntryTitle"
-        class="remove-entry-title"
-      >
-        <span class="remove-entry-icon">🗑️</span>
+<div class="remove-entry-title" id="removeEntryTitle">
+<span class="remove-entry-icon">🗑️</span>
         Remove Entry
       </div>
-
-    </div>
-
-    <div class="dose-card-body">
-
-      <div class="remove-entry-details">
-
-        <div
-          id="removeMedName"
-          class="remove-entry-med"
-        >
+</div>
+<div class="dose-card-body">
+<div class="remove-entry-details">
+<div class="remove-entry-med" id="removeMedName">
           Medication
         </div>
-
-        <div
-          id="removeEntryTime"
-          class="remove-entry-time"
-        >
+<div class="remove-entry-time" id="removeEntryTime">
           Time
         </div>
-
-        <div class="remove-entry-question">
+<div class="remove-entry-question">
           Remove this entry?
         </div>
-
-      </div>
-
-    </div>
-
-    <div class="dose-card-footer">
-
-      <button
-        id="removeCancelBtn"
-        class="dose-cancel-btn"
-        type="button"
-      >
+</div>
+</div>
+<div class="dose-card-footer">
+<button class="dose-cancel-btn" id="removeCancelBtn" type="button">
         Keep Entry
       </button>
-
-      <button
-        id="removeConfirmBtn"
-        class="remove-delete-btn"
-        type="button"
-      >
+<button class="remove-delete-btn" id="removeConfirmBtn" type="button">
         Remove
       </button>
-
-    </div>
-
-  </div>
-
 </div>
-   
-   <!-- =========================================================
+</div>
+</div>
+<!-- =========================================================
      DOSE ENTRY CARD
 ========================================================= -->
-
-<div id="doseModal" class="dose-modal" aria-hidden="true">
-
-  <div
-    class="dose-card"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="doseMedName"
-  >
-
-    <div class="dose-card-header">
-
-      <button
-        id="doseCloseBtn"
-        class="dose-close-btn"
-        type="button"
-        aria-label="Close dose entry"
-      >
+<div aria-hidden="true" class="dose-modal" id="doseModal">
+<div aria-labelledby="doseMedName" aria-modal="true" class="dose-card" role="dialog">
+<div class="dose-card-header">
+<button aria-label="Close dose entry" class="dose-close-btn" id="doseCloseBtn" type="button">
         ×
       </button>
-
-      <div id="doseDogName" class="dose-dog-name">
+<div class="dose-dog-name" id="doseDogName">
         Medication
       </div>
-
-      <div id="doseMedName" class="dose-med-name">
+<div class="dose-med-name" id="doseMedName">
         Dose Entry
       </div>
-
-    </div>
-
-    <div class="dose-card-body">
-
-      <div class="dose-field">
-
-        <label class="dose-field-label">
+</div>
+<div class="dose-card-body">
+<div class="dose-field">
+<label class="dose-field-label">
           Time Given
         </label>
-
-        <div class="dose-time-row">
-
-          <select
-            id="doseHour"
-            aria-label="Hour"
-          ></select>
-
-          <select
-            id="doseMinute"
-            aria-label="Minute"
-          ></select>
-
-          <select
-            id="dosePeriod"
-            aria-label="AM or PM"
-          >
-            <option value="AM">AM</option>
-            <option value="PM">PM</option>
-          </select>
-
-        </div>
-
-        <button
-          id="doseNowBtn"
-          class="dose-now-btn"
-          type="button"
-        >
+<div class="dose-time-row">
+<select aria-label="Hour" id="doseHour"></select>
+<select aria-label="Minute" id="doseMinute"></select>
+<select aria-label="AM or PM" id="dosePeriod">
+<option value="AM">AM</option>
+<option value="PM">PM</option>
+</select>
+</div>
+<button class="dose-now-btn" id="doseNowBtn" type="button">
           NOW
         </button>
-
-      </div>
-
-      <div
-        id="doseAmountSection"
-        class="dose-field dose-section-hidden"
-      >
-
-        <label
-          class="dose-field-label"
-          for="doseAmount"
-        >
+</div>
+<div class="dose-field dose-section-hidden" id="doseAmountSection">
+<label class="dose-field-label" for="doseAmount">
           Dose
         </label>
-
-<div
-  id="doseChoices"
-  class="dose-choice-buttons"
-></div>
-
-      </div>
-
-      <button
-        id="doseSkipBtn"
-        class="dose-skip-btn"
-        type="button"
-      >
+<div class="dose-choice-buttons" id="doseChoices"></div>
+</div>
+<button class="dose-skip-btn" id="doseSkipBtn" type="button">
         ↷Mark as Skipped
       </button>
-
-    </div>
-
-    <div class="dose-card-footer">
-
-      <button
-        id="doseCancelBtn"
-        class="dose-cancel-btn"
-        type="button"
-      >
+</div>
+<div class="dose-card-footer">
+<button class="dose-cancel-btn" id="doseCancelBtn" type="button">
         Cancel
       </button>
-
-      <button
-        id="doseSaveBtn"
-        class="dose-save-btn"
-        type="button"
-      >
+<button class="dose-save-btn" id="doseSaveBtn" type="button">
         Save Entry
       </button>
-
-    </div>
-
-  </div>
-
 </div>
-
+</div>
+</div>
 <!-- CLEAR DAY CONFIRMATION -->
-
-<div
-  id="clearDayModal"
-  class="dose-modal"
-  aria-hidden="true"
->
-
-  <div
-    class="dose-card clear-day-card"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="clearDayTitle"
-  >
-
-    <div class="dose-card-header clear-day-header">
-
-      <button
-        id="clearDayCloseBtn"
-        class="dose-close-btn"
-        type="button"
-        aria-label="Close clear day confirmation"
-      >
+<div aria-hidden="true" class="dose-modal" id="clearDayModal">
+<div aria-labelledby="clearDayTitle" aria-modal="true" class="dose-card clear-day-card" role="dialog">
+<div class="dose-card-header clear-day-header">
+<button aria-label="Close clear day confirmation" class="dose-close-btn" id="clearDayCloseBtn" type="button">
         ×
       </button>
-
-      <div class="dose-dog-name">
+<div class="dose-dog-name">
         PawHub
       </div>
-
-      <div
-        id="clearDayTitle"
-        class="dose-med-name"
-      >
+<div class="dose-med-name" id="clearDayTitle">
         Clear Day?
       </div>
-
-    </div>
-
-    <div class="dose-card-body">
-
-      <div class="clear-day-message">
+</div>
+<div class="dose-card-body">
+<div class="clear-day-message">
 
         Remove all medication entries for
 
@@ -5304,360 +4983,208 @@ if ("serviceWorker" in navigator) {
         </strong>?
 
       </div>
-
-      <div class="clear-day-warning">
+<div class="clear-day-warning">
         This cannot be undone.
       </div>
-
-    </div>
-
-    <div class="dose-card-footer">
-
-      <button
-        id="clearDayCancelBtn"
-        class="dose-cancel-btn"
-        type="button"
-      >
+</div>
+<div class="dose-card-footer">
+<button class="dose-cancel-btn" id="clearDayCancelBtn" type="button">
         Keep Entries
       </button>
-
-      <button
-        id="clearDayConfirmBtn"
-        class="clear-day-confirm-btn"
-        type="button"
-      >
+<button class="clear-day-confirm-btn" id="clearDayConfirmBtn" type="button">
         Clear Day
       </button>
-
-    </div>
-
-  </div>
-
 </div>
-
+</div>
+</div>
 <!-- =====================================================
      MEDICATION CARD MODAL
 ====================================================== -->
-<div id="medCardModal" class="med-card-overlay" aria-hidden="true">
-
-  <div
-    class="med-card"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="medCardTitle"
-  >
-
-    <button
-      id="closeMedCardBtn"
-      class="med-card-close"
-      type="button"
-      aria-label="Close medication record"
-    >
+<div aria-hidden="true" class="med-card-overlay" id="medCardModal">
+<div aria-labelledby="medCardTitle" aria-modal="true" class="med-card" role="dialog">
+<button aria-label="Close medication record" class="med-card-close" id="closeMedCardBtn" type="button">
       ×
     </button>
-
-    <div class="med-card-header">
-
-      <div class="med-card-paw">🐾</div>
-
-      <div>
-        <div class="med-card-eyebrow">
+<div class="med-card-header">
+<div class="med-card-paw">🐾</div>
+<div>
+<div class="med-card-eyebrow">
           PawHub
         </div>
-
-        <h2 id="medCardTitle">
+<h2 id="medCardTitle">
           Medication Record
         </h2>
-      </div>
-
-    </div>
-
-    <div class="med-card-medication">
-      <span id="medCardDog">Dog</span>
-      <strong id="medCardMed">Medication</strong>
-    </div>
-
-    <!-- MAIN MEDICATION PAGE -->
-    <div
-      id="medCardMainPage"
-      class="med-card-page"
-    >
-
-      <div class="med-card-menu">
-
-        <button
-          class="med-card-option"
-          type="button"
-          data-panel="prescription"
-        >
-          <span class="med-card-option-icon">💊</span>
-
-          <span class="med-card-option-text">
-            <strong>Item Details</strong>
-            <small>Store dosage and pharmacy information</small>
-          </span>
-
-          <span class="med-card-arrow">›</span>
-        </button>
-
-        <button
-          class="med-card-option"
-          type="button"
-          data-panel="reminders"
-        >
-          <span class="med-card-option-icon">🔔</span>
-
-          <span class="med-card-option-text">
-            <strong>Reminders</strong>
-            <small>Schedule alerts for this medication</small>
-          </span>
-
-          <span class="med-card-arrow">›</span>
-        </button>
-
-        <button
-          class="med-card-option"
-          type="button"
-          data-panel="history"
-        >
-          <span class="med-card-option-icon">📖</span>
-
-          <span class="med-card-option-text">
-            <strong>History</strong>
-            <small>Review when it was given</small>
-          </span>
-
-          <span class="med-card-arrow">›</span>
-        </button>
-
-        <button
-          class="med-card-option"
-          type="button"
-          data-panel="notes"
-        >
-          <span class="med-card-option-icon">📝</span>
-
-          <span class="med-card-option-text">
-            <strong>Notes</strong>
-            <small>Add medication or care notes</small>
-          </span>
-
-          <span class="med-card-arrow">›</span>
-        </button>
-
-        <button
-          class="med-card-option"
-          type="button"
-          data-panel="vet"
-        >
-          <span class="med-card-option-icon">🩺</span>
-
-          <span class="med-card-option-text">
-            <strong>Vet Instructions</strong>
-            <small>Keep important directions handy</small>
-          </span>
-
-          <span class="med-card-arrow">›</span>
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- REMINDER SETTINGS PAGE -->
-    <div
-      id="medCardReminderPage"
-      class="med-card-page"
-      hidden
-    >
-
-      <button
-        id="reminderBackBtn"
-        class="med-card-back"
-        type="button"
-      >
+</div>
+</div>
+<div class="med-card-medication">
+<span id="medCardDog">Dog</span>
+<strong id="medCardMed">Medication</strong>
+</div>
+<!-- MAIN MEDICATION PAGE -->
+<div class="med-card-page" id="medCardMainPage">
+<div class="med-card-menu">
+<button class="med-card-option" data-panel="prescription" type="button">
+<span class="med-card-option-icon">💊</span>
+<span class="med-card-option-text">
+<strong>Item Details</strong>
+<small>Store dosage and pharmacy information</small>
+</span>
+<span class="med-card-arrow">›</span>
+</button>
+<button class="med-card-option" data-panel="reminders" type="button">
+<span class="med-card-option-icon">🔔</span>
+<span class="med-card-option-text">
+<strong>Reminders</strong>
+<small>Schedule alerts for this medication</small>
+</span>
+<span class="med-card-arrow">›</span>
+</button>
+<button class="med-card-option" data-panel="history" type="button">
+<span class="med-card-option-icon">📖</span>
+<span class="med-card-option-text">
+<strong>History</strong>
+<small>Review when it was given</small>
+</span>
+<span class="med-card-arrow">›</span>
+</button>
+<button class="med-card-option" data-panel="notes" type="button">
+<span class="med-card-option-icon">📝</span>
+<span class="med-card-option-text">
+<strong>Notes</strong>
+<small>Add medication or care notes</small>
+</span>
+<span class="med-card-arrow">›</span>
+</button>
+<button class="med-card-option" data-panel="vet" type="button">
+<span class="med-card-option-icon">🩺</span>
+<span class="med-card-option-text">
+<strong>Vet Instructions</strong>
+<small>Keep important directions handy</small>
+</span>
+<span class="med-card-arrow">›</span>
+</button>
+</div>
+</div>
+<!-- REMINDER SETTINGS PAGE -->
+<div class="med-card-page" hidden="" id="medCardReminderPage">
+<button class="med-card-back" id="reminderBackBtn" type="button">
         ← Back
       </button>
-
-      <div class="reminder-settings">
-
-        <div class="reminder-toggle-row">
-
-          <div class="reminder-toggle-text">
-            <strong>Enable Reminder</strong>
-            <small>Turn alerts on for this medication</small>
-          </div>
-
-          <label class="reminder-switch">
-
-            <input
-              id="reminderEnabled"
-              type="checkbox"
-            >
-
-            <span class="reminder-switch-slider"></span>
-
-          </label>
-
-        </div>
-
-
-        <div id="reminderFields">
-
-          <div class="reminder-settings">
-
-            <div class="reminder-field">
-              <label for="reminderHour">
+<div class="reminder-settings">
+<div class="reminder-toggle-row">
+<div class="reminder-toggle-text">
+<strong>Enable Reminder</strong>
+<small>Turn alerts on for this medication</small>
+</div>
+<label class="reminder-switch">
+<input id="reminderEnabled" type="checkbox"/>
+<span class="reminder-switch-slider"></span>
+</label>
+</div>
+<div id="reminderFields">
+<div class="reminder-settings">
+<div class="reminder-field">
+<label for="reminderHour">
                 MEDICATION TIME
               </label>
-
-              <div class="reminder-time-picker">
-
-  <select id="reminderHour" aria-label="Hour">
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
-    <option value="7">7</option>
-    <option value="8">8</option>
-    <option value="9">9</option>
-    <option value="10">10</option>
-    <option value="11">11</option>
-    <option value="12">12</option>
-  </select>
-
-  <select id="reminderMinute" aria-label="Minute">
-    <option value="00">00</option>
-    <option value="05">05</option>
-    <option value="10">10</option>
-    <option value="15">15</option>
-    <option value="20">20</option>
-    <option value="25">25</option>
-    <option value="30">30</option>
-    <option value="35">35</option>
-    <option value="40">40</option>
-    <option value="45">45</option>
-    <option value="50">50</option>
-    <option value="55">55</option>
-  </select>
-
-  <select id="reminderPeriod" aria-label="AM or PM">
-    <option value="AM">AM</option>
-    <option value="PM">PM</option>
-  </select>
-
+<div class="reminder-time-picker">
+<select aria-label="Hour" id="reminderHour">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+</select>
+<select aria-label="Minute" id="reminderMinute">
+<option value="00">00</option>
+<option value="05">05</option>
+<option value="10">10</option>
+<option value="15">15</option>
+<option value="20">20</option>
+<option value="25">25</option>
+<option value="30">30</option>
+<option value="35">35</option>
+<option value="40">40</option>
+<option value="45">45</option>
+<option value="50">50</option>
+<option value="55">55</option>
+</select>
+<select aria-label="AM or PM" id="reminderPeriod">
+<option value="AM">AM</option>
+<option value="PM">PM</option>
+</select>
 </div>
-            </div>
-
-
-            <div class="reminder-field">
-              <label for="remindBefore">
+</div>
+<div class="reminder-field">
+<label for="remindBefore">
                 REMIND ME
               </label>
-
-              <select id="remindBefore">
-                <option value="0">At medication time</option>
-                <option value="10">10 minutes before</option>
-                <option value="15">15 minutes before</option>
-                <option value="30">30 minutes before</option>
-                <option value="60">1 hour before</option>
-              </select>
-            </div>
-
-
-            <div class="reminder-field">
-              <label for="repeatEvery">
+<select id="remindBefore">
+<option value="0">At medication time</option>
+<option value="10">10 minutes before</option>
+<option value="15">15 minutes before</option>
+<option value="30">30 minutes before</option>
+<option value="60">1 hour before</option>
+</select>
+</div>
+<div class="reminder-field">
+<label for="repeatEvery">
                 REPEAT IF MISSED
               </label>
-
-              <select id="repeatEvery">
-                <option value="0">Do not repeat</option>
-                <option value="5">Every 5 minutes</option>
-                <option value="10">Every 10 minutes</option>
-                <option value="15">Every 15 minutes</option>
-                <option value="30">Every 30 minutes</option>
-                <option value="60">Every hour</option>
-              </select>
-            </div>
-
-
-            <div class="reminder-field">
-              <label for="stopAfter">
+<select id="repeatEvery">
+<option value="0">Do not repeat</option>
+<option value="5">Every 5 minutes</option>
+<option value="10">Every 10 minutes</option>
+<option value="15">Every 15 minutes</option>
+<option value="30">Every 30 minutes</option>
+<option value="60">Every hour</option>
+</select>
+</div>
+<div class="reminder-field">
+<label for="stopAfter">
                 STOP AFTER
               </label>
-
-              <select id="stopAfter">
-                <option value="30">30 minutes</option>
-                <option value="60">1 hour</option>
-                <option value="120">2 hours</option>
-                <option value="180">3 hours</option>
-                <option value="240">4 hours</option>
-              </select>
-            </div>
-
-
-            <div class="reminder-toggle-row">
-
-              <div class="reminder-toggle-text">
-                <strong>Sound</strong>
-                <small>Play a sound with the alert</small>
-              </div>
-
-              <label class="reminder-switch">
-
-                <input
-                  id="reminderSound"
-                  type="checkbox"
-                  checked
-                >
-
-                <span class="reminder-switch-slider"></span>
-
-              </label>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <p
-          id="reminderStatus"
-          class="reminder-status"
-          aria-live="polite"
-        ></p>
-
-        <div class="reminder-actions">
-
-          <button
-            id="cancelReminderBtn"
-            class="reminder-action-btn reminder-cancel-btn"
-            type="button"
-          >
+<select id="stopAfter">
+<option value="30">30 minutes</option>
+<option value="60">1 hour</option>
+<option value="120">2 hours</option>
+<option value="180">3 hours</option>
+<option value="240">4 hours</option>
+</select>
+</div>
+<div class="reminder-toggle-row">
+<div class="reminder-toggle-text">
+<strong>Sound</strong>
+<small>Play a sound with the alert</small>
+</div>
+<label class="reminder-switch">
+<input checked="" id="reminderSound" type="checkbox"/>
+<span class="reminder-switch-slider"></span>
+</label>
+</div>
+</div>
+</div>
+<p aria-live="polite" class="reminder-status" id="reminderStatus"></p>
+<div class="reminder-actions">
+<button class="reminder-action-btn reminder-cancel-btn" id="cancelReminderBtn" type="button">
             Cancel
           </button>
-
-          <button
-            id="saveReminderBtn"
-            class="reminder-action-btn reminder-save-btn"
-            type="button"
-          >
+<button class="reminder-action-btn reminder-save-btn" id="saveReminderBtn" type="button">
             Save Reminder
           </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
 </div>
-
-   <script>
+</div>
+</div>
+</div>
+</div>
+<script>
    /* =========================================================
    DOSE ENTRY CARD
 ========================================================= */
@@ -6363,7 +5890,6 @@ activeDoseCell.classList.add("active");
   closeDoseCard();
 });
 </script>
-
 <script>
 /* =========================================================
    REMOVE ENTRY CARD
@@ -6484,7 +6010,6 @@ removeModal.addEventListener(
   }
 );
 </script>
-
 <script>
 /* =========================================================
    CLEAR DAY CONFIRMATION
@@ -6926,6 +6451,236 @@ function highlightNightChecklistToday() {
 highlightNightChecklistToday();
 
 </script>
-   
+<div aria-hidden="true" class="logan-delete-modal" id="loganExerciseModal"><div aria-modal="true" class="logan-delete-card" role="dialog"><div class="logan-delete-head"><button aria-label="Close" class="logan-delete-x" id="loganExerciseX" type="button">×</button><span class="paw">🐾</span><h3>Log Exercise Session</h3></div><div class="logan-note-body logan-ex-form"><label>Exercise</label><select id="loganExerciseType"><option>Supported Standing</option><option>Gentle Weight Shifts</option><option>Harness-Assisted Walking</option><option>Gentle Hind-Leg Range of Motion</option><option>Combination / Other</option></select><label>How did Logan do?</label><select id="loganExerciseResponse"><option>😊 Good</option><option>😐 Tired</option><option>🛑 Stopped</option></select><label>Quick note (optional)</label><textarea id="loganExerciseNote" placeholder="Example: Stood about 15 seconds twice. Right leg got tired on second try."></textarea><div class="logan-ex-row"><label>Date<input id="loganExerciseDate" type="date"></label><label>Time<input id="loganExerciseTime" type="time"></label></div></div><div class="logan-delete-actions"><button id="loganExerciseCancel" type="button">Cancel</button><button class="logan-ex-save" id="loganExerciseSave" type="button">Save Session</button></div></div></div><div aria-hidden="true" class="logan-delete-modal" id="loganNoteModal"><div aria-labelledby="loganNoteTitle" aria-modal="true" class="logan-delete-card logan-note-card" role="dialog"><div class="logan-delete-head logan-note-head"><button aria-label="Close" class="logan-delete-x" id="loganNoteX" type="button">×</button><span class="paw">🐾</span><h3 id="loganNoteTitle">Add Food Note</h3></div><div class="logan-note-body"><label for="loganNoteText">What did Logan eat?</label><textarea id="loganNoteText" placeholder="Example: Ate a little pile of torn-up treats — Milk-Bone, chicken treat and part of a Dentastix." rows="5"></textarea><div class="logan-note-date-row"><label>Date <input id="loganNoteDate" type="date"/></label><label>Time <input id="loganNoteTime" type="time"/></label></div></div><div class="logan-delete-actions"><button id="loganNoteCancel" type="button">Cancel</button><button class="logan-note-save" id="loganNoteSave" type="button">Save Note</button></div></div></div><div aria-hidden="true" class="logan-delete-modal" id="loganNoteDeleteModal"><div aria-modal="true" class="logan-delete-card" role="dialog"><div class="logan-delete-head"><button aria-label="Close" class="logan-delete-x" id="loganNoteDeleteX" type="button">×</button><span class="paw">🐾</span><h3>Delete Food Note?</h3></div><div class="logan-delete-body">Remove this note from Logan’s food notes?<div class="logan-delete-entry" id="loganNoteDeletePreview"></div></div><div class="logan-delete-actions"><button id="loganNoteDeleteCancel" type="button">Keep Note</button><button id="loganNoteDeleteConfirm" type="button">🗑 Delete Note</button></div></div></div><div aria-hidden="true" class="logan-delete-modal" id="loganDeleteModal"><div aria-labelledby="loganDeleteTitle" aria-modal="true" class="logan-delete-card" role="dialog"><div class="logan-delete-head"><button aria-label="Close" class="logan-delete-x" id="loganDeleteX" type="button">×</button><span class="paw">🐾</span><h3 id="loganDeleteTitle">Delete Logan History?</h3></div><div class="logan-delete-body">Remove this entry from Logan’s food history?<div class="logan-delete-entry" id="loganDeleteEntry"></div></div><div class="logan-delete-actions"><button id="loganDeleteCancel" type="button">Keep Entry</button><button id="loganDeleteConfirm" type="button">🗑 Delete Entry</button></div></div></div>
+<script>
+/* =========================================================
+   LOGAN'S FOOD MENU — history tracker, separate storage only
+   IMPORTANT: never reads/writes medData, medData_backup or Firebase.
+========================================================= */
+(function () {
+  const STORAGE_KEY = "pawhubLoganFoodMenu_v2";
+  const OLD_KEY = "pawhubLoganFoodMenu_v1";
+  const tab = document.getElementById("loganMenuTab");
+  const page = document.getElementById("loganMenuPage");
+  const back = document.getElementById("backFromLoganMenu");
+  const tracker = document.querySelector(".matrix");
+  const nightPage = document.getElementById("nightChecklistPage");
+  const nightTab = document.getElementById("nightChecklistTab");
+  const favoritesList = document.getElementById("loganFavoritesList");
+  const deleteModal=document.getElementById("loganDeleteModal"), deleteEntryLabel=document.getElementById("loganDeleteEntry"), deleteConfirm=document.getElementById("loganDeleteConfirm"), deleteCancel=document.getElementById("loganDeleteCancel"), deleteX=document.getElementById("loganDeleteX");
+  let pendingDelete=null;
+  function closeDeleteModal(){pendingDelete=null;deleteModal.classList.remove("open");deleteModal.setAttribute("aria-hidden","true");}
+  function openDeleteModal(id,idx,name,entry){pendingDelete={id,idx};const labels={ate:"❤️ Ate It",little:"🤷 A Little",nope:"❌ Nope"};deleteEntryLabel.textContent=name+" — "+(labels[entry.rating]||entry.rating)+" — "+formatWhen(entry.time);deleteModal.classList.add("open");deleteModal.setAttribute("aria-hidden","false");}
+
+  if (!tab || !page || !back || !tracker) return;
+
+  function readMenu() {
+    try {
+      /* If v2 exists at all, it is authoritative — even when it is {}.
+         This prevents deleted migrated entries from being resurrected from v1. */
+      const currentRaw = localStorage.getItem(STORAGE_KEY);
+      if (currentRaw !== null) {
+        const current = JSON.parse(currentRaw || "{}");
+        let changed = false;
+        [["food-57","food-1"],["food-58","food-8"],["food-74","food-55"]].forEach(([from,to]) => {
+          if (current[from] && Array.isArray(current[from].history) && current[from].history.length) {
+            if (!current[to] || !Array.isArray(current[to].history)) current[to] = {name:"",history:[]};
+            current[to].history = current[to].history.concat(current[from].history).sort((a,b)=>(a.time||0)-(b.time||0));
+            delete current[from]; changed = true;
+          } else if (current[from]) { delete current[from]; changed = true; }
+        });
+        if (changed) writeMenu(current);
+        return current;
+      }
+
+      /* One-time migration from the original single-rating menu. */
+      const old = JSON.parse(localStorage.getItem(OLD_KEY) || "{}");
+      const migrated = {};
+      Object.keys(old).forEach(id => {
+        const e = old[id];
+        if (e && e.rating) migrated[id] = {name:e.name || "", history:[{rating:e.rating,time:e.time || Date.now()}]};
+      });
+
+      /* Always create v2, including an empty object, to mark migration complete. */
+      writeMenu(migrated);
+      return migrated;
+    } catch (e) { return {}; }
+  }
+  function writeMenu(data) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+    catch (e) { console.error("Logan menu save error", e); }
+  }
+  function historyFor(entry) { return entry && Array.isArray(entry.history) ? entry.history : []; }
+  function counts(history) {
+    return history.reduce((a,x) => { if (a[x.rating] !== undefined) a[x.rating]++; return a; }, {ate:0,little:0,nope:0});
+  }
+  function formatWhen(ms) {
+    return new Date(ms).toLocaleString([], {month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"});
+  }
+  function ensureCardExtras(card) {
+    let summary = card.querySelector(".logan-food-summary");
+    if (!summary) {
+      summary = document.createElement("div"); summary.className="logan-food-summary";
+      card.querySelector(".logan-food-status").insertAdjacentElement("afterend", summary);
+    }
+    let success = card.querySelector(".logan-food-success");
+    if (!success) { success=document.createElement("div"); success.className="logan-food-success"; summary.insertAdjacentElement("afterend",success); }
+    let tools = card.querySelector(".logan-food-tools");
+    if (!tools) {
+      tools=document.createElement("div"); tools.className="logan-food-tools";
+      tools.innerHTML='<button type="button" class="logan-history-btn">📜 Show History</button><button type="button" class="logan-undo-btn">↩ Undo Last</button>';
+      card.querySelector(".logan-food-actions").insertAdjacentElement("afterend",tools);
+    }
+    let panel=card.querySelector(".logan-history-panel");
+    if (!panel) { panel=document.createElement("div"); panel.className="logan-history-panel"; tools.insertAdjacentElement("afterend",panel); }
+    return {summary,success,tools,panel};
+  }
+  function renderHistory(panel, history) {
+    if (!history.length) { panel.innerHTML='<div class="logan-history-empty">No reviews yet.</div>'; return; }
+    const labels={ate:"❤️ Ate It",little:"🤷 A Little",nope:"❌ Nope"};
+    panel.innerHTML=history.map((x,i)=>({x,i})).reverse().map(({x,i}) =>
+      '<div class="logan-history-row" data-history-index="'+i+'">'+
+        '<span>'+labels[x.rating]+'</span><span>'+formatWhen(x.time)+'</span>'+
+        '<div class="logan-history-actions"><button type="button" class="logan-history-edit">✏️ Edit</button><button type="button" class="logan-history-delete">🗑 Delete</button></div>'+
+      '</div>'
+    ).join("");
+  }
+  function renderFavorites(data) {
+    if (!favoritesList) return;
+    const ranked=[];
+    page.querySelectorAll(".logan-food-card").forEach(card => {
+      const h=historyFor(data[card.dataset.foodId]); if (!h.length) return;
+      const c=counts(h); const positive=c.ate+c.little; const score=(c.ate + c.little*0.5)/h.length;
+      ranked.push({name:card.dataset.foodName,score,tries:h.length,ate:c.ate,positive});
+    });
+    ranked.sort((a,b)=> b.score-a.score || b.ate-a.ate || b.tries-a.tries || a.name.localeCompare(b.name));
+    const top=ranked.filter(x=>x.tries>=1).slice(0,5);
+    favoritesList.innerHTML=top.length ? top.map((x,i)=>'<span class="logan-favorite-chip">'+(i===0?'👑 ':'')+x.name+' • '+Math.round(x.score*100)+'%</span>').join("") : '<span class="logan-favorites-empty">His Majesty needs a few reviews first. 😂</span>';
+  }
+  function render() {
+    const data=readMenu();
+    page.querySelectorAll(".logan-food-card").forEach(card => {
+      const entry=data[card.dataset.foodId]; const h=historyFor(entry); const c=counts(h); const last=h[h.length-1];
+      const labels={ate:"❤️ Ate It",little:"🤷 A Little",nope:"❌ Nope"};
+      card.querySelector(".logan-food-status").textContent=last ? labels[last.rating]+" • Last tried: "+formatWhen(last.time) : "Not tried yet";
+      card.querySelectorAll(".logan-food-btn").forEach(btn=>btn.classList.toggle("selected",!!last && btn.dataset.rating===last.rating));
+      const ex=ensureCardExtras(card);
+      ex.panel.classList.remove("open");
+      ex.tools.querySelector(".logan-history-btn").textContent="📜 Show History";
+      ex.summary.innerHTML='<span class="logan-count ate">❤️ '+c.ate+'</span><span class="logan-count little">🤷 '+c.little+'</span><span class="logan-count nope">❌ '+c.nope+'</span>';
+      const positive=c.ate+c.little; ex.success.textContent=h.length ? 'Accepted '+positive+' of '+h.length+' tries • '+Math.round(positive/h.length*100)+'%' : 'No pattern yet';
+      ex.tools.querySelector(".logan-undo-btn").disabled=!h.length;
+      renderHistory(ex.panel,h);
+    });
+    renderFavorites(data);
+  }
+  page.addEventListener("click", function(event) {
+    const ratingBtn=event.target.closest(".logan-food-btn");
+    const historyBtn=event.target.closest(".logan-history-btn");
+    const undoBtn=event.target.closest(".logan-undo-btn");
+    const card=event.target.closest(".logan-food-card");
+    if (!card) return;
+    if (ratingBtn) {
+      const data=readMenu(); const id=card.dataset.foodId;
+      if (!data[id] || !Array.isArray(data[id].history)) data[id]={name:card.dataset.foodName,history:[]};
+      data[id].name=card.dataset.foodName; data[id].history.push({rating:ratingBtn.dataset.rating,time:Date.now()});
+      writeMenu(data); render(); return;
+    }
+    if (historyBtn) {
+      const panel=card.querySelector(".logan-history-panel");
+      const opening=!panel.classList.contains("open");
+      panel.classList.toggle("open",opening);
+      historyBtn.textContent=opening ? "📜 Hide History" : "📜 Show History";
+      return;
+    }
+    const editBtn=event.target.closest(".logan-history-edit");
+    const deleteBtn=event.target.closest(".logan-history-delete");
+    const choiceBtn=event.target.closest(".logan-history-choice");
+    const cancelEdit=event.target.closest(".logan-history-cancel");
+    const historyRow=event.target.closest(".logan-history-row");
+    if (editBtn && historyRow) {
+      let editor=historyRow.querySelector(".logan-history-editor");
+      if (editor) { editor.remove(); return; }
+      editor=document.createElement("div"); editor.className="logan-history-editor";
+      editor.innerHTML='<button type="button" class="logan-history-choice" data-rating="ate">❤️ Ate It</button><button type="button" class="logan-history-choice" data-rating="little">🤷 A Little</button><button type="button" class="logan-history-choice" data-rating="nope">❌ Nope</button><button type="button" class="logan-history-choice logan-history-cancel">Cancel</button>';
+      historyRow.appendChild(editor); return;
+    }
+    if (cancelEdit && historyRow) { const editor=historyRow.querySelector(".logan-history-editor"); if(editor) editor.remove(); return; }
+    if (choiceBtn && !choiceBtn.classList.contains("logan-history-cancel") && historyRow) {
+      const data=readMenu(), id=card.dataset.foodId, idx=Number(historyRow.dataset.historyIndex);
+      if (data[id] && data[id].history && data[id].history[idx]) { data[id].history[idx].rating=choiceBtn.dataset.rating; writeMenu(data); render(); }
+      return;
+    }
+    if (deleteBtn && historyRow) {
+      const data=readMenu(), id=card.dataset.foodId, idx=Number(historyRow.dataset.historyIndex);
+      const entry=data[id] && data[id].history && data[id].history[idx];
+      if(entry) openDeleteModal(id,idx,card.dataset.foodName,entry);
+      return;
+    }
+    if (undoBtn) {
+      const data=readMenu(); const id=card.dataset.foodId;
+      if (data[id] && Array.isArray(data[id].history) && data[id].history.length) {
+        data[id].history.pop(); if (!data[id].history.length) delete data[id]; writeMenu(data); render();
+      }
+    }
+  });
+  deleteCancel.addEventListener("click",closeDeleteModal);
+  deleteX.addEventListener("click",closeDeleteModal);
+  deleteModal.addEventListener("click",function(e){if(e.target===deleteModal)closeDeleteModal();});
+  deleteConfirm.addEventListener("click",function(){if(!pendingDelete)return;const id=pendingDelete.id,idx=pendingDelete.idx,data=readMenu();if(data[id]&&Array.isArray(data[id].history)&&data[id].history[idx]){data[id].history.splice(idx,1);if(!data[id].history.length)delete data[id];writeMenu(data);}closeDeleteModal();render();});
+
+  tab.addEventListener("click", function() {
+    tracker.style.display="none"; if (nightPage) nightPage.style.display="none"; page.style.display="block";
+    tab.style.display="none"; if (nightTab) nightTab.style.display="none"; render(); window.scrollTo(0,0);
+  });
+  back.addEventListener("click", function() {
+    page.style.display="none"; tracker.style.display="block"; tab.style.display=""; if (nightTab) nightTab.style.display=""; window.scrollTo(0,0);
+  });
+  render();
+})();
+</script>
+\n<script>
+/* =========================================================
+   LOGAN FOOD NOTES — separate from medication data/Firebase
+========================================================= */
+(function(){
+  const KEY="pawhubLoganFoodNotes_v1";
+  const add=document.getElementById("loganAddNote"), list=document.getElementById("loganNotesList");
+  const modal=document.getElementById("loganNoteModal"), title=document.getElementById("loganNoteTitle"), textBox=document.getElementById("loganNoteText"), dateBox=document.getElementById("loganNoteDate"), timeBox=document.getElementById("loganNoteTime");
+  const x=document.getElementById("loganNoteX"), cancel=document.getElementById("loganNoteCancel"), save=document.getElementById("loganNoteSave");
+  const delModal=document.getElementById("loganNoteDeleteModal"), delPreview=document.getElementById("loganNoteDeletePreview"), delX=document.getElementById("loganNoteDeleteX"), delCancel=document.getElementById("loganNoteDeleteCancel"), delConfirm=document.getElementById("loganNoteDeleteConfirm");
+  if(!add||!list||!modal) return;
+  let editingId=null, deletingId=null;
+  function read(){try{const v=JSON.parse(localStorage.getItem(KEY)||"[]");return Array.isArray(v)?v:[]}catch(e){return[]}}
+  function write(v){localStorage.setItem(KEY,JSON.stringify(v));}
+  function pad(n){return String(n).padStart(2,"0")}
+  function localParts(ms){const d=new Date(ms);return {date:d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()),time:pad(d.getHours())+":"+pad(d.getMinutes())}}
+  function fromParts(d,t){const parts=d.split("-").map(Number), tm=t.split(":").map(Number);return new Date(parts[0],parts[1]-1,parts[2],tm[0]||0,tm[1]||0).getTime()}
+  function fmt(ms){return new Date(ms).toLocaleString([], {month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"})}
+  function esc(s){return String(s).replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+  function render(){const notes=read().sort((a,b)=>b.time-a.time);list.innerHTML=notes.length?notes.map(n=>'<div class="logan-note-item" data-note-id="'+n.id+'"><div class="logan-note-meta">'+fmt(n.time)+'</div><div class="logan-note-text">'+esc(n.text)+'</div><div class="logan-note-actions"><button type="button" class="logan-note-edit">✏️ Edit</button><button type="button" class="logan-note-delete">🗑 Delete</button></div></div>').join(""):'<div class="logan-notes-empty">No food notes yet.</div>';}
+  function openNote(note){editingId=note?note.id:null;title.textContent=note?"Edit Food Note":"Add Food Note";textBox.value=note?note.text:"";const p=localParts(note?note.time:Date.now());dateBox.value=p.date;timeBox.value=p.time;modal.classList.add("open");modal.setAttribute("aria-hidden","false");setTimeout(()=>textBox.focus(),50);}
+  function closeNote(){editingId=null;modal.classList.remove("open");modal.setAttribute("aria-hidden","true");}
+  function closeDelete(){deletingId=null;delModal.classList.remove("open");delModal.setAttribute("aria-hidden","true");}
+  add.addEventListener("click",()=>openNote(null));x.addEventListener("click",closeNote);cancel.addEventListener("click",closeNote);modal.addEventListener("click",e=>{if(e.target===modal)closeNote()});
+  save.addEventListener("click",()=>{const txt=textBox.value.trim();if(!txt){textBox.focus();return}const when=fromParts(dateBox.value,timeBox.value);let notes=read();if(editingId){const n=notes.find(x=>x.id===editingId);if(n){n.text=txt;n.time=when}}else notes.push({id:"note-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),text:txt,time:when});write(notes);closeNote();render();});
+  list.addEventListener("click",e=>{const item=e.target.closest(".logan-note-item");if(!item)return;const notes=read(), note=notes.find(n=>n.id===item.dataset.noteId);if(!note)return;if(e.target.closest(".logan-note-edit")){openNote(note);return}if(e.target.closest(".logan-note-delete")){deletingId=note.id;delPreview.textContent=fmt(note.time)+" — "+note.text;delModal.classList.add("open");delModal.setAttribute("aria-hidden","false");}});
+  delX.addEventListener("click",closeDelete);delCancel.addEventListener("click",closeDelete);delModal.addEventListener("click",e=>{if(e.target===delModal)closeDelete()});delConfirm.addEventListener("click",()=>{if(!deletingId)return;write(read().filter(n=>n.id!==deletingId));closeDelete();render();});
+  render();
+})();
+</script>\n
+<script>
+/* LOGAN EXERCISE PAGE — local only, separate from medication/Firebase */
+(function(){
+ const tab=document.getElementById("loganExerciseTab"), page=document.getElementById("loganExercisePage"), back=document.getElementById("backFromLoganExercise"), tracker=document.querySelector("main.matrix"), nightPage=document.getElementById("nightChecklistPage"), nightTab=document.getElementById("nightChecklistTab"), menuPage=document.getElementById("loganMenuPage"), menuTab=document.getElementById("loganMenuTab");
+ if(!tab||!page||!back)return; const KEY="pawhubLoganExercise_v1"; const DAILY_KEY="pawhubLoganExerciseDaily_v1"; const add=document.getElementById("loganAddExercise"),list=document.getElementById("loganExerciseList"),modal=document.getElementById("loganExerciseModal"),x=document.getElementById("loganExerciseX"),cancel=document.getElementById("loganExerciseCancel"),save=document.getElementById("loganExerciseSave"),type=document.getElementById("loganExerciseType"),response=document.getElementById("loganExerciseResponse"),note=document.getElementById("loganExerciseNote"),date=document.getElementById("loganExerciseDate"),time=document.getElementById("loganExerciseTime");
+ function read(){try{let v=JSON.parse(localStorage.getItem(KEY)||"[]");return Array.isArray(v)?v:[]}catch(e){return[]}} function write(v){localStorage.setItem(KEY,JSON.stringify(v))} function pad(n){return String(n).padStart(2,"0")} function parts(ms){let d=new Date(ms);return [d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()),pad(d.getHours())+":"+pad(d.getMinutes())]} function esc(v){return String(v||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))} function fmt(ms){return new Date(ms).toLocaleString([],{month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"})}
+ function render(){let v=read().sort((a,b)=>b.time-a.time);list.innerHTML=v.length?v.map(e=>'<div class="logan-ex-session" data-id="'+e.id+'"><div class="logan-ex-session-meta">'+fmt(e.time)+'</div><div class="logan-ex-session-title">'+esc(e.type)+' · '+esc(e.response)+'</div>'+(e.note?'<div class="logan-ex-session-note">'+esc(e.note)+'</div>':'')+'<div class="logan-ex-session-actions"><button class="logan-ex-delete" style="background:#8b3035">🗑 Delete</button></div></div>').join(""):'<div class="logan-ex-empty">No exercise sessions logged yet.</div>'}
+ function open(){let p=parts(Date.now());date.value=p[0];time.value=p[1];note.value="";modal.classList.add("open");modal.setAttribute("aria-hidden","false")} function close(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true")}
+ add.addEventListener("click",open);x.addEventListener("click",close);cancel.addEventListener("click",close);modal.addEventListener("click",e=>{if(e.target===modal)close()}); save.addEventListener("click",()=>{let d=date.value.split("-").map(Number),t=time.value.split(":").map(Number),when=new Date(d[0],d[1]-1,d[2],t[0]||0,t[1]||0).getTime(),v=read();v.push({id:"ex-"+Date.now(),type:type.value,response:response.value,note:note.value.trim(),time:when});write(v);close();render()}); list.addEventListener("click",e=>{let b=e.target.closest(".logan-ex-delete"),row=e.target.closest(".logan-ex-session");if(!b||!row)return;write(read().filter(x=>x.id!==row.dataset.id));render()});
+ function todayKey(){let d=new Date();return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())} function readDaily(){try{let v=JSON.parse(localStorage.getItem(DAILY_KEY)||"{}");return v&&typeof v==="object"?v:{}}catch(e){return{}}} function writeDaily(v){localStorage.setItem(DAILY_KEY,JSON.stringify(v))} function renderDaily(){let all=readDaily(),day=todayKey(),v=all[day]||{};document.querySelectorAll(".logan-daily-check").forEach(box=>{let key=box.dataset.daily,state=v[key]||{};let dt=box.querySelector(".logan-daily-date");if(dt)dt.textContent=new Date().toLocaleDateString([],{month:"short",day:"numeric"});box.querySelectorAll(".logan-daily-btn").forEach(b=>b.classList.toggle("on",!!state[b.dataset.slot]));});} document.querySelectorAll(".logan-daily-check").forEach(box=>box.addEventListener("click",e=>{let b=e.target.closest(".logan-daily-btn");if(!b)return;let all=readDaily(),day=todayKey(),key=box.dataset.daily;all[day]=all[day]||{};all[day][key]=all[day][key]||{am:false,pm:false,rest:false};let st=all[day][key],slot=b.dataset.slot;if(slot==="rest"){st.rest=!st.rest;if(st.rest){st.am=false;st.pm=false}}else{st[slot]=!st[slot];if(st[slot])st.rest=false}writeDaily(all);renderDaily();})); renderDaily();
+ tab.addEventListener("click",()=>{tracker.style.display="none";if(nightPage)nightPage.style.display="none";if(menuPage)menuPage.style.display="none";page.style.display="block";tab.style.display="none";if(nightTab)nightTab.style.display="none";if(menuTab)menuTab.style.display="none";render();renderDaily();window.scrollTo(0,0)}); back.addEventListener("click",()=>{page.style.display="none";tracker.style.display="block";tab.style.display="";if(nightTab)nightTab.style.display="";if(menuTab)menuTab.style.display="";window.scrollTo(0,0)}); render();renderDaily();
+})();
+</script>
 </body>
 </html>
