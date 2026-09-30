@@ -6822,21 +6822,34 @@ highlightNightChecklistToday();
 </script>
 <script>
 /* =========================================================
-   LOGAN FOOD CLOUD SYNC — food history + food notes only
-   Uses separate Firestore documents so medication cells are untouched.
+   LOGAN FOOD CLOUD SYNC v2 — deletion/edit safe
+   Whole-document last-write-wins sync for Logan food history + notes.
+   Local mutations immediately receive a revision timestamp, so an older
+   cloud snapshot cannot merge a deliberately deleted item back in.
+   Medication cells remain in their separate dashboard/current document.
 ========================================================= */
 (function(){
   const MENU_KEY="pawhubLoganFoodMenu_v2";
   const NOTES_KEY="pawhubLoganFoodNotes_v1";
-  let historyRef=null, notesRef=null, historyUnsub=null, notesUnsub=null;
+  const MENU_REV_KEY="pawhubLoganFoodMenu_cloudRevision_v2";
+  const NOTES_REV_KEY="pawhubLoganFoodNotes_cloudRevision_v2";
+  let historyRef=null, notesRef=null;
   let historyTimer=null, notesTimer=null;
 
   function readObj(key){try{const v=JSON.parse(localStorage.getItem(key)||"{}");return v&&typeof v==="object"&&!Array.isArray(v)?v:{}}catch(e){return {}}}
   function readArr(key){try{const v=JSON.parse(localStorage.getItem(key)||"[]");return Array.isArray(v)?v:[]}catch(e){return []}}
-  function nonEmptyObj(o){return o&&Object.keys(o).length>0}
+  function readRev(key){const n=Number(localStorage.getItem(key)||0);return Number.isFinite(n)?n:0}
+  function setRev(key,n){localStorage.setItem(key,String(Number(n)||0))}
   function same(a,b){try{return JSON.stringify(a)===JSON.stringify(b)}catch(e){return false}}
+  function nonEmptyObj(o){return !!(o&&Object.keys(o).length)}
+  function legacyRemoteRev(data){
+    if(!data)return 0;
+    const n=Number(data.updatedAt||0); if(Number.isFinite(n)&&n>0)return n;
+    const parsed=Date.parse(data.updated||""); return Number.isFinite(parsed)?parsed:0;
+  }
+  /* Used only once when upgrading old merge-based cloud data. */
   function histKey(x){return String(x&&x.time||"")+"|"+String(x&&x.rating||"")}
-  function mergeMenus(a,b){
+  function bootstrapMergeMenus(a,b){
     const out={};
     [a||{},b||{}].forEach(src=>Object.keys(src).forEach(id=>{
       const e=src[id]||{}, h=Array.isArray(e.history)?e.history:[];
@@ -6848,54 +6861,78 @@ highlightNightChecklistToday();
     }));
     return out;
   }
-  function mergeNotes(a,b){
+  function bootstrapMergeNotes(a,b){
     const map=new Map();
     (a||[]).concat(b||[]).forEach(n=>{if(!n||!n.id)return;const prev=map.get(n.id);if(!prev||Number(n.time||0)>=Number(prev.time||0))map.set(n.id,n)});
     return Array.from(map.values()).sort((x,y)=>(y.time||0)-(x.time||0));
   }
-  async function saveHistory(data){
+  async function saveHistory(data,rev){
     if(!historyRef||!window.firebaseSetDoc)return;
-    try{await window.firebaseSetDoc(historyRef,{menu:data,updated:new Date().toString()});}
+    try{await window.firebaseSetDoc(historyRef,{menu:data,updatedAt:rev,updated:new Date(rev).toString()});}
     catch(e){console.error("Logan food history cloud save error",e)}
   }
-  async function saveNotes(data){
+  async function saveNotes(data,rev){
     if(!notesRef||!window.firebaseSetDoc)return;
-    try{await window.firebaseSetDoc(notesRef,{notes:data,updated:new Date().toString()});}
+    try{await window.firebaseSetDoc(notesRef,{notes:data,updatedAt:rev,updated:new Date(rev).toString()});}
     catch(e){console.error("Logan food notes cloud save error",e)}
   }
-  window.syncLoganFoodHistory=function(data){clearTimeout(historyTimer);historyTimer=setTimeout(()=>saveHistory(data||readObj(MENU_KEY)),180)};
-  window.syncLoganFoodNotes=function(data){clearTimeout(notesTimer);notesTimer=setTimeout(()=>saveNotes(data||readArr(NOTES_KEY)),180)};
 
-  function refreshFoodUI(){
-    /* Re-render by reopening the current page state without touching medication data. */
-    const page=document.getElementById("loganMenuPage");
-    if(page&&page.style.display!=="none"){
-      const cards=page.querySelectorAll(".logan-food-card");
-      /* The menu IIFE owns rendering; a tiny custom event lets it refresh safely. */
-      window.dispatchEvent(new Event("loganFoodCloudUpdated"));
-    }
-  }
-  function refreshNotesUI(){window.dispatchEvent(new Event("loganFoodNotesCloudUpdated"));}
+  /* Called by the existing food/notes write functions after ANY add/edit/delete. */
+  window.syncLoganFoodHistory=function(data){
+    const rev=Date.now(); setRev(MENU_REV_KEY,rev);
+    clearTimeout(historyTimer); historyTimer=setTimeout(()=>saveHistory(data||readObj(MENU_KEY),rev),120);
+  };
+  window.syncLoganFoodNotes=function(data){
+    const rev=Date.now(); setRev(NOTES_REV_KEY,rev);
+    clearTimeout(notesTimer); notesTimer=setTimeout(()=>saveNotes(data||readArr(NOTES_KEY),rev),120);
+  };
+
+  function refreshFoodUI(){window.dispatchEvent(new Event("loganFoodCloudUpdated"))}
+  function refreshNotesUI(){window.dispatchEvent(new Event("loganFoodNotesCloudUpdated"))}
 
   function start(){
     if(!window.db||!window.firebaseDoc||!window.firebaseOnSnapshot||!window.firebaseSetDoc){setTimeout(start,300);return}
     historyRef=window.firebaseDoc(window.db,"dashboard","loganFoodHistory");
     notesRef=window.firebaseDoc(window.db,"dashboard","loganFoodNotes");
-    historyUnsub=window.firebaseOnSnapshot(historyRef,snap=>{
-      const local=readObj(MENU_KEY);
-      if(!snap.exists()){if(nonEmptyObj(local))saveHistory(local);return}
-      const remote=(snap.data()&&snap.data().menu)||{};
-      const merged=mergeMenus(remote,local);
-      if(!same(local,merged)){localStorage.setItem(MENU_KEY,JSON.stringify(merged));refreshFoodUI()}
-      if(!same(remote,merged))saveHistory(merged);
+
+    window.firebaseOnSnapshot(historyRef,snap=>{
+      const local=readObj(MENU_KEY), localRev=readRev(MENU_REV_KEY);
+      if(!snap.exists()){
+        if(nonEmptyObj(local)){const rev=localRev||Date.now();setRev(MENU_REV_KEY,rev);saveHistory(local,rev)}
+        return;
+      }
+      const d=snap.data()||{}, remote=d.menu&&typeof d.menu==="object"?d.menu:{}, remoteRev=legacyRemoteRev(d);
+      if(!localRev){
+        /* One-time upgrade from the old union/merge sync. Preserve both sides, then establish a real revision. */
+        const merged=bootstrapMergeMenus(remote,local), rev=Math.max(Date.now(),remoteRev+1);
+        localStorage.setItem(MENU_KEY,JSON.stringify(merged)); setRev(MENU_REV_KEY,rev); refreshFoodUI(); saveHistory(merged,rev); return;
+      }
+      if(remoteRev>localRev){
+        if(!same(local,remote)){localStorage.setItem(MENU_KEY,JSON.stringify(remote));refreshFoodUI()}
+        setRev(MENU_REV_KEY,remoteRev);
+      }else if(localRev>remoteRev){
+        /* Local add/edit/delete is newer. Push it; NEVER union the old remote records back in. */
+        saveHistory(local,localRev);
+      }
     },e=>console.error("Logan food history cloud load error",e));
-    notesUnsub=window.firebaseOnSnapshot(notesRef,snap=>{
-      const local=readArr(NOTES_KEY);
-      if(!snap.exists()){if(local.length)saveNotes(local);return}
-      const remote=(snap.data()&&Array.isArray(snap.data().notes))?snap.data().notes:[];
-      const merged=mergeNotes(remote,local);
-      if(!same(local,merged)){localStorage.setItem(NOTES_KEY,JSON.stringify(merged));refreshNotesUI()}
-      if(!same(remote,merged))saveNotes(merged);
+
+    window.firebaseOnSnapshot(notesRef,snap=>{
+      const local=readArr(NOTES_KEY), localRev=readRev(NOTES_REV_KEY);
+      if(!snap.exists()){
+        if(local.length){const rev=localRev||Date.now();setRev(NOTES_REV_KEY,rev);saveNotes(local,rev)}
+        return;
+      }
+      const d=snap.data()||{}, remote=Array.isArray(d.notes)?d.notes:[], remoteRev=legacyRemoteRev(d);
+      if(!localRev){
+        const merged=bootstrapMergeNotes(remote,local), rev=Math.max(Date.now(),remoteRev+1);
+        localStorage.setItem(NOTES_KEY,JSON.stringify(merged)); setRev(NOTES_REV_KEY,rev); refreshNotesUI(); saveNotes(merged,rev); return;
+      }
+      if(remoteRev>localRev){
+        if(!same(local,remote)){localStorage.setItem(NOTES_KEY,JSON.stringify(remote));refreshNotesUI()}
+        setRev(NOTES_REV_KEY,remoteRev);
+      }else if(localRev>remoteRev){
+        saveNotes(local,localRev);
+      }
     },e=>console.error("Logan food notes cloud load error",e));
   }
   start();
