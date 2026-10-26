@@ -3502,6 +3502,27 @@ background: rgba(18, 25, 22, 0.58);
 .brian-muted{display:block;margin:8px 0 0;color:#c4d8e8;font-size:14px;line-height:1.4}
 @media(max-width:650px){.brian-dose-table{font-size:14px}.brian-dose-table th,.brian-dose-table td{padding:10px 8px}.brian-dose-table td:last-child{font-size:16px}.brian-dose-table th:last-child{width:29%}}
 </style>
+<style id="bedtimeComboAndEditStyle">
+/* PAWHUB — combined bedtime medications and inline editing */
+.grid-row[data-legacy-bedtime="true"] { display:none !important; }
+.bedtime-combo-row .med-name { min-height:92px; }
+.bedtime-combo-row .med-note { font-size:12px; line-height:1.2; }
+.bedtime-combo-row .cell { height:92px; padding:3px 1px; }
+.bedtime-combo-row .cell-entry { line-height:1.08; }
+.bedtime-combo-row .cell-dose { white-space:normal; font-size:11px; font-weight:750; margin-top:3px; line-height:1.15; }
+.bedtime-combo-row .combo-dose-lines { display:flex; flex-direction:column; gap:2px; text-align:center; }
+#removeModal .dose-card-footer { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+#removeModal .dose-card-footer button { min-width:0; min-height:50px; padding:9px 4px; font-size:clamp(11px,2.4vw,14px); }
+#bedtimeComboDoseSection { margin-bottom:12px; }
+.bedtime-combo-help { margin:3px 0 13px; color:#d1e6fa; font-size:14px; }
+.bedtime-combo-picker { margin-bottom:13px; }
+.bedtime-combo-picker label { display:block; margin-bottom:6px; font-weight:850; color:#e9e8ff; }
+.bedtime-combo-select { display:block; width:100%; min-height:48px; border:1px solid #7291bd; border-radius:10px; background:#0d1c2c; color:white; padding:9px; font:700 16px Arial,sans-serif; }
+.bedtime-combo-select:focus { outline:2px solid #bca2ff; outline-offset:2px; }
+.bedtime-combo-previous { margin:10px 0 0; padding:9px; border:1px solid #516880; border-radius:9px; color:#d4e6f8; font-size:13px; line-height:1.35; }
+.bedtime-combo-error { margin:9px 0 0; color:#ffb2ba; font-weight:800; }
+@media (max-width:700px) { .bedtime-combo-row .med-note{font-size:11px;} }
+</style>
 </head>
 <body>
 <div class="pawhub-app">
@@ -3925,7 +3946,7 @@ background: rgba(18, 25, 22, 0.58);
 <!-- =================================================
      LOGAN
 ================================================== -->
-<section class="dog logan" style="--row-count:24;">
+<section class="dog logan" style="--row-count:22;">
 <div class="dog-info">
 <div class="dog-name-line">
 <span class="dog-paw">🐾</span>
@@ -4033,7 +4054,7 @@ background: rgba(18, 25, 22, 0.58);
     🛏️ 1 hour or less before bedtime
   </span>
 </div>
-<div class="grid-row med-gabapentin med-detail-row" data-row-key="logan-bed-gab2">
+<div class="grid-row med-gabapentin med-detail-row" data-row-key="logan-bed-gab2" data-legacy-bedtime="true">
 <div class="med-name" data-med="logan-pm-gab">
 <span class="med-main">PM Gabapentin 💧
 </span>
@@ -4044,7 +4065,7 @@ background: rgba(18, 25, 22, 0.58);
 <div class="cell"></div><div class="cell"></div>
 <div class="cell"></div>
 </div>
-<div class="grid-row med-hydrocodone med-detail-row" data-row-key="logan-hydro3">
+<div class="grid-row med-hydrocodone med-detail-row" data-row-key="logan-hydro3" data-legacy-bedtime="true">
 <div class="med-name" data-med="logan-pm-hydro">
 <span class="med-main">PM Hydrocodone</span>
 <span class="med-note">Recommended: ¼ tab</span>
@@ -4054,10 +4075,21 @@ background: rgba(18, 25, 22, 0.58);
 <div class="cell"></div><div class="cell"></div>
 <div class="cell"></div>
 </div>
-<div class="grid-row med-detail-row" data-row-key="logan-pm-acepromazine">
+<div class="grid-row med-detail-row" data-row-key="logan-pm-acepromazine" data-legacy-bedtime="true">
 <div class="med-name" data-med="logan-pm-ace">
 <span class="med-main">Acepromazine</span>
 <span class="med-note">Recommended: ¼ tab</span>
+</div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div><div class="cell"></div>
+<div class="cell"></div>
+</div>
+<!-- Combined bedtime entry; original three rows above remain in DOM for saved-data compatibility. -->
+<div class="grid-row med-detail-row bedtime-combo-row" data-row-key="logan-bedtime-combo">
+<div class="med-name" data-med="logan-bedtime-combo">
+<span class="med-main">🌙 Bedtime Meds</span>
+<span class="med-note">Gabapentin • Hydrocodone • Acepromazine</span>
 </div>
 <div class="cell"></div><div class="cell"></div>
 <div class="cell"></div><div class="cell"></div>
@@ -4710,7 +4742,8 @@ data[key] = {
   text: cell.dataset.time || cell.textContent || "",
   active: cell.classList.contains("active"),
   skipped: cell.classList.contains("skipped"),
-  locked: cell.dataset.locked === "true"
+  locked: cell.dataset.locked === "true",
+  bundle: cell.dataset.bundle ? JSON.parse(cell.dataset.bundle) : null
 };
   });
 
@@ -4730,6 +4763,7 @@ cell.textContent = "";
 cell.dataset.time = "";
 cell.dataset.skipped = "false";
 cell.dataset.locked = "false";
+cell.dataset.bundle = "";
 
 cell.classList.remove(
   "active",
@@ -4740,6 +4774,14 @@ cell.classList.remove(
     if (!saved) return;
 
 cell.dataset.time = saved.text || "";
+if (saved.bundle && isBedtimeComboCell(cell)) {
+  cell.dataset.bundle = JSON.stringify(saved.bundle);
+  cell.classList.toggle("active", Boolean(saved.active));
+  cell.classList.toggle("skipped", Boolean(saved.skipped));
+  if (saved.locked) { cell.dataset.locked = "true"; cell.classList.add("locked"); }
+  renderBedtimeBundleCell(cell, saved.bundle);
+  return;
+}
 
 if (saved.skipped) {
   cell.dataset.skipped = "true";
@@ -4765,6 +4807,30 @@ else {
       cell.classList.add("locked");
     }
   });
+
+  // Make old bedtime entries visible through the combined row without deleting legacy data.
+  for (let day=0; day<7; day++) {
+    const combo=document.querySelector('[data-row-key="logan-bedtime-combo"]')?.querySelectorAll('.cell')[day];
+    if (!combo || combo.dataset.time || combo.dataset.bundle) continue;
+    const map={gab:'logan-bed-gab2',hydro:'logan-hydro3',ace:'logan-pm-acepromazine'};
+    const meds={};
+    let any=false, firstTime="";
+    for (const [med,row] of Object.entries(map)) {
+      const old=data[row+'::'+day];
+      if (!old || !(old.text||'').trim()) continue;
+      any=true;
+      const parsed=parseSavedDoseAndTime(old.text);
+      if (!firstTime && parsed.time) firstTime=parsed.time;
+      meds[med]={dose:old.skipped?'Skipped':(parsed.dose||'Not recorded'),time:parsed.time||''};
+    }
+    if (!any) continue;
+    const bundle={time:firstTime,meds,legacy:true};
+    combo.dataset.bundle=JSON.stringify(bundle);
+    combo.dataset.time=firstTime+'\n(Previous bedtime records)';
+    combo.dataset.locked='true';
+    combo.classList.add('active','locked');
+    renderBedtimeBundleCell(combo,bundle);
+  }
 
   return data;
 }
@@ -5052,6 +5118,7 @@ cell.textContent = "";
 cell.dataset.time = "";
 cell.dataset.skipped = "false";
 cell.dataset.locked = "false";
+cell.dataset.bundle = "";
 
 cell.classList.remove(
   "active",
@@ -5213,8 +5280,8 @@ if ("serviceWorker" in navigator) {
         Medication
       </div>
 <div class="remove-entry-title" id="removeEntryTitle">
-<span class="remove-entry-icon">🗑️</span>
-        Remove Entry
+<span class="remove-entry-icon">✏️</span>
+        Saved Entry
       </div>
 </div>
 <div class="dose-card-body">
@@ -5226,13 +5293,16 @@ if ("serviceWorker" in navigator) {
           Time
         </div>
 <div class="remove-entry-question">
-          Remove this entry?
+          What would you like to do?
         </div>
 </div>
 </div>
 <div class="dose-card-footer">
 <button class="dose-cancel-btn" id="removeCancelBtn" type="button">
         Keep Entry
+      </button>
+<button class="dose-save-btn" id="removeEditBtn" type="button">
+        ✏️ Edit Entry
       </button>
 <button class="remove-delete-btn" id="removeConfirmBtn" type="button">
         Remove
@@ -5278,6 +5348,23 @@ if ("serviceWorker" in navigator) {
           Dose
         </label>
 <div class="dose-choice-buttons" id="doseChoices"></div>
+</div>
+<div id="bedtimeComboDoseSection" class="dose-field dose-section-hidden">
+  <p class="bedtime-combo-help">Choose a dose or <strong>Skip</strong> for each medication.</p>
+  <div class="bedtime-combo-picker">
+    <label for="comboGab">💧 Gabapentin</label>
+    <select id="comboGab" class="bedtime-combo-select" aria-label="Gabapentin dose"></select>
+  </div>
+  <div class="bedtime-combo-picker">
+    <label for="comboHydro">💊 Hydrocodone</label>
+    <select id="comboHydro" class="bedtime-combo-select" aria-label="Hydrocodone dose"></select>
+  </div>
+  <div class="bedtime-combo-picker">
+    <label for="comboAce">💊 Acepromazine</label>
+    <select id="comboAce" class="bedtime-combo-select" aria-label="Acepromazine dose"></select>
+  </div>
+  <p id="bedtimeComboPrevious" class="bedtime-combo-previous" hidden></p>
+  <p id="bedtimeComboError" class="bedtime-combo-error" role="alert" hidden>Please choose a dose or Skip for all three medications.</p>
 </div>
 <button class="dose-skip-btn" id="doseSkipBtn" type="button">
         ↷Mark as Skipped
@@ -5554,6 +5641,69 @@ const doseCloseBtn =
 
 let activeDoseCell = null;
 let selectedDoseValue = "";
+let doseEditMode = false;
+const comboDoseSection=document.getElementById("bedtimeComboDoseSection");
+const comboControls={gab:document.getElementById("comboGab"),hydro:document.getElementById("comboHydro"),ace:document.getElementById("comboAce")};
+const comboPrevious=document.getElementById("bedtimeComboPrevious");
+const comboError=document.getElementById("bedtimeComboError");
+
+function isBedtimeComboCell(cell) {
+  return !!cell && cell.closest('.grid-row')?.dataset.rowKey === 'logan-bedtime-combo';
+}
+function parseSavedDoseAndTime(text) {
+  const str=String(text||'').trim();
+  const match=str.match(/^(\d{1,2}:\d{2}\s*[AP]M)/i);
+  const time=match?match[1]:'';
+  const tail=match?str.slice(match[0].length).trim():'';
+  return {time,dose:tail.replace(/^\(/,'').replace(/\)$/,'').trim()};
+}
+function setDosePickerFromText(text) {
+  const parsed=parseSavedDoseAndTime(text);
+  const m=parsed.time.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (!m) {setDosePickerTime(new Date());return;}
+  doseHour.value=String(Number(m[1]));
+  doseMinute.value=m[2];
+  dosePeriod.value=m[3].toUpperCase();
+}
+function selectDoseChoice(choice) {
+  const btn=[...doseChoices.querySelectorAll('.dose-choice-btn')].find(b=>b.dataset.value===choice);
+  if (btn) {btn.click();return;}
+  const liquid=doseChoices.querySelector('.gab-liquid-select');
+  if (liquid && [...liquid.options].some(o=>o.value===choice)) {
+    liquid.value=choice;liquid.dispatchEvent(new Event('change'));
+  } else if (choice) {
+    selectedDoseValue=choice;
+  }
+}
+function setupComboControls() {
+  const gabChoices=getDoseChoicesForCell(document.querySelector('[data-row-key="logan-bed-gab2"] .cell'));
+  const defaults={gab:gabChoices,hydro:['¼ tab','½ tab'],ace:['¼ tab','½ tab']};
+  for (const [key,ctrl] of Object.entries(comboControls)) {
+    ctrl.innerHTML='';
+    const placeholder=document.createElement('option');placeholder.value='';placeholder.textContent='Select dose or Skip';ctrl.append(placeholder);
+    for (const v of [...defaults[key], 'Skipped']) {
+      const opt=document.createElement('option');opt.value=v;opt.textContent=v==='Skipped'?'❌ Skip this medication':v;ctrl.append(opt);
+    }
+    ctrl.addEventListener('change',()=>comboError.hidden=true);
+  }
+}
+setupComboControls();
+function renderBedtimeBundleCell(cell,bundle) {
+  cell.innerHTML='';
+  const outer=document.createElement('span');outer.className='cell-entry';
+  const tm=document.createElement('span');tm.className='cell-time';
+  tm.textContent=bundle.legacy?'Previous entries':(bundle.time||'Time not set');outer.append(tm);
+  const lines=document.createElement('span');lines.className='cell-dose combo-dose-lines';
+  const labels=[['gab','Gab'],['hydro','Hydro'],['ace','Ace']];
+  for (const [k,label] of labels) {
+    const med=bundle.meds?.[k];
+    const line=document.createElement('span');
+    line.textContent=label+': '+(med?.dose||'—');
+    lines.append(line);
+  }
+  outer.append(lines);cell.append(outer);
+}
+
 
 /* Build the hour choices */
 
@@ -5995,8 +6145,34 @@ function getCellDogKey(cell) {
 
 /* Open the card */
 
-function openDoseCard(cell) {
+function openDoseCard(cell, editing = false) {
   activeDoseCell = cell;
+  doseEditMode = Boolean(editing);
+  doseSaveBtn.textContent = editing ? 'Save Changes' : 'Save Entry';
+  doseSkipBtn.textContent = editing && cell.classList.contains('skipped') ? '↷ Keep Skipped' : '↷ Mark as Skipped';
+  const isCombo=isBedtimeComboCell(cell);
+  comboDoseSection.classList.toggle('dose-section-hidden',!isCombo);
+  doseSkipBtn.style.display=isCombo?'none':'';
+  comboError.hidden=true;
+  comboPrevious.hidden=true;
+  if (isCombo) {
+    let bundle={};
+    try {bundle=JSON.parse(cell.dataset.bundle||'{}')}catch(e){}
+    const prior=bundle.meds||{};
+    for (const [key,ctrl] of Object.entries(comboControls)) {
+      const val=prior[key]?.dose||'';
+      // Historic entries with no dose should remain visible as such until edited.
+      if (val && ![...ctrl.options].some(o=>o.value===val)) {
+        const other=document.createElement('option');other.value=val;other.textContent=val+' (previously recorded)';ctrl.append(other);
+      }
+      ctrl.value=editing?val:'';
+    }
+    if (editing && bundle.legacy) {
+      const labels={gab:'Gabapentin',hydro:'Hydrocodone',ace:'Acepromazine'};
+      comboPrevious.textContent='Original separate entries: '+Object.entries(prior).map(([key,v])=>`${labels[key]||key}: ${v?.dose||'—'} at ${v?.time||'unknown time'}`).join(' • ');
+      comboPrevious.hidden=false;
+    }
+  }
 
 const medName = getCellMedicationName(cell);
 const dogName = getCellDogName(cell);
@@ -6009,7 +6185,8 @@ doseMedName.textContent = medName
   .trim();
   doseModal.dataset.dog = dogKey;
   
-  setDosePickerTime(new Date());
+  if (editing) setDosePickerFromText(cell.dataset.time || cell.textContent);
+  else setDosePickerTime(new Date());
 
 selectedDoseValue = "";
 doseChoices.innerHTML = "";
@@ -6027,6 +6204,9 @@ if (automaticDose) {
     "dose-section-hidden"
   );
 }
+else if (isCombo) {
+  doseAmountSection.classList.add('dose-section-hidden');
+}
 else if (availableChoices.length > 0) {
   loadDoseChoices(availableChoices);
 
@@ -6040,6 +6220,10 @@ else {
   );
 }
 
+  if (editing && !isCombo && availableChoices.length) {
+    const previous=parseSavedDoseAndTime(cell.dataset.time).dose;
+    if (cell.classList.contains('active') && previous) selectDoseChoice(previous);
+  }
   doseModal.classList.add("open");
   doseModal.setAttribute("aria-hidden", "false");
 }
@@ -6052,6 +6236,7 @@ function closeDoseCard() {
   doseModal.setAttribute("aria-hidden", "true");
 
   activeDoseCell = null;
+  doseEditMode = false;
 }
 
 
@@ -6181,6 +6366,7 @@ doseSkipBtn.addEventListener("click", () => {
 
   activeDoseCell.dataset.time = skipTime;
   activeDoseCell.dataset.skipped = "true";
+  activeDoseCell.dataset.bundle = "";
   activeDoseCell.dataset.locked = "true";
 
   activeDoseCell.classList.remove("active");
@@ -6209,6 +6395,29 @@ doseSaveBtn.addEventListener("click", () => {
   }
 
   let display = getDoseTimeText();
+  if (isBedtimeComboCell(activeDoseCell)) {
+    const meds={};
+    for (const [key,control] of Object.entries(comboControls)) {
+      if (!control.value) {
+        comboError.hidden=false;
+        control.focus();
+        return;
+      }
+      meds[key]={dose:control.value,time:display};
+    }
+    const bundle={time:display,meds,legacy:false};
+    activeDoseCell.dataset.time=display+'\n(Combined bedtime medications)';
+    activeDoseCell.dataset.bundle=JSON.stringify(bundle);
+    const allSkipped=Object.values(meds).every(m=>m.dose==='Skipped');
+    activeDoseCell.dataset.skipped=allSkipped?'true':'false';
+    activeDoseCell.dataset.locked='true';
+    activeDoseCell.classList.remove('skipped','active');
+    activeDoseCell.classList.add(allSkipped?'skipped':'active','locked');
+    renderBedtimeBundleCell(activeDoseCell,bundle);
+    saveState();saveToFirebase();closeDoseCard();
+    return;
+  }
+  activeDoseCell.dataset.bundle='';
 
 if (selectedDoseValue) {
   display += "\n(" + selectedDoseValue + ")";
@@ -6249,6 +6458,7 @@ const removeEntryTime =
 
 const removeConfirmBtn =
   document.getElementById("removeConfirmBtn");
+const removeEditBtn=document.getElementById('removeEditBtn');
 
 const removeCancelBtn =
   document.getElementById("removeCancelBtn");
@@ -6307,9 +6517,19 @@ removeConfirmBtn.addEventListener(
       return;
     }
 
+if (isBedtimeComboCell(activeRemoveCell)) {
+  const day=[...activeRemoveCell.closest('.grid-row').querySelectorAll('.cell')].indexOf(activeRemoveCell);
+  for (const oldKey of ['logan-bed-gab2','logan-hydro3','logan-pm-acepromazine']) {
+    const oldCell=document.querySelector(`[data-row-key="${oldKey}"]`)?.querySelectorAll('.cell')[day];
+    if (!oldCell) continue;
+    oldCell.dataset.time='';oldCell.dataset.skipped='false';oldCell.dataset.locked='false';oldCell.dataset.bundle='';
+    oldCell.textContent='';oldCell.classList.remove('active','skipped','locked');
+  }
+}
 activeRemoveCell.dataset.time = "";
 activeRemoveCell.dataset.skipped = "false";
 activeRemoveCell.dataset.locked = "false";
+activeRemoveCell.dataset.bundle = "";
 activeRemoveCell.textContent = "";
 
 activeRemoveCell.classList.remove(
@@ -6325,6 +6545,14 @@ activeRemoveCell.classList.remove(
   }
 );
 
+
+/* Edit the selected entry, keeping the existing time and dose selections. */
+removeEditBtn.addEventListener('click',()=>{
+  const selected=activeRemoveCell;
+  if (!selected) return;
+  closeRemoveCard();
+  openDoseCard(selected,true);
+});
 
 /* Keep Entry and X buttons */
 
