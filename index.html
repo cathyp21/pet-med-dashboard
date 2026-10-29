@@ -3523,6 +3523,30 @@ background: rgba(18, 25, 22, 0.58);
 .bedtime-combo-error { margin:9px 0 0; color:#ffb2ba; font-weight:800; }
 @media (max-width:700px) { .bedtime-combo-row .med-note{font-size:11px;} }
 </style>
+<style id="pawhubNightChecklistBulletsAndSonos">
+/* Keep the two night pages side-by-side even when the navigation wraps. */
+.night-tabs-together { display:flex; gap:10px; align-items:stretch; flex-wrap:nowrap; }
+.night-tabs-together .pawhub-page-tab { min-width:200px; }
+@media(max-width:520px){
+  .night-tabs-together { width:100%; gap:7px; }
+  .night-tabs-together .pawhub-page-tab { min-width:0; flex:1 1 50%; padding:10px 7px; font-size:12px; }
+}
+/* Every bullet has its own Sun-Sat checkbox, retaining the existing saved weekly checks. */
+.night-grid { grid-template-columns:minmax(390px,2.8fr) repeat(7,minmax(75px,1fr)); min-width:1040px; gap:5px; }
+.night-task { min-height:66px; padding:11px 15px; background:#d7e9f6; }
+.night-task strong { color:#1f2d43; font-size:16px; line-height:1.25; }
+.night-task span { font-size:12px; line-height:1.34; color:#36465c; opacity:1; margin:5px 0 0 17px; }
+.night-grid .night-check,.night-grid .night-time { min-height:66px; }
+.night-section-title { background:linear-gradient(90deg,#7549a8,#365675); font-size:17px; padding:13px 16px; }
+#nightChecklistPage .night-checklist-subtitle { font-size:15px; line-height:1.5; }
+/* Four balanced shortcuts at the bottom of PawHub. */
+.bottom-bar { grid-template-columns:repeat(4,minmax(0,1fr))!important; }
+.bottom-bar a.sonos-app-button { display:flex; align-items:center; justify-content:center; width:100%; min-width:0;
+ padding:10px 15px; border:1px solid rgba(151,185,218,.22); border-radius:9px; background:#294158;
+ color:white; text-decoration:none; font-size:14px; font-weight:700; font-family:Arial,Helvetica,sans-serif; }
+.bottom-bar a.sonos-app-button:active {transform:translateY(1px);}
+@media(max-width:700px){.bottom-bar a.sonos-app-button { padding:9px 5px; font-size:12px; }}
+</style>
 </head>
 <body>
 <div class="pawhub-app">
@@ -3562,18 +3586,12 @@ background: rgba(18, 25, 22, 0.58);
      PAWHUB PAGE SWITCHER
 ====================================================== -->
 <div class="pawhub-page-tabs">
-<button class="pawhub-page-tab" id="nightChecklistTab" type="button">
-    🌙 Night Checklist
-  </button>
-<button class="pawhub-page-tab" id="loganMenuTab" type="button">
-    🍽️ Logan’s Menu
-  </button>
-<button class="pawhub-page-tab" id="loganExerciseTab" type="button">
-    🏋️ Logan’s Exercise
-  </button>
-<button class="pawhub-page-tab" id="brianInstructionsTab" type="button">
-    📝 Brian’s Instructions
-  </button>
+  <div class="night-tabs-together" role="group" aria-label="Nighttime pages">
+    <button class="pawhub-page-tab" id="nightChecklistTab" type="button">🌙 Night Checklist</button>
+    <button class="pawhub-page-tab" id="brianInstructionsTab" type="button">💊 Night Med Instructions</button>
+  </div>
+  <button class="pawhub-page-tab" id="loganMenuTab" type="button">🍽️ Logan’s Menu</button>
+  <button class="pawhub-page-tab" id="loganExerciseTab" type="button">🏋️ Logan’s Exercise</button>
 </div>
 <!-- =====================================================
      NIGHT CHECKLIST PAGE
@@ -3585,12 +3603,12 @@ background: rgba(18, 25, 22, 0.58);
 </button>
 <div class="night-checklist-title">🌙 Night Checklist</div>
 <div class="night-checklist-subtitle">
-      Everything ready for bedtime
+      One step at a time — check each item when it’s done
     </div>
 </div>
 <div id="nightChecklistContent">
 <div class="night-grid">
-<div class="night-grid-header night-task-header">TASK</div>
+<div class="night-grid-header night-task-header">BRIAN’S NIGHT CHECKLIST</div>
 <div class="night-grid-header">SUN</div>
 <div class="night-grid-header">MON</div>
 <div class="night-grid-header">TUE</div>
@@ -3598,77 +3616,104 @@ background: rgba(18, 25, 22, 0.58);
 <div class="night-grid-header">THU</div>
 <div class="night-grid-header">FRI</div>
 <div class="night-grid-header">SAT</div>
-<!-- DOG CARE -->
-<div class="night-section-title">
-      🐾 DOG CARE
-    </div>
-<div class="night-task">
-<strong>💧 Refresh water — when home</strong>
-<span>Check and freshen all dog water bowls</span>
-</div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div>
-<div class="night-task">
-<strong>🍽️ Early evening feeding check</strong>
-<span>Try feeding, especially Callie &amp; Logan • Record eating in PawHub</span>
-</div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div>
-<div class="night-task">
-<strong>👀 Check dog cues / meds</strong>
-<span>If restless, uncomfortable, pacing or whining, check PawHub and/or ask Cathy</span>
-</div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div>
-<div class="night-task">
-<strong>💧 Refresh water — before bed</strong>
-<span>Make sure everyone has fresh water for the night</span>
-</div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div>
-<div class="night-task">
-<strong>🐾 Let dogs out before bed</strong>
-<span>Record the time</span>
-</div>
-<div class="night-time"></div><div class="night-time"></div>
-<div class="night-time"></div><div class="night-time"></div>
-<div class="night-time"></div><div class="night-time"></div>
-<div class="night-time"></div>
-<div class="night-task">
-<strong>🚧 Living room gate</strong>
-<span>Make sure the gate is up if needed</span>
-</div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div>
-<!-- HOUSE -->
-<div class="night-section-title">
-      🏠 HOUSE
-    </div>
-<div class="night-task">
-<strong>🪟 Close curtains</strong>
-</div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div>
-<div class="night-task">
-<strong>🍽️ Put away food before bed</strong>
-<span>Put away any food, leftovers or ingredients left out</span>
-</div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div><div class="night-check"></div>
-<div class="night-check"></div>
+<div class="night-section-title">🏡 WHEN YOU GET HOME</div>
+<div class="night-task"><strong>• 💧 Fill the water bowls</strong><span>Check all the dogs’ water bowls and add fresh water.</span></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💧 Fill the water bowls SUN"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💧 Fill the water bowls MON"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💧 Fill the water bowls TUE"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💧 Fill the water bowls WED"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💧 Fill the water bowls THU"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💧 Fill the water bowls FRI"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💧 Fill the water bowls SAT"></div>
+<div class="night-task"><strong>• 🍽️ Offer Callie food</strong><span>See whether Callie wants her dinner or a snack.</span></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Offer Callie food SUN"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Offer Callie food MON"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Offer Callie food TUE"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Offer Callie food WED"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Offer Callie food THU"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Offer Callie food FRI"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Offer Callie food SAT"></div>
+<div class="night-task"><strong>• 🍽️ Offer Logan food</strong><span>Offer Logan something he likes, even if he only eats a little.</span></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Offer Logan food SUN"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Offer Logan food MON"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Offer Logan food TUE"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Offer Logan food WED"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Offer Logan food THU"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Offer Logan food FRI"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Offer Logan food SAT"></div>
+<div class="night-task"><strong>• 📝 Log what they ate</strong><span>Record Callie’s and Logan’s food in PawHub.</span></div>
+<div class="night-check" role="button" tabindex="0" aria-label="📝 Log what they ate SUN"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="📝 Log what they ate MON"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="📝 Log what they ate TUE"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="📝 Log what they ate WED"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="📝 Log what they ate THU"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="📝 Log what they ate FRI"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="📝 Log what they ate SAT"></div>
+<div class="night-task"><strong>• 👀 Check on the dogs</strong><span>Notice pacing, whining, restlessness, or discomfort.</span></div>
+<div class="night-check" role="button" tabindex="0" aria-label="👀 Check on the dogs SUN"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="👀 Check on the dogs MON"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="👀 Check on the dogs TUE"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="👀 Check on the dogs WED"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="👀 Check on the dogs THU"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="👀 Check on the dogs FRI"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="👀 Check on the dogs SAT"></div>
+<div class="night-task"><strong>• 💊 Check PawHub before extra medicine</strong><span>Check the last dose time; ask Cathy if unsure.</span></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💊 Check PawHub before extra medicine SUN"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💊 Check PawHub before extra medicine MON"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💊 Check PawHub before extra medicine TUE"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💊 Check PawHub before extra medicine WED"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💊 Check PawHub before extra medicine THU"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💊 Check PawHub before extra medicine FRI"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💊 Check PawHub before extra medicine SAT"></div>
+<div class="night-section-title">🌙 BEFORE BED</div>
+<div class="night-task"><strong>• 💊 Mix Logan’s nighttime meds</strong><span>Follow the separate Night Med Instructions page for the complete directions.</span></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💊 Mix Logan’s nighttime meds SUN"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💊 Mix Logan’s nighttime meds MON"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💊 Mix Logan’s nighttime meds TUE"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💊 Mix Logan’s nighttime meds WED"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💊 Mix Logan’s nighttime meds THU"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💊 Mix Logan’s nighttime meds FRI"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💊 Mix Logan’s nighttime meds SAT"></div>
+<div class="night-task"><strong>• 💧 Check water bowls again</strong><span>Make sure each dog has fresh water for the night.</span></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💧 Check water bowls again SUN"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💧 Check water bowls again MON"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💧 Check water bowls again TUE"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💧 Check water bowls again WED"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💧 Check water bowls again THU"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💧 Check water bowls again FRI"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="💧 Check water bowls again SAT"></div>
+<div class="night-task"><strong>• 🐾 Take the dogs out</strong><span>Tap the day’s box to save the time they went outside.</span></div>
+<div class="night-time" role="button" tabindex="0" aria-label="🐾 Take the dogs out SUN"></div>
+<div class="night-time" role="button" tabindex="0" aria-label="🐾 Take the dogs out MON"></div>
+<div class="night-time" role="button" tabindex="0" aria-label="🐾 Take the dogs out TUE"></div>
+<div class="night-time" role="button" tabindex="0" aria-label="🐾 Take the dogs out WED"></div>
+<div class="night-time" role="button" tabindex="0" aria-label="🐾 Take the dogs out THU"></div>
+<div class="night-time" role="button" tabindex="0" aria-label="🐾 Take the dogs out FRI"></div>
+<div class="night-time" role="button" tabindex="0" aria-label="🐾 Take the dogs out SAT"></div>
+<div class="night-task"><strong>• 🚧 Put up the living room gate</strong><span>Make sure the gate is in place if needed.</span></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🚧 Put up the living room gate SUN"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🚧 Put up the living room gate MON"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🚧 Put up the living room gate TUE"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🚧 Put up the living room gate WED"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🚧 Put up the living room gate THU"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🚧 Put up the living room gate FRI"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🚧 Put up the living room gate SAT"></div>
+<div class="night-task"><strong>• 🪟 Close the curtains</strong><span>Check that the curtains are shut.</span></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🪟 Close the curtains SUN"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🪟 Close the curtains MON"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🪟 Close the curtains TUE"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🪟 Close the curtains WED"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🪟 Close the curtains THU"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🪟 Close the curtains FRI"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🪟 Close the curtains SAT"></div>
+<div class="night-task"><strong>• 🍽️ Put away leftover food</strong><span>Put away food, leftovers, and ingredients before bed.</span></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Put away leftover food SUN"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Put away leftover food MON"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Put away leftover food TUE"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Put away leftover food WED"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Put away leftover food THU"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Put away leftover food FRI"></div>
+<div class="night-check" role="button" tabindex="0" aria-label="🍽️ Put away leftover food SAT"></div>
 </div>
 </div>
 </section>
@@ -3766,7 +3811,7 @@ background: rgba(18, 25, 22, 0.58);
   <div class="brian-wrap">
     <div class="brian-head">
       <button class="brian-back" id="backFromBrianInstructions" type="button">← Back to PawHub</button>
-      <div class="brian-titles"><h2 id="brianInstructionsTitle">🌙 Logan’s Nighttime Meds</h2><p>Brian’s quick instructions</p></div>
+      <div class="brian-titles"><h2 id="brianInstructionsTitle">🌙 Logan’s Night Med Instructions</h2><p>For Brian — preparing Logan’s nighttime medication</p></div>
     </div>
     <div class="brian-warning"><strong>First:</strong> Check PawHub for the times of Logan’s last hydrocodone and gabapentin doses. If a time is unclear, ask Cathy.</div>
 
@@ -4375,6 +4420,9 @@ background: rgba(18, 25, 22, 0.58);
 <button onclick="openApp('grocery')">
       🛒 Grocery
     </button>
+<a class="sonos-app-button" href="intent://#Intent;scheme=sonos;package=com.sonos.acr2;S.browser_fallback_url=https%3A%2F%2Fplay.sonos.com%2F;end" aria-label="Open Sonos app" title="Open Sonos app">
+      🎵 Sonos
+    </a>
 </div>
 <div id="backupDot"></div>
 </div>
@@ -6916,6 +6964,29 @@ localStorage.removeItem("pawhubNightTimes");
     );
   }
 }
+
+/* ONE-TIME CHECKLIST UPDATE — preserve semantically matching weekly checkmarks. */
+(function migrateNightChecklistToSimpleNightMeds() {
+  const key='pawhubNightChecklistSimpler_v2';
+  if (localStorage.getItem(key)==='done') return;
+  try {
+    const raw=JSON.parse(localStorage.getItem('pawhubNightChecklist')||'[]');
+    if (!Array.isArray(raw)) return;
+    // If the prior 17-item checklist ran, its detailed-layout marker is present.
+    const wasExpanded=localStorage.getItem('pawhubNightChecklistDetailed_v1')==='done';
+    const rowMap=wasExpanded
+      ? {0:[0],1:[1],2:[2],3:[3],4:[4],5:[5],8:[6],12:[7],13:[8],14:[9],15:[10]}
+      : {0:[0],1:[1],2:[4],3:[7],4:[8],5:[9],6:[10]};
+    const results=[];
+    raw.forEach(v=>{
+      if(!Number.isInteger(v)||v<0) return;
+      const row=Math.floor(v/7),day=v%7;
+      (rowMap[row]||[]).forEach(nextRow=>results.push(nextRow*7+day));
+    });
+    localStorage.setItem('pawhubNightChecklist',JSON.stringify([...new Set(results)]));
+    localStorage.setItem(key,'done');
+  } catch(e) { console.warn('Night checklist checkmark migration unavailable',e); }
+})();
 
 resetNightChecklistForNewWeek();
 loadNightChecklist();
